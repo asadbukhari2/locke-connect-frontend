@@ -1,0 +1,104 @@
+/* css variable define in .css file because they gave error when using within CssVars(polished) */
+
+:root {
+  /* variables */
+  --primary-25: #f2f5fd;
+  --primary-50: #e6ebfc;
+  --primary-100: #ccd6f8;
+  --primary-200: #99aef1;
+  --primary-300: #6685eb;
+  --primary-400: #335de4;
+  --primary-500: #0034dd;
+  --primary-600: #002bb6;
+  --primary-700: #00269f;
+  --primary-800: #001f85;
+  --primary-900: #00196a;
+  --secondary-25: #f7f4ff;
+  --secondary-50: #f0ebff;
+  --secondary-100: #e1d6ff;
+  --secondary-200: #c3adff;
+  --secondary-300: #a485ff;
+  --secondary-400: #865cff;
+  --secondary-500: #6833ff;
+  --secondary-600: #602eed;
+  --secondary-700: #5428d2;
+  --secondary-800: #4721b5;
+  --secondary-900: #3a1a97;
+  --success-25: #f6fcf7;
+  --success-50: #eefaf0;
+  --success-100: #dcf5e0;
+  --success-200: #b8eac0;
+  --success-300: #95e0a1;
+  --success-400: #71d581;
+  --success-500: #4ecb62;
+  --success-600: #43af54;
+  --success-700: #399447;
+  --success-800: #2f783a;
+  --success-900: #245a2c;
+  --danger-25: #fef5f6;
+  --danger-50: #ffecee;
+  --danger-100: #fed8dc;
+  --danger-200: #fcb1ba;
+  --danger-300: #fb8a97;
+  --danger-400: #f96375;
+  --danger-500: #f83c52;
+  --danger-600: #de364a;
+  --danger-700: #c33041;
+  --danger-800: #a52938;
+  --danger-900: #80202b;
+  --warning-25: #fffbf7;
+  --warning-50: #fff9f1;
+  --warning-100: #fff2e2;
+  --warning-200: #ffe4c5;
+  --warning-300: #ffd7a7;
+  --warning-400: #ffc98a;
+  --warning-500: #ffbc6d;
+  --warning-600: #e5a963;
+  --warning-700: #c69255;
+  --warning-800: #ac7f49;
+  --warning-900: #8e683c;
+  --gray-25: #f5f6f8;
+  --gray-50: #ecedf1;
+  --gray-100: #d7dbe3;
+  --gray-200: #afb7c6;
+  --gray-300: #8893aa;
+  --gray-400: #606f8d;
+  --gray-500: #384b71;
+  --gray-600: #324263;
+  --gray-700: #2b3855;
+  --gray-800: #232f48;
+  --gray-900: #172032;
+  --gradient-orange: linear-gradient(94deg, #f79f72 0.97%, #e37171 100%);
+  --gradient-green: linear-gradient(94deg, #81cec5 0.97%, #82ca8e 100%);
+  --gradient-pink: linear-gradient(94deg, #f9b6b2 0.97%, #c67093 100%);
+  --gradient-blue: linear-gradient(94deg, #8cc0e9 0.97%, #ac85bd 100%);
+  --gradient-primary: linear-gradient(94deg, #99aef1 0.97%, #335de4 100%);
+  --gradient-secondary: linear-gradient(94deg, #c3adff 0.97%, #865cff 100%);
+  --gradient-success: linear-gradient(94deg, #b8eac0 0.97%, #71d581 100%);
+  --gradient-negative: linear-gradient(94deg, #fcb1ba 0.97%, #f96375 100%);
+  --body-color: white;
+  --white: #fff;
+  --black: #172032;
+  --body-text: #2a3855;
+  --body-text-25: #9eb1ef;
+
+  --base-font-sans-serif: "Jost", "Arial", "Helvetica Neue", "Helvetica",
+    sans-serif;
+  --base-font-serif: "Times New Roman", "Times", "Baskerville", "GeorFgia",
+    serif;
+
+  /* scrollbar-face-color: rgb(210, 210, 210);
+  scrollbar-track-color: rgb(46, 54, 69);
+  scrollbar-color: rgb(210, 210, 210) rgb(46, 54, 69);
+  scrollbar-width: 3px; */
+
+  /* Body */
+  --base-text-color: var(--body-text);
+  --base-background-color: var(--body-color);
+  --font-size-base: 14px;
+  --line-height-base: 18px;
+  --base-font-family: var(--base-font-sans-serif);
+  --base-min-width: 380px;
+
+  /*  Links */
+}
