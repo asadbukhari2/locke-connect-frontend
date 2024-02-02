@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 export const StyledProperty = styled.div`
   width: 100%;
   position: relative;
+  scroll-margin-top: 100px;
 
   .pagination {
     padding: 0;

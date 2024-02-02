@@ -459,6 +459,11 @@ export const Profile = styled.div`
       width: 48px;
       height: 48px;
     }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .logout {
