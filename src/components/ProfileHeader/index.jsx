@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Image from "next/image";
-import Img01 from "../../../public/avatar-women.png";
+import Img01 from "../../../public/user-skeleton.png";
 import { PiPhoneCallBold } from "react-icons/pi";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { TbMapPin } from "react-icons/tb";

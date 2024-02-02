@@ -452,7 +452,7 @@ export const Profile = styled.div`
     height: 38px;
     overflow: hidden;
     flex-shrink: 0;
-    background: var(--white);
+    background: var(--primary-50);
     border-radius: 12px;
 
     @media (min-width: 992px) {
