@@ -1,18 +1,15 @@
-import React from "react";
-import { useContextHook } from "use-context-hook";
-import Property from "@/components/Property/Property";
-import VisualSection from "@/components/VisualSection";
-import Peoples from "@/components/Peoples/Peoples";
-import { MyContext } from "@/context/card";
-import useAuth from "@/helpers/auth";
+import React from 'react';
+import { useContextHook } from 'use-context-hook';
+import Property from '@/components/Property/Property';
+import VisualSection from '@/components/VisualSection';
+import Peoples from '@/components/Peoples/Peoples';
+import { MyContext } from '@/context/card';
+import useAuth from '@/helpers/auth';
 
 const Index = () => {
   const isAuthenticated = useAuth();
 
-  const { cardVal, setCardVal } = useContextHook(MyContext, [
-    "cardVal",
-    "setCardVal",
-  ]);
+  const { cardVal, setCardVal } = useContextHook(MyContext, ['cardVal', 'setCardVal']);
 
   return (
     <>

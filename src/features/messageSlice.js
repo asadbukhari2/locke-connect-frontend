@@ -1,45 +1,35 @@
-import peoplesService from "@/services/peoples";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import peoplesService from '@/services/peoples';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-const getMessages = createAsyncThunk(
-  "messages/getMessages",
-  async (author, receiver, conversationId) => {
-    try {
-      const response = await peoplesService.getMessages(
-        author,
-        receiver,
-        conversationId
-      );
-      return { messages: response.data.messages };
-    } catch (error) {
-      console.log(error);
-    }
+const getMessages = createAsyncThunk('messages/getMessages', async (author, receiver, conversationId) => {
+  try {
+    const response = await peoplesService.getMessages(author, receiver, conversationId);
+    return { messages: response.data.messages };
+  } catch (error) {
+    console.log(error);
   }
-);
-const fetchAllConversations = createAsyncThunk(
-  "messages/fetchAllConversations",
-  async () => {
-    try {
-      const response = await peoplesService.getAllConversations();
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
+});
+const fetchAllConversations = createAsyncThunk('messages/fetchAllConversations', async () => {
+  try {
+    const response = await peoplesService.getAllConversations();
+    return response.data;
+  } catch (error) {
+    console.log(error);
   }
-);
+});
 
 const initState = {
   messages: [],
   conversations: [],
   currentConversation: null,
-  error: "",
-  errorChat: "",
+  error: '',
+  errorChat: '',
   loading: false,
   loadingChat: false,
 };
 
 const messagesSlice = createSlice({
-  name: "chat",
+  name: 'chat',
   initialState: initState,
   reducers: {
     setMessages: (state, action) => {
@@ -50,7 +40,7 @@ const messagesSlice = createSlice({
     },
     setCountToZero: (state, action) => {
       const { conversationId } = action.payload;
-      const updatedConversations = state.conversations.map((conversation) => {
+      const updatedConversations = state.conversations.map(conversation => {
         if (conversation._id === conversationId) {
           return { ...conversation, unreadcount: 0 };
         }
@@ -66,26 +56,26 @@ const messagesSlice = createSlice({
       state.messages = [];
       state.conversations = [];
       state.currentConversation = null;
-      state.error = "";
-      state.errorChat = "";
+      state.error = '';
+      state.errorChat = '';
       state.loading = false;
       state.loadingChat = false;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(getMessages.pending, (state, action) => {
         state.loadingChat = true;
-        state.errorChat = "";
+        state.errorChat = '';
       })
       .addCase(getMessages.fulfilled, (state, action) => {
         state.messages = action.payload?.messages ?? [];
         state.loadingChat = false;
-        state.errorChat = "";
+        state.errorChat = '';
       })
       .addCase(getMessages.rejected, (state, action) => {
         state.loadingChat = false;
-        state.errorChat = "Error";
+        state.errorChat = 'Error';
       })
       .addCase(fetchAllConversations.pending, (state, action) => {
         state.loading = true;
@@ -101,12 +91,7 @@ const messagesSlice = createSlice({
   },
 });
 
-export const {
-  setMessages,
-  setConversations,
-  setCurrentConversation,
-  onLogout,
-  setCountToZero,
-} = messagesSlice.actions;
+export const { setMessages, setConversations, setCurrentConversation, onLogout, setCountToZero } =
+  messagesSlice.actions;
 export const messagesReducer = messagesSlice.reducer;
 export { getMessages, fetchAllConversations };

@@ -30,7 +30,7 @@ const UserRegister = () => {
     !emailRegex.test(user.email) ||
     user.email?.length === 0;
 
-  const handlePhoneNumberChange = (event) => {
+  const handlePhoneNumberChange = event => {
     const rawPhoneNumber = event.target.value;
     const formattedPhoneNumber = formatPhoneNumber(rawPhoneNumber);
     console.log({ formatPhoneNumber });
@@ -39,15 +39,15 @@ const UserRegister = () => {
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
+    setUser(prevUser => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
-  const registerHandler = async (event) => {
+  const registerHandler = async event => {
     event.preventDefault();
     setLoading(true);
     try {
@@ -65,61 +65,50 @@ const UserRegister = () => {
   };
   return (
     <StyledFormRegister>
-      <form className='formWrapper'>
-        <div className='title'>Register</div>
+      <form className="formWrapper">
+        <div className="title">Register</div>
         <Input
-          placeholder='jhon@example.com'
-          label='Email'
-          Field_Name='user-mail'
-          type='email'
-          name='email'
-          className='input-group'
+          placeholder="jhon@example.com"
+          label="Email"
+          Field_Name="user-mail"
+          type="email"
+          name="email"
+          className="input-group"
           value={user.email}
           onChange={handleChange}
-          error={
-            user.email.length > 0 && !emailRegex.test(user.email)
-              ? 'Email not correct'
-              : null
-          }
+          error={user.email.length > 0 && !emailRegex.test(user.email) ? 'Email not correct' : null}
         />
         <Input
-          placeholder='Password'
-          label='Password'
-          Field_Name='user-password'
-          type='password'
-          name='password'
-          className='input-group'
+          placeholder="Password"
+          label="Password"
+          Field_Name="user-password"
+          type="password"
+          name="password"
+          className="input-group"
           value={user.password}
           onChange={handleChange}
         />
         <Input
-          placeholder='Phone Number'
-          label='Phone Number'
-          Field_Name='user-PhoneNumber'
-          type='text'
-          name='phoneNumber'
-          className='input-group'
+          placeholder="Phone Number"
+          label="Phone Number"
+          Field_Name="user-PhoneNumber"
+          type="text"
+          name="phoneNumber"
+          className="input-group"
           value={user.phoneNumber}
           onChange={handlePhoneNumberChange}
           error={
-            user.phoneNumber?.length > 0 && !phoneRegex.test(user.phoneNumber)
-              ? 'Please enter correct phone'
-              : null
+            user.phoneNumber?.length > 0 && !phoneRegex.test(user.phoneNumber) ? 'Please enter correct phone' : null
           }
         />
 
-        <div className='buttonWrapper'>
-          <Button
-            variant='primary'
-            onClick={registerHandler}
-            loader={loading}
-            disabled={isDisabled}
-          >
+        <div className="buttonWrapper">
+          <Button variant="primary" onClick={registerHandler} loader={loading} disabled={isDisabled}>
             Register
           </Button>
         </div>
-        <span className='already-account'>
-          Already have account, <Link href='sign-in'>Sign In</Link>
+        <span className="already-account">
+          Already have account, <Link href="sign-in">Sign In</Link>
         </span>
       </form>
     </StyledFormRegister>

@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { StyledEditProfileModal } from "./EditProfileModal.styles";
-import Input from "../TextField";
-import Button from "../Button";
-import { formatPhoneNumber } from "@/helpers/common";
-import userService from "@/services/auth";
-import { useContextHook } from "use-context-hook";
-import { AuthContext } from "@/context/authContext";
-import Toast from "../Toast";
+import React, { useState } from 'react';
+import { StyledEditProfileModal } from './EditProfileModal.styles';
+import Input from '../TextField';
+import Button from '../Button';
+import { formatPhoneNumber } from '@/helpers/common';
+import userService from '@/services/auth';
+import { useContextHook } from 'use-context-hook';
+import { AuthContext } from '@/context/authContext';
+import Toast from '../Toast';
 
 const EditProfileModal = ({ user, onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -14,21 +14,21 @@ const EditProfileModal = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
     displayName: user.displayName,
     phoneNumber: formatPhoneNumber(user?.phoneNumber?.slice(2)),
-    address: user.address || "",
+    address: user.address || '',
   });
 
-  const { fetchUser } = useContextHook(AuthContext, ["fetchUser"]);
+  const { fetchUser } = useContextHook(AuthContext, ['fetchUser']);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handlePhoneNumberChange = (event) => {
+  const handlePhoneNumberChange = event => {
     const rawPhoneNumber = event.target.value;
     const formattedPhoneNumber = formatPhoneNumber(rawPhoneNumber);
     handleChange({
-      target: { name: "phoneNumber", value: formattedPhoneNumber },
+      target: { name: 'phoneNumber', value: formattedPhoneNumber },
     });
   };
 
@@ -40,14 +40,14 @@ const EditProfileModal = ({ user, onClose }) => {
         setLoading(false);
         fetchUser();
         onClose();
-        Toast({ type: "success", message: "User Updated Successfully" });
+        Toast({ type: 'success', message: 'User Updated Successfully' });
       }
     } catch (error) {
       setLoading(false);
       onClose();
       Toast({
-        type: "error",
-        message: error.message || "Something went wrong!",
+        type: 'error',
+        message: error.message || 'Something went wrong!',
       });
     }
   };
@@ -96,12 +96,7 @@ const EditProfileModal = ({ user, onClose }) => {
         onChange={handleChange}
       />
       <div className="buttonWrapper">
-        <Button
-          type="button"
-          onClick={editHandler}
-          loader={loading}
-          disabled={loading}
-        >
+        <Button type="button" onClick={editHandler} loader={loading} disabled={loading}>
           Save
         </Button>
       </div>

@@ -1,13 +1,11 @@
 /* eslint-disable prefer-promise-reject-errors */
-import { useRef, useEffect } from "react";
+import { useRef, useEffect } from 'react';
 
 export function makeCancelable(promise) {
   let isCanceled = false;
 
   const wrappedPromise = new Promise((resolve, reject) => {
-    promise
-      .then((val) => !isCanceled && resolve(val))
-      .catch((error) => !isCanceled && reject(error));
+    promise.then(val => !isCanceled && resolve(val)).catch(error => !isCanceled && reject(error));
   });
 
   return {
@@ -23,9 +21,7 @@ export function useCancellablePromise(cancelable = makeCancelable) {
 
   // test if the input argument is a cancelable promise generator
   if (cancelable(emptyPromise).cancel === undefined) {
-    throw new Error(
-      "promise wrapper argument must provide a cancel() function"
-    );
+    throw new Error('promise wrapper argument must provide a cancel() function');
   }
 
   const promises = useRef();
@@ -33,7 +29,7 @@ export function useCancellablePromise(cancelable = makeCancelable) {
   useEffect(() => {
     promises.current = promises.current || [];
     return function cancel() {
-      promises.current.forEach((p) => p.cancel());
+      promises.current.forEach(p => p.cancel());
       promises.current = [];
     };
   }, []);

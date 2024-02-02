@@ -82,10 +82,8 @@
   --body-text: #2a3855;
   --body-text-25: #9eb1ef;
 
-  --base-font-sans-serif: "Jost", "Arial", "Helvetica Neue", "Helvetica",
-    sans-serif;
-  --base-font-serif: "Times New Roman", "Times", "Baskerville", "GeorFgia",
-    serif;
+  --base-font-sans-serif: 'Jost', 'Arial', 'Helvetica Neue', 'Helvetica', sans-serif;
+  --base-font-serif: 'Times New Roman', 'Times', 'Baskerville', 'GeorFgia', serif;
 
   /* scrollbar-face-color: rgb(210, 210, 210);
   scrollbar-track-color: rgb(46, 54, 69);

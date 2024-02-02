@@ -43,7 +43,7 @@ const PropertyDetails = () => {
         <ModalBooking setOpen={setModal} />
       </Modal>
       <TopHead />
-      <div className='detail-wrap'>
+      <div className="detail-wrap">
         <div className={scroll ? `detail-col padding` : 'detail-col'}>
           <PropertySlider />
           <HomeInfo />
@@ -53,8 +53,8 @@ const PropertyDetails = () => {
           <SchoolNearby />
           <Neighborhood />
           <PropertyHistory />
-          <PropertySaleSlider title='Similar homes for sale' />
-          <PropertySaleSlider title='Recently sold nearby' />
+          <PropertySaleSlider title="Similar homes for sale" />
+          <PropertySaleSlider title="Recently sold nearby" />
         </div>
         <aside className={scroll ? `fixed-scroll fix` : 'fixed-scroll'}>
           <Recommended />

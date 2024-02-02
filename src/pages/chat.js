@@ -1,26 +1,26 @@
-import React, { useEffect, useRef, useState } from "react";
-import { IoIosArrowRoundBack } from "react-icons/io";
-import ChatHeader from "@/components/chat/ChatHeader";
-import ChatMessage from "@/components/chat/ChatMessage";
-import ChatFooter from "@/components/chat/ChatFooter";
-import { useDispatch, useSelector } from "react-redux";
-import { socketServer } from "@/utils/socketServerConnection";
-import { setMessages } from "@/features/messageSlice";
-import { AuthContext } from "@/context/authContext";
-import { useContextHook } from "use-context-hook";
-import { v4 as uuid } from "uuid";
-import { useRouter } from "next/router";
-import TypingNotify from "@/components/chat/TypingNotify";
-import SelectedDocumentsList from "@/components/chat/SelectedDocumetsList";
-import Modal from "@/components/Modal";
-import UserDetail from "@/components/UserDetailComp";
-import Loaders from "@/components/Loaders";
+import React, { useEffect, useRef, useState } from 'react';
+import { IoIosArrowRoundBack } from 'react-icons/io';
+import ChatHeader from '@/components/chat/ChatHeader';
+import ChatMessage from '@/components/chat/ChatMessage';
+import ChatFooter from '@/components/chat/ChatFooter';
+import { useDispatch, useSelector } from 'react-redux';
+import { socketServer } from '@/utils/socketServerConnection';
+import { getMessages, setMessages } from '@/features/messageSlice';
+import { AuthContext } from '@/context/authContext';
+import { useContextHook } from 'use-context-hook';
+import { v4 as uuid } from 'uuid';
+import { useRouter } from 'next/router';
+import TypingNotify from '@/components/chat/TypingNotify';
+import SelectedDocumentsList from '@/components/chat/SelectedDocumetsList';
+import Modal from '@/components/Modal';
+import UserDetail from '@/components/UserDetailComp';
+import Loaders from '@/components/Loaders';
 
 const chat = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const [userDetail, setUserDetail] = useState(false);
-  const [inputMessage, setInputMessage] = useState("");
+  const [inputMessage, setInputMessage] = useState('');
   const [localMessages, setLocalMessages] = useState([]);
   const [selectedDocuments, setSelectedDocuments] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState({});
@@ -29,19 +29,15 @@ const chat = () => {
 
   const scrollContainerRef = useRef();
 
-  const online = useSelector((state) => state.onlineUsers);
-  const { user } = useContextHook(AuthContext, ["user"]);
+  const online = useSelector(state => state.onlineUsers);
+  const { user } = useContextHook(AuthContext, ['user']);
 
   const socket = socketServer();
   const dispatch = useDispatch();
 
-  const { messages, currentConversation, loadingChat } = useSelector(
-    (state) => state.chat
-  );
+  const { messages, currentConversation, loadingChat } = useSelector(state => state.chat);
 
-  const otherId = currentConversation?.participants?.find(
-    (id) => id !== user.id
-  );
+  const otherId = currentConversation?.participants?.find(id => id !== user.id);
 
   useEffect(() => {
     setLocalMessages(messages);
@@ -55,23 +51,31 @@ const chat = () => {
     if (scrollContainer) {
       scrollContainer.scrollTop = scrollContainer.scrollHeight;
     }
+    // if (scrollContainer) {
+    //   scrollContainer.addEventListener('scroll', handleScroll);
+    // }
+    // return () => {
+    //   if (scrollContainer) {
+    //     scrollContainer.removeEventListener('scroll', handleScroll);
+    //   }
+    // };
   }, [localMessages]);
 
   const handleSendMessage = async () => {
     if (
-      inputMessage.trim() !== "" ||
+      inputMessage.trim() !== '' ||
       selectedDocuments.length > 0 ||
       Object.keys(selectedProperty).length > 0 ||
       Object.keys(selectedContact).length > 0
     ) {
       if (selectedDocuments.length > 0) {
-        const documentMessages = selectedDocuments.map((document) => ({
+        const documentMessages = selectedDocuments.map(document => ({
           author: user.id,
           receiver: otherId,
           text: inputMessage,
-          time: "now",
+          time: 'now',
           uuid: uuid(),
-          msgType: "document",
+          msgType: 'document',
           photoURL: user.photoURL,
           file: document,
           property: selectedProperty,
@@ -80,29 +84,29 @@ const chat = () => {
 
         dispatch(setMessages([...localMessages, ...documentMessages]));
 
-        documentMessages.forEach((message) => {
-          socket.emit("direct-message", message);
+        documentMessages.forEach(message => {
+          socket.emit('direct-message', message);
         });
         //if there is msg with documents, send that
-        if (inputMessage.trim() !== "") {
+        if (inputMessage.trim() !== '') {
           const message = {
             author: user.id,
             receiver: otherId,
             text: inputMessage,
-            time: "now",
+            time: 'now',
             uuid: uuid(),
             msgType:
               Object.keys(selectedProperty).length > 0
-                ? "property"
+                ? 'property'
                 : Object.keys(selectedContact).length > 0
-                  ? "contact"
-                  : "text",
+                  ? 'contact'
+                  : 'text',
             photoURL: user.photoURL,
             file: {},
             property: selectedProperty,
             contact: selectedContact,
           };
-          socket.emit("direct-message", message);
+          socket.emit('direct-message', message);
           dispatch(setMessages([...localMessages, message]));
         }
       } else {
@@ -110,59 +114,71 @@ const chat = () => {
           author: user.id,
           receiver: otherId,
           text: inputMessage,
-          time: "now",
+          time: 'now',
           uuid: uuid(),
           msgType:
             Object.keys(selectedProperty).length > 0
-              ? "property"
+              ? 'property'
               : Object.keys(selectedContact).length > 0
-                ? "contact"
-                : "text",
+                ? 'contact'
+                : 'text',
           photoURL: user.photoURL,
           file: {},
           property: selectedProperty,
           contact: selectedContact,
         };
 
-        socket.emit("direct-message", message);
+        socket.emit('direct-message', message);
         dispatch(setMessages([...localMessages, message]));
       }
-      setInputMessage("");
+      setInputMessage('');
       setSelectedProperty({});
       setSelectedContact({});
       setSelectedDocuments([]);
     }
   };
-  const handleMessageChange = async (event) => {
+  const handleMessageChange = async event => {
     setInputMessage(event.target.value);
   };
 
   const typingStart = () => {
-    socket.emit("typing", { to: otherId, from: user.id });
+    socket.emit('typing', { to: otherId, from: user.id });
   };
   const typingEnd = () => {
-    socket.emit("typing-end", { to: otherId, from: user.id });
+    socket.emit('typing-end', { to: otherId, from: user.id });
   };
 
-  const handleSelectProperty = (data) => {
+  const handleSelectProperty = data => {
     setSelectedProperty(data);
     inputRef.current.focus();
-    setInputMessage(" ");
+    setInputMessage(' ');
   };
-  const handleSelectContact = (data) => {
+  const handleSelectContact = data => {
     setSelectedContact(data);
     inputRef.current.focus();
-    setInputMessage(" ");
+    setInputMessage(' ');
   };
-  const handleSelectFiles = (data) => {
+  const handleSelectFiles = data => {
     setSelectedDocuments(data);
     inputRef.current.focus();
-    setInputMessage(" ");
+    setInputMessage(' ');
   };
 
-  const handleRemoveFile = (file) => {
-    setSelectedDocuments((prev) => [...prev.filter((_) => _.id !== file.id)]);
+  const handleRemoveFile = file => {
+    setSelectedDocuments(prev => [...prev.filter(_ => _.id !== file.id)]);
   };
+  // const handleScroll = () => {
+  //   const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+  //   if (scrollHeight - scrollTop >= clientHeight + 10) {
+  //     const author = currentConversation?.initBy;
+  //     const receiver = currentConversation?.receiver;
+  //     const conversationId = currentConversation?._id ?? '';
+  //     console.log({ currentConversation });
+  //     // dispatch(getMessages({ author, receiver, conversationId }));
+
+  //     console.log('heyhe');
+  //   }
+  // };
 
   return (
     <>
@@ -171,12 +187,12 @@ const chat = () => {
       </Modal>
       <div className="chat-container">
         <div className="history">
-          <button className="btnBack" onClick={() => router.push("/")}>
+          <button className="btnBack" onClick={() => router.push('/')}>
             <IoIosArrowRoundBack size="24" /> Go back
           </button>
         </div>
         {!currentConversation ? (
-          "Select any chat to continue"
+          'Select any chat to continue'
         ) : (
           <>
             <ChatHeader
@@ -184,31 +200,27 @@ const chat = () => {
                 channelName: currentConversation.channelName,
                 photoURL: currentConversation.photoURL,
                 slectedUserId: otherId,
-                isOnline:
-                  online.findIndex((user) => user.userId == otherId) !== -1,
+                isOnline: online.findIndex(user => user.userId == otherId) !== -1,
               }}
             />
             <div className="messagesArea" ref={scrollContainerRef}>
               {loadingChat ? (
                 <Loaders loading={loadingChat} height={100} />
               ) : (
-                localMessages?.map((msg) => {
+                localMessages?.map(msg => {
                   const onClick = () => {
-                    if (msg.msgType === "contact") {
+                    if (msg.msgType === 'contact') {
                       setUserDetail(msg.contact);
                       setModal(true);
                     }
-                    if (msg.msgType === "property") {
-                      window.open(
-                        "/property-details/Riche-Luxury-Mansion",
-                        "_blank"
-                      );
+                    if (msg.msgType === 'property') {
+                      window.open('/property-details/Riche-Luxury-Mansion', '_blank');
                     }
                   };
 
                   return (
                     <ChatMessage
-                      type={msg.msgType ?? "text"}
+                      type={msg.msgType ?? 'text'}
                       key={msg.uuid}
                       message={msg.text}
                       document={msg.file}

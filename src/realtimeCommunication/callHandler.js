@@ -1,6 +1,6 @@
-import * as webRTCHandler from "./webRTCHandler";
-import * as socketConnection from "../utils/socketServerConnection";
-import store from "@/features/store";
+import * as webRTCHandler from './webRTCHandler';
+import * as socketConnection from '../utils/socketServerConnection';
+import store from '@/features/store';
 import {
   setAudioCallModal,
   setCallAccepted,
@@ -9,14 +9,14 @@ import {
   setRemoteStream,
   setStartTime,
   setVideoCallModal,
-} from "@/features/roomSlice";
+} from '@/features/roomSlice';
 
 export const notifyUser = async (from, to, type) => {
   const successCalbackFunc = () => {
     socketConnection.notifyUser(from, to, type);
   };
 
-  const audioOnly = type == "audio" ? true : false;
+  const audioOnly = type == 'audio' ? true : false;
   await webRTCHandler.getLocalStreamPreview(audioOnly, successCalbackFunc);
 };
 export const endCall = (from, to, isNotify = true) => {
@@ -26,7 +26,7 @@ export const endCall = (from, to, isNotify = true) => {
   webRTCHandler.closeAllConnections();
   const localStream = store.getState().room.localStream;
   if (localStream) {
-    localStream.getTracks().forEach((track) => track.stop());
+    localStream.getTracks().forEach(track => track.stop());
     store.dispatch(setLocalStream(null));
     store.dispatch(setRemoteStream(null));
     setTimeout(() => {
@@ -37,7 +37,7 @@ export const endCall = (from, to, isNotify = true) => {
 
   if (isNotify) {
     const socket = socketConnection.socketServer();
-    socket.emit("call-ended", {
+    socket.emit('call-ended', {
       from,
       to,
     });

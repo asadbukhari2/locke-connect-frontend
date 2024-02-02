@@ -1,26 +1,16 @@
-import { setConversations, setMessages } from "@/features/messageSlice";
-import { setOnlineUsers } from "@/features/onlineUsersSlice";
-import {
-  setCallAccepted,
-  setReceivingCall,
-  setStartTime,
-} from "@/features/roomSlice";
-import store from "@/features/store";
-import {
-  callEndedHandler,
-  receiveCallHandler,
-} from "@/realtimeCommunication/socketHandler";
-import {
-  handleSignalingData,
-  prepareNewPeerConnection,
-} from "@/realtimeCommunication/webRTCHandler";
-import { io } from "socket.io-client";
+import { setConversations, setMessages } from '@/features/messageSlice';
+import { setOnlineUsers } from '@/features/onlineUsersSlice';
+import { setCallAccepted, setReceivingCall, setStartTime } from '@/features/roomSlice';
+import store from '@/features/store';
+import { callEndedHandler, receiveCallHandler } from '@/realtimeCommunication/socketHandler';
+import { handleSignalingData, prepareNewPeerConnection } from '@/realtimeCommunication/webRTCHandler';
+import { io } from 'socket.io-client';
 let socket = null;
 
-export const connectToServer = (user) => {
+export const connectToServer = user => {
   const __URL__ = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
   socket = io(__URL__, {
-    path: "/websocket",
+    path: '/websocket',
     auth: {
       token: user.id,
     },
@@ -30,27 +20,25 @@ export const connectToServer = (user) => {
     multiplex: false,
   });
 
-  socket.on("connect", () => {
-    socket.on("online-users", ({ onlineUsers }) => {
-      const online = onlineUsers.filter((_) => _?.userId != user?.id);
+  socket.on('connect', () => {
+    socket.on('online-users', ({ onlineUsers }) => {
+      const online = onlineUsers.filter(_ => _?.userId != user?.id);
       store.dispatch(setOnlineUsers(online));
     });
 
-    socket.on("message-received", () => {
+    socket.on('message-received', () => {
       const sound = new Audio(
-        "https://firebasestorage.googleapis.com/v0/b/locke-connect.appspot.com/o/sounds%2FmessageSound.wav?alt=media&token=e83fb870-e0ee-4b88-99d8-6d673c379751"
+        'https://firebasestorage.googleapis.com/v0/b/locke-connect.appspot.com/o/sounds%2FmessageSound.wav?alt=media&token=e83fb870-e0ee-4b88-99d8-6d673c379751',
       );
       sound.play();
     });
-    socket.on("direct-chat-history", (data) => {
+    socket.on('direct-chat-history', data => {
       const { currentConversation } = store.getState().chat;
 
       if (currentConversation?._id === data?.message?.conversationId) {
         const oldMessages = [...store.getState().chat.messages];
         const newMessage = data.message;
-        const isMessageAlreadyExists = oldMessages.some(
-          (message) => message.uuid === newMessage.uuid
-        );
+        const isMessageAlreadyExists = oldMessages.some(message => message.uuid === newMessage.uuid);
         if (!isMessageAlreadyExists) {
           const updatedMessages = [...oldMessages, newMessage];
           store.dispatch(setMessages(updatedMessages));
@@ -61,24 +49,22 @@ export const connectToServer = (user) => {
       const newConversation = data.conversation;
 
       const isConversationAlreadyExists = oldConversations.some(
-        (conversation) => conversation._id === newConversation._id
+        conversation => conversation._id === newConversation._id,
       );
 
       let updatedConversations;
 
       if (isConversationAlreadyExists) {
-        const filteredConversations = oldConversations.filter(
-          (conversation) => conversation._id !== newConversation._id
-        );
+        const filteredConversations = oldConversations.filter(conversation => conversation._id !== newConversation._id);
         updatedConversations = [
           newConversation,
-          ...filteredConversations.map((conversation) =>
+          ...filteredConversations.map(conversation =>
             conversation._id === newConversation._id
               ? {
                   ...conversation,
                   lastMessage: newConversation.lastMessage,
                 }
-              : conversation
+              : conversation,
           ),
         ];
       } else {
@@ -88,48 +74,44 @@ export const connectToServer = (user) => {
       store.dispatch(setConversations(updatedConversations));
     });
 
-    socket.on("notify-video-call", (data) => {
+    socket.on('notify-video-call', data => {
       const { currentConversation } = store.getState().chat;
 
       const arr = [data.from, data.to];
-      const isAllowedToCall =
-        arr.includes(currentConversation.initBy) &&
-        arr.includes(currentConversation.receiver);
+      const isAllowedToCall = arr.includes(currentConversation.initBy) && arr.includes(currentConversation.receiver);
 
       if (isAllowedToCall) {
         receiveCallHandler(data);
       }
     });
-    socket.on("notify-audio-call", (data) => {
+    socket.on('notify-audio-call', data => {
       const { currentConversation } = store.getState().chat;
 
       const arr = [data.from, data.to];
-      const isAllowedToCall =
-        arr.includes(currentConversation.initBy) &&
-        arr.includes(currentConversation.receiver);
+      const isAllowedToCall = arr.includes(currentConversation.initBy) && arr.includes(currentConversation.receiver);
 
       if (isAllowedToCall) {
         receiveCallHandler(data);
       }
     });
-    socket.on("conn-prepare", (data) => {
+    socket.on('conn-prepare', data => {
       const { from, to } = data;
       prepareNewPeerConnection(from, false);
-      socket.emit("conn-init", { to: from, from: to });
+      socket.emit('conn-init', { to: from, from: to });
     });
-    socket.on("conn-init", (data) => {
+    socket.on('conn-init', data => {
       store.dispatch(setReceivingCall(true));
       const { from } = data;
       prepareNewPeerConnection(from, true);
     });
-    socket.on("conn-signal", (data) => {
+    socket.on('conn-signal', data => {
       handleSignalingData(data);
     });
-    socket.on("call-attended", () => {
+    socket.on('call-attended', () => {
       store.dispatch(setCallAccepted(true));
       store.dispatch(setStartTime(Date.now()));
     });
-    socket.on("call-ended", (data) => {
+    socket.on('call-ended', data => {
       callEndedHandler(data);
     });
   });
@@ -138,14 +120,14 @@ export const connectToServer = (user) => {
 export const socketServer = () => socket;
 
 export const notifyUser = (from, to, type) => {
-  type == "video"
-    ? socket.emit("notify-video-call", { from, to, type })
-    : socket.emit("notify-audio-call", { from, to, type });
+  type == 'video'
+    ? socket.emit('notify-video-call', { from, to, type })
+    : socket.emit('notify-audio-call', { from, to, type });
 };
 
-export const signalPeerData = (data) => {
-  socket.emit("conn-signal", data);
+export const signalPeerData = data => {
+  socket.emit('conn-signal', data);
 };
-export const callAttended = (to) => {
-  socket.emit("call-attended", { to });
+export const callAttended = to => {
+  socket.emit('call-attended', { to });
 };

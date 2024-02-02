@@ -1,4 +1,4 @@
-import { getCookie } from "./common";
+import { getCookie } from './common';
 
 const useAuth = () => {
   const data = getCookie(process.env.NEXT_PUBLIC_TOKEN);
