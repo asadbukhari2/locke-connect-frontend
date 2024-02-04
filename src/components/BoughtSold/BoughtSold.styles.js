@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyleBoughtSold = styled.div`
   position: relative;
@@ -42,6 +42,9 @@ export const StyleBoughtSold = styled.div`
       font-size: 16px;
       line-height: 20px;
       font-weight: 400;
+    }
+    &:hover {
+      color: var(--primary-500);
     }
   }
 `;

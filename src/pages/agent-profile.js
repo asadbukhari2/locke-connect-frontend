@@ -9,11 +9,12 @@ import { AuthContext } from '@/context/authContext';
 import ProfileHeaderAgent from '@/components/ProfileHeaderAgent';
 import AcountDetail from '@/components/AgentProfileComp/AcountDetail';
 import Introduction from '@/components/AgentProfileComp/Introduction';
+import Subscription from '@/components/AgentProfileComp/Subscription';
 
 const tabs = [
   { label: 'Account information', content: <AcountDetail /> },
   { label: 'Introduction', content: <Introduction /> },
-  { label: 'Subscription', content: 'Subscription' },
+  { label: 'Subscription', content: <Subscription /> },
 ];
 
 function AgentProfile() {
