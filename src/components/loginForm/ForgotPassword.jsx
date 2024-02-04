@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import Toast from '../Toast';
 import userService from '@/services/auth';
 
-
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,7 +16,7 @@ const ForgotPassword = () => {
 
   const isDisabled = email.length === 0 || !emailRegex.test(email);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     try {
       setLoading(true);
@@ -33,35 +32,26 @@ const ForgotPassword = () => {
 
   return (
     <StyledFormUser>
-      <form className='formWrapper' onSubmit={handleSubmit}>
-        <div className='title-reset'>Forgot Password</div>
+      <form className="formWrapper" onSubmit={handleSubmit}>
+        <div className="title-reset">Forgot Password</div>
         <Input
-          placeholder='Enter Email'
-          label='Email'
-          Field_Name='user-mail'
-          type='email'
-          className='input-group'
+          placeholder="Enter Email"
+          label="Email"
+          Field_Name="user-mail"
+          type="email"
+          className="input-group"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={
-            email.length > 0 && !emailRegex.test(email)
-              ? 'Email not correct'
-              : null
-          }
+          onChange={e => setEmail(e.target.value)}
+          error={email.length > 0 && !emailRegex.test(email) ? 'Email not correct' : null}
         />
-        <div className='buttonWrapper'>
-          <Button
-            variant='primary'
-            type='submit'
-            disabled={loading || isDisabled}
-            loader={loading}
-          >
+        <div className="buttonWrapper">
+          <Button variant="primary" type="submit" disabled={loading || isDisabled} loader={loading}>
             Send email
           </Button>
         </div>
-        <div className='span'>
+        <div className="span">
           Already have an account?
-          <Link href='/sign-in'> Sign In</Link>
+          <Link href="/sign-in"> Sign In</Link>
         </div>
       </form>
     </StyledFormUser>

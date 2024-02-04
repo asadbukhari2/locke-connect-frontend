@@ -1,15 +1,15 @@
-import { Fetch } from "@/helpers/fetchWrapper";
+import { Fetch } from '@/helpers/fetchWrapper';
 
-import { useCancellablePromise } from "@/helpers/promiseHandler";
-import { useEffect, useState } from "react";
+import { useCancellablePromise } from '@/helpers/promiseHandler';
+import { useEffect, useState } from 'react';
 
 const STATUS = {
-  LOADING: "loading",
-  SUCCESS: "success",
-  ERROR: "error",
+  LOADING: 'loading',
+  SUCCESS: 'success',
+  ERROR: 'error',
 };
 
-const _url = `${process.env.NEXT_PUBLIC_API_URL}/user/v1`;
+const _url = `${process.env.NEXT_PUBLIC_API_URL}/routes/v1`;
 
 const peoplesService = {
   GetRecomenderAgents() {
@@ -22,7 +22,7 @@ const peoplesService = {
     useEffect(() => {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getRecomenderAgents())
-        .then((res) => {
+        .then(res => {
           setAgents(() => res);
           setStatus(STATUS.SUCCESS);
         })
@@ -30,7 +30,7 @@ const peoplesService = {
     }, []);
     return {
       agents_loading: status === STATUS.LOADING,
-      agents_error: status === STATUS.ERROR ? status : "",
+      agents_error: status === STATUS.ERROR ? status : '',
       agents_data: agents,
     };
   },
@@ -45,7 +45,7 @@ const peoplesService = {
     useEffect(() => {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getPeoples(searchQuery))
-        .then((res) => {
+        .then(res => {
           setPeoples(() => res);
           setStatus(STATUS.SUCCESS);
         })
@@ -53,7 +53,7 @@ const peoplesService = {
     }, [searchQuery]);
     return {
       peoples_loading: status === STATUS.LOADING,
-      peoples_error: status === STATUS.ERROR ? status : "",
+      peoples_error: status === STATUS.ERROR ? status : '',
       peoples_data: peoples,
     };
   },
@@ -68,7 +68,7 @@ const peoplesService = {
     useEffect(() => {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getAllConversations())
-        .then((res) => {
+        .then(res => {
           setConversations(() => res);
           setStatus(STATUS.SUCCESS);
         })
@@ -76,7 +76,7 @@ const peoplesService = {
     }, []);
     return {
       conversations_loading: status === STATUS.LOADING,
-      conversations_error: status === STATUS.ERROR ? status : "",
+      conversations_error: status === STATUS.ERROR ? status : '',
       conversations_data: conversations,
     };
   },
@@ -93,7 +93,7 @@ const peoplesService = {
     useEffect(() => {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getDocuments(searchQuery))
-        .then((res) => {
+        .then(res => {
           console.log({ res });
           setDocuments(() => res);
           setStatus(STATUS.SUCCESS);
@@ -102,7 +102,7 @@ const peoplesService = {
     }, [searchQuery, refetch]);
     return {
       documents_loading: status === STATUS.LOADING,
-      documents_error: status === STATUS.ERROR ? status : "",
+      documents_error: status === STATUS.ERROR ? status : '',
       documents_data: documents,
     };
   },
@@ -116,13 +116,11 @@ const peoplesService = {
       };
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
 
-  async getPeoples({ page = 1, pageSize = 10, licenseNumber = "" }) {
-    let res = await Fetch.get(
-      `${_url}/agents?page=${page}&pageSize=${pageSize}&licenseNumber=${licenseNumber}`
-    );
+  async getPeoples({ page = 1, pageSize = 10, licenseNumber = '' }) {
+    let res = await Fetch.get(`${_url}/agents?page=${page}&pageSize=${pageSize}&licenseNumber=${licenseNumber}`);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return {
@@ -131,7 +129,7 @@ const peoplesService = {
       };
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
 
   async getAllConversations() {
@@ -141,19 +139,19 @@ const peoplesService = {
       return res;
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
 
-  async getMessages({ author = "", receiver = "", conversationId }) {
+  async getMessages({ author = '', receiver = '', conversationId }) {
     let res = await Fetch.get(
-      `${_url}/get-conversation?author=${author}&receiver=${receiver}&conversationId=${conversationId}`
+      `${_url}/get-conversation?author=${author}&receiver=${receiver}&conversationId=${conversationId}`,
     );
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return res;
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
   async deleteConversation(id) {
     let res = await Fetch.delete(`${_url}/conversation/${id}`);
@@ -162,13 +160,11 @@ const peoplesService = {
       return res;
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
 
-  async getDocuments({ page = 1, pageSize = 10, filterText = "" }) {
-    let res = await Fetch.get(
-      `${_url}/get-documents?page=${page}&pageSize=${pageSize}&filterText=${filterText}`
-    );
+  async getDocuments({ page = 1, pageSize = 10, filterText = '' }) {
+    let res = await Fetch.get(`${_url}/get-documents?page=${page}&pageSize=${pageSize}&filterText=${filterText}`);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return {
@@ -179,7 +175,7 @@ const peoplesService = {
       };
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
   async deleteDocument(id) {
     let res = await Fetch.delete(`${_url}/delete-document/${id}`);
@@ -188,7 +184,7 @@ const peoplesService = {
       return res;
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
   async addPeopleToConversation(id, body) {
     let res = await Fetch.put(`${_url}/add-people/${id}`, body);
@@ -197,7 +193,7 @@ const peoplesService = {
       return res;
     }
     const { message } = await res.json();
-    throw new Error(message ?? "Something went wrong");
+    throw new Error(message ?? 'Something went wrong');
   },
 };
 

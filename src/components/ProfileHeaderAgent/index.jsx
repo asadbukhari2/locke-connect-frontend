@@ -1,43 +1,43 @@
-import React, { useRef, useState } from "react";
-import Image from "next/image";
-import Img01 from "../../../public/avatar-women.png";
-import { PiPhoneCallBold } from "react-icons/pi";
-import { FaRegEnvelope } from "react-icons/fa6";
-import { TbMapPin } from "react-icons/tb";
-import { BiEditAlt } from "react-icons/bi";
-import { ProfileHead } from "./ProfileHeaderAgent.styles";
-import Button from "../Button";
-import { IoSettingsOutline } from "react-icons/io5";
-import Modal from "../Modal";
-import EditProfileModal from "../EditProfileModal";
-import userService from "@/services/auth";
-import Toast from "../Toast";
-import { useContextHook } from "use-context-hook";
-import { AuthContext } from "@/context/authContext";
-import ToggleSwitch from "../UserSearchFilter/ToggleSwitch";
+import React, { useRef, useState } from 'react';
+import Image from 'next/image';
+import Img01 from '../../../public/avatar-women.png';
+import { PiPhoneCallBold } from 'react-icons/pi';
+import { FaRegEnvelope } from 'react-icons/fa6';
+import { TbMapPin } from 'react-icons/tb';
+import { BiEditAlt } from 'react-icons/bi';
+import { ProfileHead } from './ProfileHeaderAgent.styles';
+import Button from '../Button';
+import { IoSettingsOutline } from 'react-icons/io5';
+import Modal from '../Modal';
+import EditProfileModal from '../EditProfileModal';
+import userService from '@/services/auth';
+import Toast from '../Toast';
+import { useContextHook } from 'use-context-hook';
+import { AuthContext } from '@/context/authContext';
+import ToggleSwitch from '../UserSearchFilter/ToggleSwitch';
 
 const ProfileHeaderAgent = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
 
-  const { fetchUser } = useContextHook(AuthContext, ["fetchUser"]);
+  const { fetchUser } = useContextHook(AuthContext, ['fetchUser']);
   const [imageUrl, setImageUrl] = useState();
 
   const fileInputRef = useRef(null);
   const handleEditIconClick = () => fileInputRef.current.click();
 
-  const handleFileChange = async (event) => {
+  const handleFileChange = async event => {
     const file = event.target.files[0];
     if (file) {
       await uploadProfilePicture(file);
     }
   };
 
-  const uploadProfilePicture = async (file) => {
+  const uploadProfilePicture = async file => {
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
 
       const res = await userService.upload(formData);
       if (res) {
@@ -45,11 +45,11 @@ const ProfileHeaderAgent = ({ user }) => {
         setImageUrl(url);
         setLoading(false);
         fetchUser();
-        Toast({ type: "success", message: "Profile Pic updated" });
+        Toast({ type: 'success', message: 'Profile Pic updated' });
       }
     } catch (error) {
       setLoading(false);
-      Toast({ type: "error", message: error || "Something Went Wrong" });
+      Toast({ type: 'error', message: error || 'Something Went Wrong' });
     }
   };
 
@@ -70,30 +70,19 @@ const ProfileHeaderAgent = ({ user }) => {
               <div
                 className="img-box"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
                 <span className="loader"></span>
               </div>
             ) : (
               <>
                 <div className="img-box" onClick={handleEditIconClick}>
                   {imageUrl ? (
-                    <Image
-                      src={imageUrl}
-                      alt="User profile"
-                      width={500}
-                      height={500}
-                    />
+                    <Image src={imageUrl} alt="User profile" width={500} height={500} />
                   ) : user.photoURL ? (
-                    <Image
-                      src={user.photoURL}
-                      alt="img description"
-                      width={500}
-                      height={500}
-                    />
+                    <Image src={user.photoURL} alt="img description" width={500} height={500} />
                   ) : (
                     <Image src={Img01} alt="Default image" />
                   )}
@@ -102,7 +91,7 @@ const ProfileHeaderAgent = ({ user }) => {
                 <input
                   type="file"
                   onChange={handleFileChange}
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                   ref={fileInputRef}
                   accept=".png, .jpeg, .jpg"
                 />
@@ -134,15 +123,11 @@ const ProfileHeaderAgent = ({ user }) => {
             </ul>
             <ul className="list">
               <li>
-                <span className="text">
-                  Enable Locke instant Chat with cellphone
-                </span>
+                <span className="text">Enable Locke instant Chat with cellphone</span>
                 <ToggleSwitch fieldName="instantChat" sm />
               </li>
               <li>
-                <span className="text">
-                  Night Mode (message between 8am to 8pm)
-                </span>
+                <span className="text">Night Mode (message between 8am to 8pm)</span>
                 <ToggleSwitch fieldName="nightMode" sm />
               </li>
             </ul>

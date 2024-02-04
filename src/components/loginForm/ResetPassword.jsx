@@ -22,7 +22,7 @@ const ResetPassword = () => {
 
   const isDisabled = password.length === 0;
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     try {
       setLoading(true);
@@ -37,30 +37,26 @@ const ResetPassword = () => {
   };
   return (
     <StyledFormUser>
-      <form className='formWrapper' onSubmit={handleSubmit}>
-        <div className='title-reset'>Reset Password</div>
+      <form className="formWrapper" onSubmit={handleSubmit}>
+        <div className="title-reset">Reset Password</div>
         <Input
-          label='Email'
-          Field_Name='user-mail'
-          type='email'
+          label="Email"
+          Field_Name="user-mail"
+          type="email"
           disabled
-          className='input-group'
+          className="input-group"
           value={userEmail}
-          onChange={(e) => setEmail(e.target.value)}
-          error={
-            email.length > 0 && !emailRegex.test(email)
-              ? 'Email not correct'
-              : null
-          }
+          onChange={e => setEmail(e.target.value)}
+          error={email.length > 0 && !emailRegex.test(email) ? 'Email not correct' : null}
         />
         <Input
-          placeholder='Enter password'
-          label='Password'
-          Field_Name='password'
-          type='password'
-          className='input-group'
+          placeholder="Enter password"
+          label="Password"
+          Field_Name="password"
+          type="password"
+          className="input-group"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
           // error={
           //   email.length > 0 && !emailRegex.test(email)
           //     ? 'Email not correct'
@@ -93,14 +89,13 @@ const ResetPassword = () => {
         <Link href="/reset-password" className="forget-password">
           Forget password?
         </Link> */}
-        <div className='buttonWrapper'>
+        <div className="buttonWrapper">
           <Button
-            variant='primary'
-            type='submit'
+            variant="primary"
+            type="submit"
             // onClick={signInHandler}
             disabled={isDisabled}
-            loader={loading}
-          >
+            loader={loading}>
             Reset
           </Button>
         </div>

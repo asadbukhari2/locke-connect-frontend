@@ -15,9 +15,7 @@ const context = {};
 export const AuthContext = createContextHook(context);
 
 export function AuthContextProvider(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!getCookie(process.env.NEXT_PUBLIC_TOKEN)
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(!!getCookie(process.env.NEXT_PUBLIC_TOKEN));
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({});
   const [loading_user, setLoadingUser] = useState(false);
@@ -54,12 +52,12 @@ export function AuthContextProvider(props) {
   const getCurrentUser = () => {
     setLoadingUser(true);
     cancellablePromise(userService.getCurrentUser())
-      .then((res) => {
+      .then(res => {
         setLoadingUser(false);
         setUser(res.data);
         sessionStorage.setItem('currentUser', JSON.stringify(res.data));
       })
-      .catch((err) => {
+      .catch(err => {
         setLoadingUser(false);
       });
   };
@@ -95,8 +93,7 @@ export function AuthContextProvider(props) {
       setLoadingUser(false);
     } catch (e) {
       console.log({ eroor: e });
-      const message =
-        e?.code?.split('/')[1] || 'Something went wrong, Please try again';
+      const message = e?.code?.split('/')[1] || 'Something went wrong, Please try again';
       setIsLoggedIn(false);
       setLoadingUser(false);
       Toast({ type: 'error', message: message });
@@ -109,7 +106,7 @@ export function AuthContextProvider(props) {
       onLogout,
       onLogin,
       setLoading,
-      setRefetch: () => setRefetch((_) => !_),
+      setRefetch: () => setRefetch(_ => !_),
       fetchUser: () => setFetchUser(() => !fetchUser),
       loading,
       isLoggedIn,
@@ -117,11 +114,7 @@ export function AuthContextProvider(props) {
       user,
       loading_user,
     }),
-    [isLoggedIn, onLogin, user]
+    [isLoggedIn, onLogin, user],
   );
-  return (
-    <AuthContext.Provider value={allContext}>
-      {props.children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={allContext}>{props.children}</AuthContext.Provider>;
 }

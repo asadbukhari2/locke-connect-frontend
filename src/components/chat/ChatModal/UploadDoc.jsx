@@ -1,9 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import {
-  ChatModalContent,
-  StyledChatModal,
-  UploadDocumentWrapper,
-} from './ChatModal.styles';
+import { ChatModalContent, StyledChatModal, UploadDocumentWrapper } from './ChatModal.styles';
 import CheckBox from '@/components/CheckBox';
 import pdf from '../../../../public/pdfColor.svg';
 import Image from 'next/image';
@@ -14,6 +10,7 @@ import { getFileType } from '@/helpers/common';
 import Toast from '@/components/Toast';
 import Loaders from '@/components/Loaders';
 import { NoRecordFound } from '@/components/NoRecordFound/NoRecord.styles';
+import userService from '@/services/auth';
 
 const UploadDoc = ({ handleSelectFiles, onClose }) => {
   const [checkedItems, setCheckedItems] = useState({});
@@ -25,12 +22,11 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
     filterText: '',
   });
 
-  const { documents_data, documents_loading } =
-    peoplesService.GetDocuments(searchQuery);
+  const { documents_data, documents_loading } = userService.GetDocuments(searchQuery);
 
   const { documents, totalCount } = useMemo(() => {
     return {
-      documents: documents_data?.items?.map((itm) => ({
+      documents: documents_data?.items?.map(itm => ({
         id: itm?.id,
         file_type: getFileType(itm?.doc_type),
         name: itm?.file_name,
@@ -42,13 +38,13 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
   }, [documents_data]);
 
   const handleCheckBoxChange = ({ fieldName, isChecked }) => {
-    setCheckedItems((prevCheckedItems) => ({
+    setCheckedItems(prevCheckedItems => ({
       ...prevCheckedItems,
       [fieldName]: isChecked,
     }));
   };
 
-  const handleSelectAllChange = (isChecked) => {
+  const handleSelectAllChange = isChecked => {
     const newCheckedItems = documents.reduce((acc, item) => {
       acc[item?.id] = isChecked;
       return acc;
@@ -64,13 +60,9 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
         onClose();
         return;
       }
-      const checkedItemKeys = Object.keys(checkedItems).filter(
-        (key) => checkedItems[key]
-      );
+      const checkedItemKeys = Object.keys(checkedItems).filter(key => checkedItems[key]);
 
-      const checkedItemsData = documents.filter((document) =>
-        checkedItemKeys.includes(document.id)
-      );
+      const checkedItemsData = documents.filter(document => checkedItemKeys.includes(document.id));
       handleSelectFiles(checkedItemsData);
       onClose();
     } catch (error) {
@@ -80,15 +72,15 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
 
   return (
     <StyledChatModal>
-      <strong className='title'>Attach document</strong>
+      <strong className="title">Attach document</strong>
       <ChatModalContent>
         <UploadDocumentWrapper>
           {!!documents?.length && (
             <CheckBox
-              type='rounded'
-              label='Select all'
-              fieldName='selectAll'
-              className='selectAll'
+              type="rounded"
+              label="Select all"
+              fieldName="selectAll"
+              className="selectAll"
               onChange={({ isChecked }) => handleSelectAllChange(isChecked)}
             />
           )}
@@ -97,14 +89,14 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
             {documents_loading ? (
               <Loaders loading={documents_loading} height={100} />
             ) : documents?.length ? (
-              documents?.map((item) => (
+              documents?.map(item => (
                 <li key={item?.id}>
                   <CheckBox
                     onChange={handleCheckBoxChange}
-                    type='rounded'
+                    type="rounded"
                     label={
                       <>
-                        <Image src={pdf} alt='file' />
+                        <Image src={pdf} alt="file" />
                         {item?.name}
                       </>
                     }
@@ -120,14 +112,13 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
         </UploadDocumentWrapper>
       </ChatModalContent>
       {!!documents?.length && (
-        <div className='buttonWrapper'>
+        <div className="buttonWrapper">
           <Button
-            variant='primary'
+            variant="primary"
             onClick={() => {
               handleSendDocuments();
-            }}
-          >
-            <MdAdd size='22' />
+            }}>
+            <MdAdd size="22" />
             Add Document
           </Button>
         </div>

@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux";
+import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 
-import { onlineUsersReducer } from "./onlineUsersSlice";
-import { messagesReducer } from "./messageSlice";
-import { roomReducer } from "./roomSlice";
+import { onlineUsersReducer } from './onlineUsersSlice';
+import { messagesReducer } from './messageSlice';
+import { roomReducer } from './roomSlice';
 
 const rootReducer = combineReducers({
   onlineUsers: onlineUsersReducer,

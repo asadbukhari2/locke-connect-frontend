@@ -16,7 +16,7 @@ const STATUS = {
   ERROR: 'error',
 };
 
-const _url = `${process.env.NEXT_PUBLIC_API_URL}/user/v1`;
+const _url = `${process.env.NEXT_PUBLIC_API_URL}/routes/v1`;
 
 const userService = {
   async signup(body) {
@@ -31,18 +31,14 @@ const userService = {
 
   async signin({ email = '', password = '' }) {
     const email_lowercase = email.toLowerCase();
-    const userCredential = await signInWithEmailAndPassword(
-      auth,
-      email_lowercase,
-      password
-    );
+    const userCredential = await signInWithEmailAndPassword(auth, email_lowercase, password);
     const user = userCredential.user;
     return user;
   },
   async forgotPassword(email = '') {
     const email_lowercase = email.toLowerCase();
-    const userCredential = await sendPasswordResetEmail(auth, email_lowercase);
-    console.log({ userCredential });
+    await sendPasswordResetEmail(auth, email_lowercase);
+
     return true;
   },
   async resetPassword(code, password) {

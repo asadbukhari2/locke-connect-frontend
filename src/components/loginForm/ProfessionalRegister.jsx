@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { StyledFormUserRegister } from "./Form.styles";
-import Input from "../TextField";
-import Button from "../Button";
-import { useRouter } from "next/router";
-import userService from "@/services/auth";
-import Select from "../DropDown/PropertyDropDown";
-import { LicenseTypes, UsStates } from "../Constants";
-import Toast from "../Toast";
-import { formatPhoneNumber } from "@/helpers/common";
+import React, { useState } from 'react';
+import { StyledFormUserRegister } from './Form.styles';
+import Input from '../TextField';
+import Button from '../Button';
+import { useRouter } from 'next/router';
+import userService from '@/services/auth';
+import Select from '../DropDown/PropertyDropDown';
+import { LicenseTypes, UsStates } from '../Constants';
+import Toast from '../Toast';
+import { formatPhoneNumber } from '@/helpers/common';
 
 const ProfessionalRegister = () => {
   const [loading, setLoading] = useState(false);
 
   const [user, setUser] = useState({
-    email: "",
-    password: "",
-    phoneNumber: "",
-    licenseNumber: "",
-    licenseType: "",
-    licensingState: "",
-    brokerageName: "",
-    address: "",
-    role: "agent",
+    email: '',
+    password: '',
+    phoneNumber: '',
+    licenseNumber: '',
+    licenseType: '',
+    licensingState: '',
+    brokerageName: '',
+    address: '',
+    role: 'agent',
   });
 
   const router = useRouter();
@@ -36,35 +36,35 @@ const ProfessionalRegister = () => {
     !emailRegex.test(user.email) ||
     user.email?.length === 0;
 
-  const handlePhoneNumberChange = (event) => {
+  const handlePhoneNumberChange = event => {
     const rawPhoneNumber = event.target.value;
     const formattedPhoneNumber = formatPhoneNumber(rawPhoneNumber);
     handleChange({
-      target: { name: "phoneNumber", value: formattedPhoneNumber },
+      target: { name: 'phoneNumber', value: formattedPhoneNumber },
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setUser((prevUser) => ({
+    setUser(prevUser => ({
       ...prevUser,
       [name]: value,
     }));
   };
 
-  const registerHandler = async (event) => {
+  const registerHandler = async event => {
     event.preventDefault();
     setLoading(true);
     try {
       const response = await userService.signup(user);
 
       if (response.success) {
-        Toast({ type: "success", message: response?.message });
-        router.replace("sign-in");
+        Toast({ type: 'success', message: response?.message });
+        router.replace('sign-in');
       }
       setLoading(false);
     } catch (error) {
-      Toast({ type: "error", message: error });
+      Toast({ type: 'error', message: error });
       setLoading(false);
     }
   };
@@ -83,11 +83,7 @@ const ProfessionalRegister = () => {
             className="input-group"
             value={user.email}
             onChange={handleChange}
-            error={
-              user.email.length > 0 && !emailRegex.test(user.email)
-                ? "Email not correct"
-                : null
-            }
+            error={user.email.length > 0 && !emailRegex.test(user.email) ? 'Email not correct' : null}
           />
           <Input
             placeholder="Password"
@@ -111,9 +107,7 @@ const ProfessionalRegister = () => {
             value={user.phoneNumber}
             onChange={handlePhoneNumberChange}
             error={
-              user.phoneNumber?.length > 0 && !phoneRegex.test(user.phoneNumber)
-                ? "Please enter correct phone"
-                : null
+              user.phoneNumber?.length > 0 && !phoneRegex.test(user.phoneNumber) ? 'Please enter correct phone' : null
             }
           />
           <div className="selectDropDown">
@@ -183,12 +177,7 @@ const ProfessionalRegister = () => {
         </div>
 
         <div className="buttonWrapper">
-          <Button
-            variant="primary"
-            onClick={registerHandler}
-            disabled={isDisabled}
-            loader={loading}
-          >
+          <Button variant="primary" onClick={registerHandler} disabled={isDisabled} loader={loading}>
             Register
           </Button>
         </div>

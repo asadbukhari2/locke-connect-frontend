@@ -1,24 +1,22 @@
-import { createGlobalStyle, css } from "styled-components";
-import Variables from "../styles/variable.css";
-import { MyContextProvider } from "@/context/card";
-import "slick-carousel/slick/slick.css";
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import { AuthContextProvider } from "@/context/authContext";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-import useAuth from "@/helpers/auth";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Modal from "@/components/Modal";
-import TodayRateModal from "@/components/TodayRateModal";
-import { SocketContextProvider } from "@/context/socketContext";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import store from "../features/store";
-// import { store, persistor } from "../features/store";
+import { createGlobalStyle, css } from 'styled-components';
+import Variables from '../styles/variable.css';
+import { MyContextProvider } from '@/context/card';
+import 'slick-carousel/slick/slick.css';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
+import { AuthContextProvider } from '@/context/authContext';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import useAuth from '@/helpers/auth';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Modal from '@/components/Modal';
+import TodayRateModal from '@/components/TodayRateModal';
+import { SocketContextProvider } from '@/context/socketContext';
+import { Provider } from 'react-redux';
+import store from '../features/store';
 
-import { fetchAllConversations } from "@/features/messageSlice";
+import { fetchAllConversations } from '@/features/messageSlice';
 const Styling = css`
   /* theme css variables */
   ${Variables}
@@ -173,8 +171,7 @@ const Styling = css`
     padding: 0;
     box-sizing: border-box;
     color: var(--base-text-color);
-    font: var(--font-size-base) / var(--line-height-base)
-      var(--base-font-family);
+    font: var(--font-size-base) / var(--line-height-base) var(--base-font-family);
     font-weight: 500;
     position: relative;
     min-width: var(--base-min-width);
@@ -388,12 +385,12 @@ const Styling = css`
   }
 
   button,
-  input[type="button"],
-  input[type="reset"],
-  input[type="file"],
-  input[type="submit"] {
+  input[type='button'],
+  input[type='reset'],
+  input[type='file'],
+  input[type='submit'] {
     cursor: pointer;
-    font-family: "Nunito";
+    font-family: 'Nunito';
   }
 
   form,
@@ -407,10 +404,10 @@ const Styling = css`
     color: var(--blue);
   }
 
-  input[type="search"]::-webkit-search-decoration,
-  input[type="search"]::-webkit-search-cancel-button,
-  input[type="search"]::-webkit-search-results-button,
-  input[type="search"]::-webkit-search-results-decoration {
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
     display: none;
   }
 
@@ -540,7 +537,7 @@ const Styling = css`
   }
 
   /* Firefox */
-  input[type="number"] {
+  input[type='number'] {
     appearance: textfield;
   }
   .rc-tooltip-placement-bottom {
@@ -602,19 +599,8 @@ export const GlobalStyles = createGlobalStyle`
   ${Styling}
 `;
 
-const pagesWithLayout = [
-  "/sign-in",
-  "/sign-up",
-  "/map",
-  "/forgot-password",
-  "/reset-password",
-];
-const pagesForAuth = [
-  "/sign-in",
-  "/sign-up",
-  "/reset-password",
-  "/forgot-password",
-];
+const pagesWithLayout = ['/sign-in', '/sign-up', '/map', '/forgot-password', '/reset-password'];
+const pagesForAuth = ['/sign-in', '/sign-up', '/reset-password', '/forgot-password'];
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -625,33 +611,29 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     if (!isAuth && !pagesForAuth.includes(pathname)) {
-      router.replace("sign-in");
+      router.replace('sign-in');
     } else if (isAuth && pagesForAuth.includes(pathname)) {
-      router.replace("/");
+      router.replace('/');
     }
   }, [isAuth, pathname, router]);
 
-  const googleTranslateElementInit = (language = "en") => {
+  const googleTranslateElementInit = (language = 'en') => {
     return new window.google.translate.TranslateElement(
       {
         pageLanguage: language,
         autoDisplay: false,
       },
-      "google_translate_element"
+      'google_translate_element',
     );
   };
   useEffect(() => {
-    const scriptUrl =
-      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    const scriptUrl = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
 
     const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
 
     if (!existingScript) {
-      var addScript = document.createElement("script");
-      addScript.setAttribute(
-        "src",
-        "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      );
+      var addScript = document.createElement('script');
+      addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
       document.body.appendChild(addScript);
       window.googleTranslateElementInit = googleTranslateElementInit;
     }
@@ -685,13 +667,12 @@ export default function App({ Component, pageProps }) {
   return (
     <>
       <Provider store={store}>
-        {/* <PersistGate loading={null} persistor={persistor}> */}
         <GlobalStyles />
         <Modal open={rate} setOpen={setRate} width="920px">
           <TodayRateModal setOpen={setRate} />
         </Modal>
         <span className="overlay" />
-        <div id={!showLayout ? "content-wrap" : ""}>
+        <div id={!showLayout ? 'content-wrap' : ''}>
           <AuthContextProvider>
             <SocketContextProvider>
               <MyContextProvider>
@@ -710,12 +691,8 @@ export default function App({ Component, pageProps }) {
             </SocketContextProvider>
           </AuthContextProvider>
         </div>
-        <div
-          id="google_translate_element"
-          style={{ display: "none", opacity: "0", visibility: "hidden" }}
-        ></div>
+        <div id="google_translate_element" style={{ display: 'none', opacity: '0', visibility: 'hidden' }}></div>
         <ToastContainer autoClose={5000} hideProgressBar={true} />
-        {/* </PersistGate> */}
       </Provider>
     </>
   );
