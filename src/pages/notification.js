@@ -1,103 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
-import '@szhsin/react-menu/dist/index.css';
-import { ChatMessageMain, ChatWidgetStyles, NotificationDropDown, SettingImage } from './NotificationWidget.styles';
-import dots from '../../../public/dots.png';
-import user1 from '../../../public/payment.png';
-import user2 from '../../../public/user.png';
-import user3 from '../../../public/setting.png';
-import trash from '../../../public/trash.png';
-import archive from '../../../public/archive.png';
-import mute from '../../../public/mute.png';
+import Badge from '@/components/Badge';
+import NotificationWidget, { chatArray } from '@/components/NotificationWidget/NotificationWidget';
+import {
+  ChatMessageMain,
+  NotificationDropDown,
+  SettingImage,
+} from '@/components/NotificationWidget/NotificationWidget.styles';
 import Image from 'next/image';
-import { FaArrowRightLong } from 'react-icons/fa6';
-import { IoIosArrowRoundForward } from 'react-icons/io';
-import Badge from '../Badge';
-
-export const chatArray = [
-  {
-    img: user1,
-    name: 'Payment setting updated',
-    message: 'Just now',
-    time: '2min ago',
-    notification: '2',
-    bg: '--gradient-orange',
-    notification: true,
-  },
-  {
-    img: user2,
-    name: 'New user registered',
-    message: 'Just now',
-    time: '2min ago',
-    bg: '--gradient-green',
-    notification: false,
-  },
-  {
-    img: user3,
-    name: 'You updated your password',
-    message: 'Just now',
-    time: '2min ago',
-    bg: '--gradient-pink',
-    notification: false,
-  },
-  {
-    img: user1,
-    name: 'Payment setting updated',
-    message: 'Just now',
-    time: '2min ago',
-    notification: '2',
-    bg: '--gradient-orange',
-    notification: true,
-  },
-  {
-    img: user2,
-    name: 'New user registered',
-    message: 'Just now',
-    time: '2min ago',
-    bg: '--gradient-green',
-    notification: false,
-  },
-  {
-    img: user3,
-    name: 'You updated your password',
-    message: 'Just now',
-    time: '2min ago',
-    bg: '--gradient-pink',
-    notification: false,
-  },
-  {
-    img: user1,
-    name: 'Payment setting updated',
-    message: 'Just now',
-    time: '2min ago',
-    notification: '2',
-    bg: '--gradient-orange',
-    notification: true,
-  },
-  {
-    img: user2,
-    name: 'New user registered',
-    message: 'Just now',
-    time: '2min ago',
-    bg: '--gradient-green',
-    notification: false,
-  },
-  {
-    img: user3,
-    name: 'You updated your password',
-    message: 'Just now',
-    time: '2min ago',
-    bg: '--gradient-pink',
-    notification: false,
-  },
-];
-
-const NotificationWidget = ({ $marginB }) => {
+import React, { useEffect, useRef, useState } from 'react';
+import dots from '../../public/dots.png';
+import trash from '../../public/trash.png';
+import archive from '../../public/archive.png';
+import mute from '../../public/mute.png';
+const index = () => {
   const NotificationRef = useRef(null);
 
   const [toggleDropDown, setToggleDropDown] = useState(null);
   const dropdownRef = useRef(null);
-
   function handelDropDown(e, ind) {
     e.stopPropagation();
 
@@ -137,14 +55,8 @@ const NotificationWidget = ({ $marginB }) => {
     };
   }, []);
   return (
-    <ChatWidgetStyles $marginB={$marginB}>
-      <span className="title">
-        <p>Notification </p>
-        <div className="badge">
-          <Badge $variant="dark" child="2" />
-        </div>
-      </span>
-      <ChatMessageMain ref={NotificationRef}>
+    <div>
+      <ChatMessageMain ref={NotificationRef} $height>
         {chatArray.map((elem, ind) => (
           <li key={ind} onClick={() => setToggleDropDown(null)}>
             <div className="chatImageText">
@@ -183,12 +95,8 @@ const NotificationWidget = ({ $marginB }) => {
           </li>
         ))}
       </ChatMessageMain>
-      <div className="viewAll">
-        <p>View All</p>
-        <IoIosArrowRoundForward size="25" className="ico" />
-      </div>
-    </ChatWidgetStyles>
+    </div>
   );
 };
 
-export default NotificationWidget;
+export default index;

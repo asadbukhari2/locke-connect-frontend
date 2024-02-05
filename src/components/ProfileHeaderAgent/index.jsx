@@ -82,7 +82,7 @@ const ProfileHeaderAgent = ({ user }) => {
                   {imageUrl ? (
                     <Image src={imageUrl} alt="User profile" width={500} height={500} />
                   ) : user.photoURL ? (
-                    <Image src={user.photoURL} alt="img description" width={500} height={500} />
+                    <Image src={user.photoURL} alt="img-description" width={500} height={500} />
                   ) : (
                     <Image src={Img01} alt="Default image" />
                   )}

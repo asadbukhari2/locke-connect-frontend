@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ProfileHead = styled.div`
   width: 100%;
@@ -69,7 +69,7 @@ export const ProfileHead = styled.div`
     }
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       visibility: hidden;
@@ -87,6 +87,11 @@ export const ProfileHead = styled.div`
       left: 50%;
       transform: translate(-50%, -50%);
       color: var(--white);
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 
