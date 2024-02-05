@@ -452,12 +452,17 @@ export const Profile = styled.div`
     height: 38px;
     overflow: hidden;
     flex-shrink: 0;
-    background: var(--white);
+    background: var(--primary-50);
     border-radius: 12px;
 
     @media (min-width: 992px) {
       width: 48px;
       height: 48px;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 

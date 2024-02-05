@@ -81,20 +81,42 @@ export const DetailBlock = styled.div`
   }
 
   .map-col {
-      flex-shrink: 0;
+    flex-shrink: 0;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+    @media (min-width: 768px) {
+      width: 133px;
+    }
+
+    iframe {
       width: 100%;
-
-      @media (min-width: 768px) {
-        width: 133px;
-      }
-
-      iframe {
-        width: 100%;
-        height: 148px;
-        border: 0;
-        border-radius: 12px;
+      height: 148px;
+      border: 0;
+      border-radius: 12px;
+      outline: none;
+      border: none;
+      pointer-events: none;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s all ease-in-out;
+      pointer-events: none;
+    }
+    &:hover {
+      &::before {
+        opacity: 1;
+        visibility: visible;
       }
     }
+  }
 `;
 
 export const Description = styled.div`

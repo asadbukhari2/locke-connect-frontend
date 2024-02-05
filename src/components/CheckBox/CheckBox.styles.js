@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledCheckBox = styled.div`
   display: flex;
@@ -21,9 +21,9 @@ export const StyledCheckBox = styled.div`
   }
 
   ${({ $type }) =>
-    $type === "checkbox" &&
+    $type === 'checkbox' &&
     css`
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         position: relative;
         border: 2px solid #afb7c6;
         border-radius: 2px;
@@ -38,17 +38,17 @@ export const StyledCheckBox = styled.div`
         -webkit-appearance: none;
       }
 
-      input[type="checkbox"]:hover {
+      input[type='checkbox']:hover {
         opacity: 1;
       }
 
-      input[type="checkbox"]:checked {
+      input[type='checkbox']:checked {
         background-color: var(--primary-500);
         border: 2px solid var(--primary-500);
         opacity: 1;
       }
-      input[type="checkbox"]:before {
-        content: "";
+      input[type='checkbox']:before {
+        content: '';
         position: absolute;
         right: 58%;
         top: 50%;
@@ -60,14 +60,14 @@ export const StyledCheckBox = styled.div`
         transform: rotate(45deg) translate(-50%, -50%);
         z-index: 2;
       }
-      input[type="checkbox"]:checked:before {
+      input[type='checkbox']:checked:before {
         border-width: 0 1.5px 1.5px 0;
       }
     `}
   ${({ $type }) =>
-    $type === "circle" &&
+    $type === 'circle' &&
     css`
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         position: relative;
         border: 2px solid #afb7c6;
         border-radius: 2px;
@@ -77,42 +77,42 @@ export const StyledCheckBox = styled.div`
         margin: 0 0.6em 0 0;
         outline: 0;
         vertical-align: text-top;
-        height: 14px;
-        width: 14px;
+        height: 20px;
+        width: 20px;
         border-radius: 50%;
         -webkit-appearance: none;
       }
 
-      input[type="checkbox"]:hover {
+      input[type='checkbox']:hover {
         opacity: 1;
       }
 
-      input[type="checkbox"]:checked {
+      input[type='checkbox']:checked {
         background-color: var(--primary-500);
         border: 2px solid var(--primary-500);
         opacity: 1;
       }
-      input[type="checkbox"]:before {
-        content: "";
+      input[type='checkbox']:before {
+        content: '';
         position: absolute;
-        right: 58%;
+        right: 50%;
         top: 50%;
-        width: 4px;
-        height: 9px;
+        width: 5px;
+        height: 10px;
         border: solid #fff;
         border-width: 0;
         margin: -1px -1px 0 -1px;
         transform: rotate(45deg) translate(-50%, -50%);
         z-index: 2;
       }
-      input[type="checkbox"]:checked:before {
-        border-width: 0 1px 1px 0;
+      input[type='checkbox']:checked:before {
+        border-width: 0 2px 2px 0;
       }
     `}
   ${({ $type }) =>
-    $type === "rounded" &&
+    $type === 'rounded' &&
     css`
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         position: relative;
         border: 2px solid #afb7c6;
         border-radius: 2px;
@@ -128,16 +128,16 @@ export const StyledCheckBox = styled.div`
         -webkit-appearance: none;
       }
 
-      input[type="checkbox"]:hover {
+      input[type='checkbox']:hover {
         opacity: 1;
       }
 
-      input[type="checkbox"]:checked {
+      input[type='checkbox']:checked {
         border: 2px solid var(--body-text);
         opacity: 1;
       }
-      input[type="checkbox"]:checked:before {
-        content: "";
+      input[type='checkbox']:checked:before {
+        content: '';
         position: absolute;
         top: 50%;
         left: 50%;

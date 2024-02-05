@@ -5,7 +5,7 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { Profile } from "./Header.styles"; // Replace with your stylesheet if needed
 import { AuthContext } from "@/context/authContext";
 import { useContextHook } from "use-context-hook";
-import AvatarWomen from "../../../public/avatar-women.png";
+import Img01 from "../../../public/user-skeleton.png";
 
 const ProfileView = () => {
   const [reload, setReload] = useState(false);
@@ -28,7 +28,7 @@ const ProfileView = () => {
       >
         <Image
           className="img"
-          src={user?.photoURL ?? AvatarWomen}
+          src={user?.photoURL ?? Img01}
           alt="img description"
           height={500}
           width={500}

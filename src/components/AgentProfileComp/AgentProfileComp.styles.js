@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const AccountDetailStyled = styled.form`
   max-width: 1440px;
@@ -205,6 +205,162 @@ export const ServiceWrapper = styled.div`
       outline: none;
       border: none;
       background: transparent;
+    }
+  }
+`;
+
+export const SubcriptionStyled = styled.div`
+  max-width: 1100px;
+  width: 100%;
+  .Subscription-main-wrapper {
+    margin-bottom: 25px;
+    @media screen and (min-width: 991px) {
+      display: flex;
+      gap: 20px;
+    }
+  }
+  .addArea {
+    @media screen and (min-width: 991px) {
+      display: flex;
+      gap: 20px;
+    }
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    margin-bottom: 25px;
+    .title {
+      display: block;
+      margin-bottom: 15px;
+    }
+    .map {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    .map-container {
+      width: 100%;
+      background: red;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 500px;
+      @media screen and (min-width: 991px) {
+        max-width: 660px;
+      }
+    }
+    .list-wrapper {
+      max-width: 100%;
+      width: 100%;
+      @media screen and (min-width: 991px) {
+        max-width: 400px;
+      }
+      .button-wrap {
+        display: flex;
+        gap: 10px;
+      }
+    }
+    .list {
+      width: 100%;
+      background: var(--primary-25);
+      border-radius: 8px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      ul {
+        li {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 20px;
+          .area {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const SubscriptionTypeWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid ${({ $active }) => ($active ? 'var(--primary-500)' : 'var(--gray-300)')};
+  color: var(--primary-500);
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-bottom: 10px;
+  .price {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 34px;
+  }
+  .duration {
+    color: var(--body-text);
+  }
+`;
+
+export const PaymentWrapper = styled.div`
+  color: var(--gray-400);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  @media screen and (min-width: 991px) {
+    max-width: 350px;
+  }
+  strong {
+    display: block;
+    margin-bottom: 20px;
+  }
+  .title {
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+  }
+  .saved-card,
+  .addcard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .dlt-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      border: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--gray-50);
+      cursor: pointer;
+      transition: 0.3s all ease-in-out;
+      &:hover {
+        background: var(--danger-600);
+        img {
+          filter: invert(96%) sepia(40%) saturate(30%) hue-rotate(162deg) brightness(117%) contrast(100%);
+        }
+      }
+    }
+    .addcard {
+      max-width: 300px;
+    }
+  }
+  .paymentForm {
+    @media screen and (min-width: 991px) {
+      max-width: 400px;
+    }
+    .combine-field {
+      display: flex;
+      gap: 10px;
+    }
+    .button-wrapper {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
     }
   }
 `;
