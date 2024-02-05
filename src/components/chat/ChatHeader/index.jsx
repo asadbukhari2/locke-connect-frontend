@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { PiPhoneCall, PiVideoCameraBold } from 'react-icons/pi';
 import userImg from '../../../../public/avatar-women.png';
@@ -22,16 +22,10 @@ const userDetail = {
 };
 
 function ChatHeader({ user = userDetail }) {
-  // const soundUrl =
-  //   "https://firebasestorage.googleapis.com/v0/b/locke-connect.appspot.com/o/sounds%2Fincoming-call.mp3?alt=media&token=c481eaa1-2a4e-4d09-a529-21a1801de572";
-  // const [audioCall, setAudioCall] = useState(false);
-
   const { user: currentUser } = useContextHook(AuthContext, ['user']);
   const dispatch = useDispatch();
 
   const { videoCallModal, audioCallModal } = useSelector(state => state.room);
-
-  // const sound = new Audio(soundUrl);
 
   const handleAudioCall = () => {
     if (user.isOnline) {

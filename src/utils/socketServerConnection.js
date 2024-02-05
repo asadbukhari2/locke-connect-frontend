@@ -101,10 +101,10 @@ export const connectToServer = user => {
 
       if (isAllowedToCall) {
         // Set the current time to 0 to start from the beginning
+        store.dispatch(setCallRingtone(callSound));
         callSound.currentTime = 0;
         callSound.play();
         receiveCallHandler(data);
-        store.dispatch(setCallRingtone(callSound));
       }
     });
     socket.on('conn-prepare', data => {
