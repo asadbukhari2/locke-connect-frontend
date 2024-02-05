@@ -55,7 +55,6 @@ function ChatHeader({ user = userDetail }) {
     const callSound = new Audio(
       'https://firebasestorage.googleapis.com/v0/b/locke-connect.appspot.com/o/sounds%2Fskype_ringtone.mp3?alt=media&token=f79dd3a2-b792-4095-bace-7192ef5e9ac9',
     );
-    callHandler.notifyUser(currentUser.id, user.slectedUserId, 'audio');
     callSound.currentTime = 0;
     dispatch(setSenderRingtone(callSound));
     callSound?.play();
