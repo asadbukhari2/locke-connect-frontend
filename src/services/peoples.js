@@ -94,7 +94,6 @@ const peoplesService = {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getDocuments(searchQuery))
         .then(res => {
-          console.log({ res });
           setDocuments(() => res);
           setStatus(STATUS.SUCCESS);
         })
@@ -119,8 +118,8 @@ const peoplesService = {
     throw new Error(message ?? 'Something went wrong');
   },
 
-  async getPeoples({ page = 1, pageSize = 10, licenseNumber = '' }) {
-    let res = await Fetch.get(`${_url}/agents?page=${page}&pageSize=${pageSize}&licenseNumber=${licenseNumber}`);
+  async getPeoples({ page = 1, pageSize = 10, address = '' }) {
+    let res = await Fetch.get(`${_url}/agents?page=${page}&pageSize=${pageSize}&address=${address}`);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return {
@@ -188,6 +187,15 @@ const peoplesService = {
   },
   async addPeopleToConversation(id, body) {
     let res = await Fetch.put(`${_url}/add-people/${id}`, body);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async toggleFavouritePeople(payload) {
+    let res = await Fetch.post(`${_url}/toggle-favourite-people`, payload);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return res;

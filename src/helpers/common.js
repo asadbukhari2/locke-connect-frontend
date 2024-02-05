@@ -100,3 +100,16 @@ export const formatFileSize = sizeInBytes => {
 
   return size.toFixed(2) + ' ' + units[units.length - 1];
 };
+
+export const debounce = (func, delay) => {
+  let timeoutId;
+
+  return function (...args) {
+    const context = this;
+
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(context, args);
+    }, delay);
+  };
+};

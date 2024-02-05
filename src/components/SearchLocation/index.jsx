@@ -1,36 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
-import { GiSettingsKnobs } from "react-icons/gi";
-import { PiMapPinBold } from "react-icons/pi";
-import { SearchForm } from "./SearchLocation.styles";
-import Suggestion from "../Suggestion";
+import React, { useEffect, useRef, useState } from 'react';
+import { GiSettingsKnobs } from 'react-icons/gi';
+import { PiMapPinBold } from 'react-icons/pi';
+import { SearchForm } from './SearchLocation.styles';
+import Suggestion from '../Suggestion';
 
 function SearchLocation({
   open,
-  child = (
-    <>
-      <GiSettingsKnobs size="20" />
-    </>
-  ),
+  child = <GiSettingsKnobs size="20" />,
   handelFilter,
+  placeholder = 'Search Location',
+  onChangeHandler,
 }) {
   const [handelInputDrop, setHandelInputDrop] = useState(false);
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState('');
   const InputRef = useRef(null);
-  const handleClickOutsideInput = (event) => {
+
+  const handleClickOutsideInput = event => {
     if (InputRef.current && !InputRef.current.contains(event.target)) {
       setHandelInputDrop(false);
     }
   };
   useEffect(() => {
-    // Attach the event listener when the component mounts
+    document.addEventListener('mousedown', handleClickOutsideInput);
 
-    document.addEventListener("mousedown", handleClickOutsideInput);
-
-    // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener("mousedown", handleClickOutsideInput);
+      document.removeEventListener('mousedown', handleClickOutsideInput);
     };
   }, []);
+
+  const onType = e => {
+    console.log(e);
+    setLocation(e);
+    onChangeHandler(e);
+  };
   return (
     <>
       <SearchForm $open={open}>
@@ -38,17 +40,12 @@ function SearchLocation({
         <div className="input-search" ref={InputRef}>
           <input
             type="search"
-            placeholder="Search Location"
+            placeholder={placeholder}
             onClick={() => setHandelInputDrop(true)}
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={e => onType(e.target.value)}
           />
-          {handelInputDrop && (
-            <Suggestion
-              onChange={(e) => setLocation(e)}
-              setOpen={setHandelInputDrop}
-            />
-          )}
+          {handelInputDrop && <Suggestion onChange={e => onType(e)} setOpen={setHandelInputDrop} />}
         </div>
         <button type="button" className="btn-search" onClick={handelFilter}>
           {child}
