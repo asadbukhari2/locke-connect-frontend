@@ -8,6 +8,7 @@ const initState = {
   receivingCall: false,
   callAccepted: false,
   startTime: null,
+  callRingtone: null,
 };
 
 const roomSlice = createSlice({
@@ -35,6 +36,9 @@ const roomSlice = createSlice({
     setStartTime: (state, action) => {
       state.startTime = action.payload;
     },
+    setCallRingtone: (state, action) => {
+      state.callRingtone = action.payload;
+    },
   },
 });
 
@@ -46,5 +50,6 @@ export const {
   setReceivingCall,
   setCallAccepted,
   setStartTime,
+  setCallRingtone,
 } = roomSlice.actions;
 export const roomReducer = roomSlice.reducer;

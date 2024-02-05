@@ -19,7 +19,7 @@ const AudioCall = ({ user }) => {
   const dispatch = useDispatch();
   const [elapsedTime, setElapsedTime] = useState(0);
 
-  const { localStream, remoteStream, receivingCall, callAccepted, startTime } =
+  const { localStream, remoteStream, receivingCall, callAccepted, startTime,callRingtone } =
     useSelector((state) => state.room);
 
   const { user: currentUser } = useContextHook(AuthContext, ["user"]);
@@ -29,6 +29,7 @@ const AudioCall = ({ user }) => {
       dispatch(setCallAccepted(true));
       callAttended(user.slectedUserId);
       dispatch(setStartTime(Date.now()));
+      callRingtone?.pause();
     } catch (error) {
       console.log(error);
     }

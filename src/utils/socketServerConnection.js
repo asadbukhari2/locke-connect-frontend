@@ -1,14 +1,19 @@
 import { setConversations, setMessages } from '@/features/messageSlice';
 import { setOnlineUsers } from '@/features/onlineUsersSlice';
-import { setCallAccepted, setReceivingCall, setStartTime } from '@/features/roomSlice';
+import { setCallAccepted, setReceivingCall, setStartTime, setCallRingtone } from '@/features/roomSlice';
 import store from '@/features/store';
 import { callEndedHandler, receiveCallHandler } from '@/realtimeCommunication/socketHandler';
 import { handleSignalingData, prepareNewPeerConnection } from '@/realtimeCommunication/webRTCHandler';
+import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 let socket = null;
 
 export const connectToServer = user => {
   const __URL__ = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+  const callSound = new Audio(
+    'https://firebasestorage.googleapis.com/v0/b/locke-connect.appspot.com/o/sounds%2Fskype_ringtone.mp3?alt=media&token=f79dd3a2-b792-4095-bace-7192ef5e9ac9',
+  );
+
   socket = io(__URL__, {
     path: '/websocket',
     auth: {
@@ -81,6 +86,8 @@ export const connectToServer = user => {
       const isAllowedToCall = arr.includes(currentConversation.initBy) && arr.includes(currentConversation.receiver);
 
       if (isAllowedToCall) {
+        store.dispatch(setCallRingtone(callSound));
+        callSound.play();
         receiveCallHandler(data);
       }
     });
@@ -91,7 +98,9 @@ export const connectToServer = user => {
       const isAllowedToCall = arr.includes(currentConversation.initBy) && arr.includes(currentConversation.receiver);
 
       if (isAllowedToCall) {
+        callSound.play();
         receiveCallHandler(data);
+        store.dispatch(setCallRingtone(callSound));
       }
     });
     socket.on('conn-prepare', data => {
@@ -108,11 +117,13 @@ export const connectToServer = user => {
       handleSignalingData(data);
     });
     socket.on('call-attended', () => {
+      callSound.pause();
       store.dispatch(setCallAccepted(true));
       store.dispatch(setStartTime(Date.now()));
     });
     socket.on('call-ended', data => {
       callEndedHandler(data);
+      callSound.pause();
     });
   });
 };
