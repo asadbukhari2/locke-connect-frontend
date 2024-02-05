@@ -32,6 +32,8 @@ const AudioCall = ({ user }) => {
       callRingtone?.pause();
     } catch (error) {
       console.log(error);
+      callRingtone?.pause();
+
     }
   };
 

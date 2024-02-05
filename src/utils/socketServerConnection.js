@@ -87,6 +87,8 @@ export const connectToServer = user => {
 
       if (isAllowedToCall) {
         store.dispatch(setCallRingtone(callSound));
+        // Set the current time to 0 to start from the beginning
+        callSound.currentTime = 0;
         callSound.play();
         receiveCallHandler(data);
       }
@@ -98,6 +100,8 @@ export const connectToServer = user => {
       const isAllowedToCall = arr.includes(currentConversation.initBy) && arr.includes(currentConversation.receiver);
 
       if (isAllowedToCall) {
+        // Set the current time to 0 to start from the beginning
+        callSound.currentTime = 0;
         callSound.play();
         receiveCallHandler(data);
         store.dispatch(setCallRingtone(callSound));
@@ -117,13 +121,22 @@ export const connectToServer = user => {
       handleSignalingData(data);
     });
     socket.on('call-attended', () => {
+      const senderRingtone = store.getState().room.senderRingtone;
+
       callSound.pause();
       store.dispatch(setCallAccepted(true));
       store.dispatch(setStartTime(Date.now()));
+      if (senderRingtone) {
+        senderRingtone?.pause();
+      }
     });
     socket.on('call-ended', data => {
+      const senderRingtone = store.getState().room.senderRingtone;
       callEndedHandler(data);
       callSound.pause();
+      if (senderRingtone) {
+        senderRingtone?.pause();
+      }
     });
   });
 };
