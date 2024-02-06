@@ -195,11 +195,17 @@ function MyDocuments() {
         <ModalDelete setOpen={setPhotos} />
       </Modal>
       <TableLayout
+        onChangeFilters={() => {
+          setSearchQuery(_ => ({
+            ..._,
+          }));
+        }}
         title="My Documents"
         filterBtns={FilterBtns}
         currentPage={searchQuery.page}
         totalCount={totalCount ?? 0}
         pageSize={searchQuery.pageSize}
+        totalPages={totalCount ? Math.ceil(totalCount / searchQuery.pageSize) : 2}
         noNegativeMargin>
         <Table loading={documents_loading} columnNames={columnNames} rowsData={documents} noPadding />
       </TableLayout>

@@ -105,6 +105,32 @@ const peoplesService = {
       documents_data: documents,
     };
   },
+
+  GetMyFavouritePeoples(searchQuery, refetch) {
+    const [favPeoples, setFavPeoples] = useState({
+      totalItems: 0,
+      items: [],
+      hasNextPage: false,
+      lastPage: 0,
+    });
+    const { cancellablePromise } = useCancellablePromise();
+    const [status, setStatus] = useState(STATUS.LOADING);
+    useEffect(() => {
+      setStatus(STATUS.LOADING);
+      cancellablePromise(this.getMyFavouritePeoples(searchQuery))
+        .then(res => {
+          setFavPeoples(() => res);
+          setStatus(STATUS.SUCCESS);
+        })
+        .catch(() => setStatus(STATUS.ERROR));
+    }, [searchQuery, refetch]);
+    return {
+      fav_peoples_loading: status === STATUS.LOADING,
+      fav_peoples_error: status === STATUS.ERROR ? status : '',
+      fav_peoples_data: favPeoples,
+    };
+  },
+
   async getRecomenderAgents() {
     let res = await Fetch.get(`${_url}/recommender/agents`);
     if (res.status >= 200 && res.status < 300) {
@@ -199,6 +225,20 @@ const peoplesService = {
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async getMyFavouritePeoples({ page = '', pageSize = '' }) {
+    let res = await Fetch.get(`${_url}/my-liked-peoples?page=${page}&pageSize=${pageSize}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return {
+        items: res?.data?.items,
+        totalItems: res?.data?.totalItems,
+        hasNextPage: res?.data?.hasNextPage,
+        lastPage: res?.data?.lastPage,
+      };
     }
     const { message } = await res.json();
     throw new Error(message ?? 'Something went wrong');

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Menu, MenuItem, MenuButton, SubMenu } from '@szhsin/react-menu';
 import '@szhsin/react-menu/dist/index.css';
 import { ChatMessageMain, ChatWidgetStyles, NotificationDropDown, SettingImage } from './NotificationWidget.styles';
 import dots from '../../../public/dots.png';
@@ -10,9 +9,9 @@ import trash from '../../../public/trash.png';
 import archive from '../../../public/archive.png';
 import mute from '../../../public/mute.png';
 import Image from 'next/image';
-import { FaArrowRightLong } from 'react-icons/fa6';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import Badge from '../Badge';
+import { useRouter } from 'next/router';
 
 export const chatArray = [
   {
@@ -94,6 +93,7 @@ export const chatArray = [
 
 const NotificationWidget = ({ $marginB }) => {
   const NotificationRef = useRef(null);
+  const router = useRouter();
 
   const [toggleDropDown, setToggleDropDown] = useState(null);
   const dropdownRef = useRef(null);
@@ -107,16 +107,12 @@ const NotificationWidget = ({ $marginB }) => {
     const rect = targetElement.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Calculate available space below and above the target element
     const spaceBelow = windowHeight - rect.bottom;
     const spaceAbove = rect.top;
 
-    // Set the position based on available space
     if (spaceBelow >= dropdown.clientHeight || spaceBelow >= spaceAbove) {
-      // Open dropdown downwards if there is enough space below or space above is smaller
       dropdown.style.top = null;
     } else {
-      // Open dropdown upwards
       dropdown.style.top = `${-dropdown.clientHeight}px`;
     }
 
@@ -128,10 +124,8 @@ const NotificationWidget = ({ $marginB }) => {
     }
   };
   useEffect(() => {
-    // Attach the event listener when the component mounts
     document.addEventListener('mousedown', handleClickOutsideNotification);
 
-    // Detach the event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideNotification);
     };
@@ -183,7 +177,11 @@ const NotificationWidget = ({ $marginB }) => {
           </li>
         ))}
       </ChatMessageMain>
-      <div className="viewAll">
+      <div
+        className="viewAll"
+        onClick={() => {
+          router.push('notification');
+        }}>
         <p>View All</p>
         <IoIosArrowRoundForward size="25" className="ico" />
       </div>

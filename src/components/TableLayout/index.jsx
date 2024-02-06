@@ -20,8 +20,8 @@ function TableLayout({
   return (
     <>
       <TableFilters>
-        <div className='heading'>{title}</div>
-        {filterBtns && <div className='btnsHolder'>{filterBtns()}</div>}
+        <div className="heading">{title}</div>
+        {filterBtns && <div className="btnsHolder">{filterBtns()}</div>}
       </TableFilters>
 
       <StyledTableLayout noNegativeMargin={noNegativeMargin}>
@@ -29,18 +29,18 @@ function TableLayout({
           total={totalCount}
           page={currentPage}
           resultPerPage={pageSize}
-          setPageSize={(_) => onChangeFilters({ pageSize: _, page: 1 })}
+          setPageSize={_ => onChangeFilters({ pageSize: _, page: 1 })}
           exportBtn={exportBtn}
           createBtn={createBtn}
         />
         {children}
-        {!!totalCount && (totalCount>pageSize) && (
+        {!!totalCount && totalCount > pageSize && (
           <Pagination
             page={currentPage}
             totalCount={totalCount}
             pageSize={pageSize}
             totalPages={totalPages}
-            onPageChange={(_) => onChangeFilters({ filter: '', page: _ })}
+            onPageChange={_ => onChangeFilters({ filter: '', page: _ })}
           />
         )}
       </StyledTableLayout>

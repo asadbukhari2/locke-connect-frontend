@@ -9,7 +9,7 @@ import TableCell from '@/components/TableCell';
 import { StyledTable, TableHolder, TBody, TableScroll, Thead, NoRecordFound } from './Table.styles';
 
 // TODO:Remove nested ternary and add loading
-function Table({ 
+function Table({
   loading,
   columnNames,
   rowsData,
