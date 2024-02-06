@@ -15,24 +15,32 @@ const Subscription = () => {
     <SubcriptionStyled>
       <div className="Subscription-main-wrapper">
         <SubscriptionTypeWrapper $active={subscriptionType.month}>
-          <strong className="price">$35.00</strong>
-          <strong className="duration">per month</strong>
-          <label htmlFor="month">Locke Basic Agent Service</label>
-          <CheckBox
-            fieldName="month"
-            type="circle"
-            onChange={e => setSubscriptionType(prev => ({ ...prev, month: e.isChecked }))}
-          />
+          <span className="priceWrapper">
+            <strong className="price">$35.00</strong>
+            <strong className="duration">per month</strong>
+          </span>
+          <span className="checkBox">
+            <label htmlFor="month">Locke Basic Agent Service</label>
+            <CheckBox
+              fieldName="month"
+              type="circle"
+              onChange={e => setSubscriptionType(prev => ({ ...prev, month: e.isChecked }))}
+            />
+          </span>
         </SubscriptionTypeWrapper>
         <SubscriptionTypeWrapper $active={subscriptionType.year}>
-          <strong className="price">$400.00</strong>
-          <strong className="duration">per year</strong>
-          <label htmlFor="year">Locke Basic Agent Service</label>
-          <CheckBox
-            fieldName="year"
-            type="circle"
-            onChange={e => setSubscriptionType(prev => ({ ...prev, year: e.isChecked }))}
-          />
+          <span className="priceWrapper">
+            <strong className="price">$400.00</strong>
+            <strong className="duration">per year</strong>
+          </span>
+          <span className="checkBox">
+            <label htmlFor="year">Locke Basic Agent Service</label>
+            <CheckBox
+              fieldName="year"
+              type="circle"
+              onChange={e => setSubscriptionType(prev => ({ ...prev, year: e.isChecked }))}
+            />
+          </span>
         </SubscriptionTypeWrapper>
       </div>
       <div className="addArea">

@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const ChatWidgetStyles = styled.div`
   background: var(--white);
-  margin-bottom: ${({ $marginB }) => ($marginB ? "40px" : "0px")};
+  margin-bottom: ${({ $marginB }) => ($marginB ? '40px' : '0px')};
   width: 100%;
   .title {
     padding-left: 20px;
@@ -46,8 +46,9 @@ export const ChatMessageMain = styled.ul`
   padding-right: 5px;
   /* max-width: 297px; */
   width: 100%;
-  max-height: 218px;
-  overflow-y: auto;
+  max-height: ${({ $height }) => ($height ? '' : '218px')};
+
+  overflow-y: ${({ $height }) => ($height ? '' : 'auto')};
 
   /* &:hover {
     &::-webkit-scrollbar {
@@ -72,6 +73,13 @@ export const ChatMessageMain = styled.ul`
     cursor: pointer;
     transition: all ease-in-out 0.3s;
     border-radius: 16px;
+    ${({ $height }) =>
+      $height &&
+      css`
+        &:nth-child(even) {
+          background: var(--primary-25);
+        }
+      `};
 
     &:hover {
       background: var(--primary-25);
@@ -160,9 +168,9 @@ export const NotificationDropDown = styled.div`
   border-radius: 12px;
   border: 1px solid var(--gray-50);
   background: var(--white);
-  height: ${({ $show }) => ($show ? "128px" : "0")};
+  height: ${({ $show }) => ($show ? '128px' : '0')};
   overflow: hidden;
-  visibility: ${({ $show }) => ($show ? "visible" : "hidden")};
+  visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
   transition: 0.3s all ease-in;
 
   .wrap {
