@@ -280,9 +280,7 @@ export const SubcriptionStyled = styled.div`
 
 export const SubscriptionTypeWrapper = styled.div`
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
   border: 1px solid ${({ $active }) => ($active ? 'var(--primary-500)' : 'var(--gray-300)')};
   color: var(--primary-500);
   padding: 15px 20px;
@@ -291,13 +289,39 @@ export const SubscriptionTypeWrapper = styled.div`
   font-weight: 400;
   line-height: 20px;
   margin-bottom: 10px;
+  @media screen and (min-width: 576px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+  }
   .price {
-    font-size: 30px;
+    font-size: 20px;
+    line-height: 24px;
     font-weight: 700;
-    line-height: 34px;
+
+    @media screen and (min-width: 576px) {
+      font-size: 30px;
+      line-height: 34px;
+    }
   }
   .duration {
     color: var(--body-text);
+  }
+  .priceWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @media screen and (max-width: 575px) {
+      margin-bottom: 10px;
+    }
+  }
+  .checkBox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `;
 
