@@ -1,102 +1,146 @@
-import Badge from '@/components/Badge';
-import NotificationWidget, { chatArray } from '@/components/NotificationWidget/NotificationWidget';
-import {
-  ChatMessageMain,
-  NotificationDropDown,
-  SettingImage,
-} from '@/components/NotificationWidget/NotificationWidget.styles';
-import Image from 'next/image';
+import { ChatMessageMain } from '@/components/NotificationWidget/NotificationWidget.styles';
 import React, { useEffect, useRef, useState } from 'react';
-import dots from '../../public/dots.png';
-import trash from '../../public/trash.png';
-import archive from '../../public/archive.png';
-import mute from '../../public/mute.png';
-const index = () => {
-  const NotificationRef = useRef(null);
+import NotificationCard from '@/components/NotificationWidget/NotificationCard';
+import peoplesService from '@/services/peoples';
+import Toast from '@/components/Toast';
+import Loaders from '@/components/Loaders';
+
+const Notification = () => {
+  const [notifications, setNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [nextPage, setNextPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(false);
+  const [initialDataFetched, setInitialDataFetched] = useState(false);
 
   const [toggleDropDown, setToggleDropDown] = useState(null);
   const dropdownRef = useRef(null);
-  function handelDropDown(e, ind) {
-    e.stopPropagation();
+  const NotificationRef = useRef(null);
 
-    const targetElement = e.currentTarget;
-    const dropdown = dropdownRef.current;
+  const fetchNotifications = async r => {
+    try {
+      setIsLoading(true);
+      const res = await peoplesService.getNotifications({ page: nextPage, pageSize: 10, all: true });
+      setNotifications(prevNotifications => {
+        const uniqueItems = res.items.filter(
+          newItem => !prevNotifications.some(prevItem => prevItem.id === newItem.id),
+        );
 
-    const rect = targetElement.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Calculate available space below and above the target element
-    const spaceBelow = windowHeight - rect.bottom;
-    const spaceAbove = rect.top;
-
-    // Set the position based on available space
-    if (spaceBelow >= dropdown.clientHeight || spaceBelow >= spaceAbove) {
-      // Open dropdown downwards if there is enough space below or space above is smaller
-      dropdown.style.top = null;
-    } else {
-      // Open dropdown upwards
-      dropdown.style.top = `${-dropdown.clientHeight}px`;
-    }
-
-    setToggleDropDown(prev => (prev === ind ? null : ind));
-  }
-  const handleClickOutsideNotification = event => {
-    if (NotificationRef.current && !NotificationRef.current.contains(event.target)) {
-      setToggleDropDown(null);
+        return [...prevNotifications, ...uniqueItems];
+      });
+      setNextPage(res.nextPage);
+      setHasNextPage(res.hasNextPage);
+      setInitialDataFetched(true);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
-  useEffect(() => {
-    // Attach the event listener when the component mounts
-    document.addEventListener('mousedown', handleClickOutsideNotification);
 
-    // Detach the event listener when the component unmounts
+  useEffect(() => {
+    if (!initialDataFetched) {
+      fetchNotifications();
+    }
+  }, [initialDataFetched]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight && !isLoading && hasNextPage) {
+        fetchNotifications();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [isLoading, hasNextPage]);
+
+  function handelDropDown(e, ind) {
+    e.stopPropagation();
+    // const targetElement = e.currentTarget;
+    // const dropdown = dropdownRef.current;
+    // const rect = targetElement.getBoundingClientRect();
+    // const windowHeight = window?.innerHeight;
+    // const spaceBelow = windowHeight - rect.bottom;
+    // const spaceAbove = rect.top;
+    // if (spaceBelow >= dropdown?.clientHeight || spaceBelow >= spaceAbove) {
+    //   dropdown.style.top = null;
+    // } else {
+    //   dropdown.style.top = `${-dropdown?.clientHeight}px`;
+    // }
+    setToggleDropDown(prev => (prev === ind ? null : ind));
+  }
+
+  useEffect(() => {
+    const handleClickOutsideNotification = event => {
+      if (NotificationRef.current && !NotificationRef.current.contains(event.target)) {
+        setToggleDropDown(null);
+      }
+    };
+    console.log('down run');
+    document.addEventListener('mousedown', handleClickOutsideNotification);
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideNotification);
     };
   }, []);
+
+  const clickHandler = async itm => {
+    setToggleDropDown(null);
+    if (!itm.is_read) {
+      try {
+        await peoplesService.markNotificationRead(itm.id);
+
+        setNotifications(prevNotifications =>
+          prevNotifications.map(notification =>
+            notification.id === itm.id ? { ...notification, is_read: true } : notification,
+          ),
+        );
+
+        console.log('Notification marked as read:', itm);
+      } catch (error) {
+        console.error('Error marking notification as read:', error);
+      }
+    }
+  };
+
+  const onDeleteNotification = async itm => {
+    setToggleDropDown(null);
+    try {
+      let res = await peoplesService.deleteNotification(itm.id);
+
+      if (res.success) {
+        setNotifications(prevNotifications => prevNotifications.filter(notification => notification.id !== itm.id));
+      }
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+      Toast({ type: 'error', message: error.message });
+    }
+  };
   return (
     <div>
       <ChatMessageMain ref={NotificationRef} $height>
-        {chatArray.map((elem, ind) => (
-          <li key={ind} onClick={() => setToggleDropDown(null)}>
-            <div className="chatImageText">
-              <SettingImage className="settingImg" bg={elem.bg}>
-                <Image src={elem.img} alt="user" />
-              </SettingImage>
-              <div className="text">
-                <strong>{elem.name}</strong>
-                <p>{elem.message}</p>
-              </div>
-            </div>
-            <div className="time">
-              {elem.notification && <Badge $variant="secondary" child="2" />}
-              <Image src={dots} alt="dots" className="dots" onClick={e => handelDropDown(e, ind)} />
-              <NotificationDropDown $show={toggleDropDown == ind ? true : false} ref={dropdownRef}>
-                <div className="wrap">
-                  <span className="icon">
-                    <Image src={trash} alt="trash" />
-                  </span>
-                  <p>Delete</p>
-                </div>
-                <div className="wrap">
-                  <span className="icon">
-                    <Image src={archive} alt="archive" />
-                  </span>
-                  <p>Archive</p>
-                </div>
-                <div className="wrap">
-                  <span className="icon">
-                    <Image src={mute} alt="mute" />
-                  </span>
-                  <p>Mute</p>
-                </div>
-              </NotificationDropDown>
-            </div>
-          </li>
-        ))}
+        {notifications &&
+          notifications.map((elem, ind) => (
+            <>
+              <NotificationCard
+                ind={ind}
+                elem={elem}
+                clickHandler={clickHandler}
+                onDropDown={handelDropDown}
+                onDeleteNotification={onDeleteNotification}
+                dropdownRef={dropdownRef}
+                toggleDropDown={toggleDropDown}
+                page={true}
+              />
+            </>
+          ))}
       </ChatMessageMain>
+
+      {isLoading && <Loaders notificationLoader={true} />}
     </div>
   );
 };
 
-export default index;
+export default Notification;

@@ -8,7 +8,8 @@ import { useRouter } from 'next/router';
 import { useCancellablePromise } from '@/helpers/promiseHandler';
 import { socketServer } from '@/utils/socketServerConnection';
 import { useDispatch } from 'react-redux';
-import { onLogout as CLEAR } from '../features/messageSlice';
+import { onLogout as CLEAR, fetchAllConversations } from '../features/messageSlice';
+import { getNotifications } from '@/features/commonSlice';
 
 const context = {};
 
@@ -81,12 +82,14 @@ export function AuthContextProvider(props) {
     setLoadingUser(true);
     try {
       const res = await userService.signin({ email, password });
-      console.log({ res });
+
       if (!res?.accessToken) {
         throw new Error(res?.message || 'Error Logging in');
       }
       Toast({ type: 'success', message: 'Logged in' });
       setCookie(process.env.NEXT_PUBLIC_TOKEN, res.accessToken);
+      // dispatch(getNotifications({ page: 1, pageSize: 5, all: false }));
+      // dispatch(fetchAllConversations());
       setIsLoggedIn(true);
       redirect();
 

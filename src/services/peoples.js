@@ -131,6 +131,32 @@ const peoplesService = {
     };
   },
 
+  GetNotifications(searchQuery) {
+    const [notifications, setNotifications] = useState({
+      totalItems: 0,
+      items: [],
+      hasNextPage: false,
+      lastPage: 0,
+      nextPage,
+    });
+    const { cancellablePromise } = useCancellablePromise();
+    const [status, setStatus] = useState(STATUS.LOADING);
+    useEffect(() => {
+      setStatus(STATUS.LOADING);
+      cancellablePromise(this.getNotifications(searchQuery))
+        .then(res => {
+          setNotifications(() => res);
+          setStatus(STATUS.SUCCESS);
+        })
+        .catch(() => setStatus(STATUS.ERROR));
+    }, []);
+    return {
+      notifications_loading: status === STATUS.LOADING,
+      notifications_error: status === STATUS.ERROR ? status : '',
+      notifications_data: notifications,
+    };
+  },
+
   async getRecomenderAgents() {
     let res = await Fetch.get(`${_url}/recommender/agents`);
     if (res.status >= 200 && res.status < 300) {
@@ -239,6 +265,40 @@ const peoplesService = {
         hasNextPage: res?.data?.hasNextPage,
         lastPage: res?.data?.lastPage,
       };
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async getNotifications({ page = '1', pageSize = '10', all = '' }) {
+    let res = await Fetch.get(`${_url}/notifications?page=${page}&pageSize=${pageSize}&all=${all}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return {
+        items: res?.data?.items,
+        totalItems: res?.data?.totalItems,
+        hasNextPage: res?.data?.hasNextPage,
+        lastPage: res?.data?.lastPage,
+        nextPage: res?.data?.nextPage,
+        currentPage: res?.data?.currentPage,
+      };
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async markNotificationRead(id) {
+    let res = await Fetch.put(`${_url}/read-notification/${id}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async deleteNotification(id) {
+    let res = await Fetch.delete(`${_url}/notification/${id}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
     }
     const { message } = await res.json();
     throw new Error(message ?? 'Something went wrong');

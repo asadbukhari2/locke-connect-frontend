@@ -4,6 +4,7 @@ import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { TableRow } from '@/components/TableRow';
 import TableCell from '@/components/TableCell';
 import { StyledTable, TableHolder, TBody, TableScroll, Thead, NoRecordFound } from './Table.styles';

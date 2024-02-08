@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import { TfiMenuAlt } from 'react-icons/tfi';
 import { TbMapPin } from 'react-icons/tb';
@@ -39,6 +39,7 @@ const Peoples = () => {
     address: '',
   });
   const [shareContacts, setShareContacts] = useState(false);
+  const [peoples, setPeoples] = useState({ peoples: [], totalItems: 0 });
 
   const [filterData, setFilterData] = useState(FilterItem);
   const [modalData, setModalData] = useState(null);
@@ -55,6 +56,14 @@ const Peoples = () => {
   const { user } = useContextHook(AuthContext, ['user']);
 
   const { conversations } = useSelector(state => state.chat);
+
+  useEffect(() => {
+    const updatedPeoples = peoples_data.peoples.map(person => ({
+      ...person,
+      isFav: user.likedPeoples.includes(person.id),
+    }));
+    setPeoples({ totalItems: peoples_data.totalItems, peoples: updatedPeoples });
+  }, [peoples_loading]);
 
   const conversationHandler = async detail => {
     try {
@@ -108,14 +117,21 @@ const Peoples = () => {
     const user = peoples_data.peoples.find(ppl => ppl.id === id);
     setModalData(user);
   };
-  function handelFav(id) {
-    setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: !elem.isFav } : elem)));
-  }
 
   const handelFavourite = async id => {
-    const userToFav = { id };
-    const reponse = await peoplesService.toggleFavouritePeople(userToFav);
-    console.log(reponse);
+    try {
+      const userToFav = { id };
+      const response = await peoplesService.toggleFavouritePeople(userToFav);
+      if (response.success) {
+        setPeoples(prev => ({
+          ...prev,
+          peoples: prev.peoples.map(elem => (elem.id === id ? { ...elem, isFav: !elem.isFav } : elem)),
+        }));
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const debouncedHandleSearchChange = debounce(e => {
@@ -125,6 +141,10 @@ const Peoples = () => {
   const handleSearchChange = e => {
     debouncedHandleSearchChange(e);
   };
+
+  function handelFav(id) {
+    setPeoples(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: !elem.isFav } : elem)));
+  }
 
   return (
     <>
@@ -181,8 +201,8 @@ const Peoples = () => {
             <LoaderHolder>
               <Loaders viewLoader={peoples_loading} />
             </LoaderHolder>
-          ) : peoples_data?.peoples?.length ? (
-            peoples_data?.peoples.map(elem => (
+          ) : peoples?.peoples?.length ? (
+            peoples?.peoples.map(elem => (
               <PeopleCardWrapper $img={elem.photoURL ? elem.photoURL : img6.src} key={elem.id}>
                 <button
                   className="btn"
@@ -234,12 +254,13 @@ const Peoples = () => {
           )}
         </StyledPropertyCards>
 
-        {!!peoples_data?.peoples?.length && (
+        {!!peoples?.peoples?.length && (
           <Pagination
+            isLoading={peoples_loading}
             page={searchQuery.page}
             pageSize={searchQuery.pageSize}
-            totalCount={peoples_data.totalItems}
-            totalPages={peoples_data.totalItems ? Math.ceil(peoples_data.totalItems / searchQuery.pageSize) : 2}
+            totalCount={peoples.totalItems}
+            totalPages={peoples.totalItems ? Math.ceil(peoples.totalItems / searchQuery.pageSize) : 2}
             onPageChange={val => {
               setSearchQuery(prev => ({ ...prev, page: val }));
             }}

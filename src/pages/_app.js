@@ -17,6 +17,7 @@ import { Provider } from 'react-redux';
 import store from '../features/store';
 
 import { fetchAllConversations } from '@/features/messageSlice';
+import { getNotifications } from '@/features/commonSlice';
 const Styling = css`
   /* theme css variables */
   ${Variables}
@@ -660,6 +661,7 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     if (isAuth) {
+      store.dispatch(getNotifications({ page: 1, pageSize: 5, all: true }));
       store.dispatch(fetchAllConversations());
     }
   }, [pathname]);
