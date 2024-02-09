@@ -1,3 +1,5 @@
+import spanishVocab from '../utils/translation/spanish.js';
+import chineseVocab from '../utils/translation/chinese.js';
 export const setCookie = (name, value, days) => {
   let expires = '';
   if (days) {
@@ -112,4 +114,23 @@ export const debounce = (func, delay) => {
       func.apply(context, args);
     }, delay);
   };
+};
+
+export const LangConverter = (content = '', lang = 'en') => {
+  const toLowerCaseKeysObject = obj => {
+    const newObj = {};
+    for (const key in obj) {
+      newObj[key.toLowerCase()] = obj[key];
+    }
+    return newObj;
+  };
+ 
+  if (lang === 'es' && content) {
+    return toLowerCaseKeysObject(spanishVocab)[content.trim().toLowerCase().replace(/-/, ' ')] ?? content;
+  }
+  if (lang === 'zh-CN' && content) {
+    return toLowerCaseKeysObject(chineseVocab)[content.trim().toLowerCase().replace(/-/, ' ')] ?? content;
+  }
+
+  return content;
 };

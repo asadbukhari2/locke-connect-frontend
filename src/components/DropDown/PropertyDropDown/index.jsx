@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  ItemWrapper,
-  StyledPropertySelectWrapper,
-} from "./PropertySelect.styles";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import React, { useEffect, useRef, useState } from 'react';
+import { ItemWrapper, StyledPropertySelectWrapper } from './PropertySelect.styles';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
-const Select = ({ className, title = "Select...", option, onChange }) => {
+const Select = ({ className, title = 'Select...', option, placeholder, onChange }) => {
   const [value, setValue] = useState(title);
   const [dropDown, setDropDown] = useState(false);
   const closeRef = useRef();
@@ -14,26 +11,22 @@ const Select = ({ className, title = "Select...", option, onChange }) => {
     setDropDown(!dropDown);
     onChange(elem, title);
   }
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (closeRef.current && !closeRef.current.contains(event.target)) {
       setDropDown(false);
     }
   };
   useEffect(() => {
     // Attach the event listener when the component mounts
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
   return (
-    <StyledPropertySelectWrapper
-      className={className}
-      $icon={dropDown}
-      ref={closeRef}
-    >
+    <StyledPropertySelectWrapper className={className} $icon={dropDown} ref={closeRef} placeholder={placeholder}>
       <div className="textFilter" onClick={() => setDropDown(!dropDown)}>
         {value.label ? <span>{value.label}</span> : <span>{title}</span>}
         <div className="iconWrap">

@@ -10,6 +10,7 @@ import { socketServer } from '@/utils/socketServerConnection';
 import { useDispatch } from 'react-redux';
 import { onLogout as CLEAR, fetchAllConversations } from '../features/messageSlice';
 import { getNotifications } from '@/features/commonSlice';
+import { LanguageData } from '@/components/Constants';
 
 const context = {};
 
@@ -22,6 +23,8 @@ export function AuthContextProvider(props) {
   const [loading_user, setLoadingUser] = useState(false);
   const [fetchUser, setFetchUser] = useState(false);
   const [refetch, setRefetch] = useState(false);
+  const [lang, setLang] = useState();
+
   const { cancellablePromise } = useCancellablePromise();
   const dispatch = useDispatch();
 
@@ -67,6 +70,17 @@ export function AuthContextProvider(props) {
     if (isLoggedIn) {
       getCurrentUser();
     }
+    const lang = JSON.parse(
+      getCookie('_lang') ??
+        `${JSON.stringify({
+          label: LanguageData[0].language,
+          value: LanguageData[0].value,
+          img: LanguageData[0].img,
+        })}`,
+    );
+
+    setLang(lang);
+
     // listen to event
     window.addEventListener('FETCH_CURRENT_USER', () => {
       getCurrentUser();
@@ -116,6 +130,11 @@ export function AuthContextProvider(props) {
       refetch: refetch,
       user,
       loading_user,
+      setLang: x => {
+        setCookie('_lang', JSON.stringify(x));
+        setLang(x);
+      },
+      lang,
     }),
     [isLoggedIn, onLogin, user],
   );

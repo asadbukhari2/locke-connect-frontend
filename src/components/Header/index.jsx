@@ -41,6 +41,7 @@ import { LanguageData } from '../Constants';
 import Suggestion from '../Suggestion';
 import ChatAside from '../chat/ChatAside';
 import { MyContext } from '@/context/card';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const location = [
   'New York ,US',
@@ -55,7 +56,11 @@ const location = [
 ];
 function Header() {
   const { cardVal, setCardVal } = useContextHook(MyContext, ['cardVal', 'setCardVal']);
-  const { onLogout } = useContextHook(AuthContext, ['onLogout']);
+  const { onLogout, setLang, lang } = useContextHook(AuthContext, ['onLogout', 'setLang', 'lang']);
+  const flag = LanguageData.find(itm => itm.value === lang?.value);
+
+  const { t } = useTranslation();
+
   const handleClick = () => {
     document?.body.classList.toggle('nav-active');
     document?.body.classList.remove('aside-active');
@@ -136,61 +141,15 @@ function Header() {
     sethandelSearch(elem);
   }
 
-  const handleLanguage = lang => {
-    // Replace 'en' with the target language code you want to switch to
-    const selectElement = document.querySelector('.goog-te-combo');
-    // Check if the select element exists
-    if (selectElement) {
-      // Define the language code you want to switch to (e.g., 'fr' for French)
-      const newLanguageCode = lang;
-      const skipTranslateDiv = document.querySelector('.skiptranslate');
-
-      if (lang === 'en') {
-        // If the language is 'en', remove the Google Translate widget
-        // Check if the div element exists
-        if (skipTranslateDiv) {
-          // Find the button element within the div
-          const iframe = document.querySelector('.skiptranslate iframe');
-          // Check if the iframe element exists
-          if (iframe) {
-            // Access the contentDocument of the iframe
-            const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-            // Check if the iframeDocument exists
-            if (iframeDocument) {
-              // Find the button element within the iframe's document
-              const buttonInIframe = iframeDocument.querySelector('#\\3a 1\\.restore'); // Escape the special characters in the ID
-              // const buttonInIframe = iframeDocument.querySelector('button');
-
-              // Check if the button element exists
-              if (buttonInIframe) {
-                // Perform your action on the button element
-                // For example, you can click the button:
-                buttonInIframe.click();
-              }
-            }
-          }
-        }
-
-        return;
-      }
-      // Find the option with the value matching the new language code
-      const optionToSelect = selectElement.querySelector(`[value="${newLanguageCode}"]`);
-      // Check if the option exists
-      if (optionToSelect) {
-        // Set the selected attribute to true
-        optionToSelect.selected = true;
-
-        // Dispatch a change event on the select element
-        const changeEvent = new Event('change', {
-          bubbles: true,
-          cancelable: true,
-        });
-        selectElement.dispatchEvent(changeEvent);
-      }
-    }
+  const handleLanguage = e => {
+    const val = {
+      label: e.language,
+      value: e.value,
+      img: e.img,
+    };
+    setLang(val);
   };
   const isAuthenticated = useAuth();
-  // console.log({ s: window.location });
   return (
     <HeaderStyles>
       {!WithoutHambuger && (
@@ -215,7 +174,7 @@ function Header() {
                 }}>
                 <Link href="/">
                   <BiHomeAlt size="20" />
-                  <span className="text">Home</span>
+                  <span className="text">{t('Home')}</span>
                 </Link>
               </li>
               <li
@@ -228,7 +187,7 @@ function Header() {
                 }}>
                 <a href="#buyFilter">
                   <IoCartOutline size="20" />
-                  <span className="text">Buy</span>
+                  <span className="text">{t('Buy')}</span>
                 </a>
               </li>
               <li
@@ -239,7 +198,7 @@ function Header() {
                 }}>
                 <Link href="/selling">
                   <MdCrisisAlert size="20" />
-                  <span className="text">Sell</span>
+                  <span className="text">{t('Sell')}</span>
                 </Link>
               </li>
               <li
@@ -252,7 +211,7 @@ function Header() {
                 }}>
                 <a href="#peopleFilter">
                   <GoPeople size="20" />
-                  <span className="text">People</span>
+                  <span className="text">{t('People')}</span>
                 </a>
               </li>
               <li
@@ -263,7 +222,7 @@ function Header() {
                 }}>
                 <Link href="/">
                   <BiMessageAlt size="20" />
-                  <span className="text">Chat</span>
+                  <span className="text">{t('Chat')}</span>
                 </Link>
               </li>
               <li
@@ -274,7 +233,7 @@ function Header() {
                 }}>
                 <Link href="/">
                   <PiBellBold size="20" />
-                  <span className="text">Notification</span>
+                  <span className="text">{t('Notification')}</span>
                 </Link>
               </li>
               <li
@@ -289,7 +248,7 @@ function Header() {
                     document.body.classList.remove('nav-active');
                   }}>
                   <AiOutlineLogout className="icon" size="25" />
-                  logout
+                  {t('logout')}
                 </button>
               </li>
               <div className="animation start-home"></div>
@@ -304,7 +263,7 @@ function Header() {
                 <PiMapPinBold className="ico" size="20" />
                 <input
                   type="search"
-                  placeholder="Search Location"
+                  placeholder={t('Search Location')}
                   value={handelSearch}
                   onChange={e => sethandelSearch(e.target.value)}
                 />
@@ -321,19 +280,20 @@ function Header() {
         {/* language drop down */}
         <Language open={languageDrop} onClick={() => setLanguageDrop(!languageDrop)} ref={LanguageRef}>
           <button type="button">
-            {languageDropVal.length <= 0 ? (
-              <Image src={flagImg} alt="img description" />
+            {flag ? (
+              <Image src={flag?.img} alt="img description" />
             ) : (
-              <Image src={languageDropVal[0].img} alt="img description" width={24} height={24} />
+              <Image src={LanguageData[0].img} alt="img description" width={24} height={24} />
             )}
           </button>
           <div className="DropDownLanguage">
             <LanguageDropDown
               onClick={item => {
                 setLanguageDropVal([item]);
-                handleLanguage(item.value);
+                handleLanguage(item);
               }}
               data={LanguageData}
+              value={lang}
             />
           </div>
         </Language>

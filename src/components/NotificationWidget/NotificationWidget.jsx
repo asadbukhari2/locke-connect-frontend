@@ -14,6 +14,7 @@ import { NoRecordFound } from '../NoRecordFound/NoRecord.styles';
 import { getNotifications } from '@/features/commonSlice';
 import Toast from '../Toast';
 import peoplesService from '@/services/peoples';
+import { useTranslation } from '@/helpers/useTranslation';
 
 export const chatArray = [
   {
@@ -100,6 +101,7 @@ const NotificationWidget = ({ $marginB }) => {
   const dropdownRef = useRef(null);
 
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const router = useRouter();
 
   const { notifications, notificationsLoading } = useSelector(state => state.common);
@@ -154,7 +156,7 @@ const NotificationWidget = ({ $marginB }) => {
   return (
     <ChatWidgetStyles $marginB={$marginB}>
       <span className="title">
-        <p>Notification </p>
+        <p>{t('Notification')} </p>
         <div className="badge">
           <Badge $variant="dark" child={notifications?.length ?? 0} />
         </div>
@@ -177,7 +179,7 @@ const NotificationWidget = ({ $marginB }) => {
             />
           ))
         ) : (
-          <NoRecordFound>No Record Found</NoRecordFound>
+          <NoRecordFound>{t('No Record Found')}</NoRecordFound>
         )}
       </ChatMessageMain>
 
@@ -186,7 +188,7 @@ const NotificationWidget = ({ $marginB }) => {
         onClick={() => {
           router.push('notification');
         }}>
-        <p>View All</p>
+        <p>{t('View All')}</p>
         <IoIosArrowRoundForward size="25" className="ico" />
       </div>
     </ChatWidgetStyles>

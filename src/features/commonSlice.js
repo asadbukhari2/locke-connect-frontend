@@ -37,11 +37,11 @@ const commonSlice = createSlice({
       })
       .addCase(getNotifications.fulfilled, (state, action) => {
         state.notifications = action.payload?.items;
-        state.totalNotification = action.payload.totalItems;
-        state.hasNextPage = action.payload.hasNextPage;
-        state.lastPage = action.payload.lastPage;
-        state.nextPage = action.payload.nextPage;
-        state.currentPage = action.payload.currentPage;
+        state.totalNotification = action.payload?.totalItems;
+        state.hasNextPage = action.payload?.hasNextPage;
+        state.lastPage = action.payload?.lastPage;
+        state.nextPage = action.payload?.nextPage;
+        state.currentPage = action.payload?.currentPage;
         state.notificationsLoading = false;
         state.notificationsError = '';
       })

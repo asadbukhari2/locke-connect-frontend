@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyledLanguageDropDown } from './LanguageDropDown.styles';
 import Image from 'next/image';
-const LanguageDropDown = ({ onClick, data = LanguageData }) => {
+const LanguageDropDown = ({ onClick, data = LanguageData,value }) => {
+
   return (
     <StyledLanguageDropDown>
       {data.map((elem, ind) => (

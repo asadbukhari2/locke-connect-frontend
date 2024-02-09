@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import Toast from '../Toast';
 import Link from 'next/link';
 import { formatPhoneNumber } from '@/helpers/common';
+import { useTranslation } from '@/helpers/useTranslation';
 // import { formatPhoneNumber } from "@/helpers/common";
 
 const UserRegister = () => {
@@ -17,6 +18,7 @@ const UserRegister = () => {
     phoneNumber: '',
     role: 'user',
   });
+  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -66,21 +68,21 @@ const UserRegister = () => {
   return (
     <StyledFormRegister>
       <form className="formWrapper">
-        <div className="title">Register</div>
+        <div className="title">{t('Register')}</div>
         <Input
           placeholder="jhon@example.com"
-          label="Email"
+          label={t('Email')}
           Field_Name="user-mail"
           type="email"
           name="email"
           className="input-group"
           value={user.email}
           onChange={handleChange}
-          error={user.email.length > 0 && !emailRegex.test(user.email) ? 'Email not correct' : null}
+          error={user.email.length > 0 && !emailRegex.test(user.email) ? t('Email not correct') : null}
         />
         <Input
-          placeholder="Password"
-          label="Password"
+          placeholder={t('Password')}
+          label={t('Password')}
           Field_Name="user-password"
           type="password"
           name="password"
@@ -89,8 +91,8 @@ const UserRegister = () => {
           onChange={handleChange}
         />
         <Input
-          placeholder="Phone Number"
-          label="Phone Number"
+          placeholder={t('Phone Number')}
+          label={t('Phone Number')}
           Field_Name="user-PhoneNumber"
           type="text"
           name="phoneNumber"
@@ -98,17 +100,17 @@ const UserRegister = () => {
           value={user.phoneNumber}
           onChange={handlePhoneNumberChange}
           error={
-            user.phoneNumber?.length > 0 && !phoneRegex.test(user.phoneNumber) ? 'Please enter correct phone' : null
+            user.phoneNumber?.length > 0 && !phoneRegex.test(user.phoneNumber) ? t('Please enter correct phone') : null
           }
         />
 
         <div className="buttonWrapper">
           <Button variant="primary" onClick={registerHandler} loader={loading} disabled={isDisabled}>
-            Register
+            {t(' Register')}
           </Button>
         </div>
         <span className="already-account">
-          Already have account, <Link href="sign-in">Sign In</Link>
+          {t('Already have an account')}, <Link href="sign-in">{t('Sign In')}</Link>
         </span>
       </form>
     </StyledFormRegister>
