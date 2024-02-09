@@ -5,36 +5,38 @@ import call from '../../../public/call.svg';
 import Image from 'next/image';
 import Input from '../TextField';
 import Button from '../Button';
+import { useTranslation } from '@/helpers/useTranslation';
 const Payment = () => {
+  const { t } = useTranslation();
   return (
     <PaymentWrapper>
-      <strong className="title">Payment Options</strong>
+      <strong className="title">{t('Payment Options')}</strong>
       <div className="saved-card">
-        <span>Saved Card</span> <span className="title">938 xxx xxx xxx 212</span>
+        <span>{t('Saved Card')}</span> <span className="title">938 xxx xxx xxx 212</span>
         <div className="dlt-icon">
           <Image src={dlt} alt="icon" />
         </div>
       </div>
       <div className="addcard">
-        <span>Add Card</span> <span className="title">ADD icon for cards</span>
+        <span>{t('Add Card')}</span> <span className="title">ADD icon for cards</span>
       </div>
       <form className="paymentForm">
-        <Input placeholder="Card Number" />
+        <Input placeholder={t('Card Number')} />
         <div className="combine-field">
-          <Input placeholder="Expiry Date" />
+          <Input placeholder={t('Expiry Date')} />
           <Input placeholder="CVC" />
         </div>
-        <Input placeholder="Card Holder Name" />
+        <Input placeholder={t('Card Holder Name')} />
         <div className="button-wrapper">
           <Button outline type="button">
-            Cancel
+            {t('Cancel')}
           </Button>
-          <Button variant="primary">Make Payment</Button>
+          <Button variant="primary">{t('Make Payment')}</Button>
         </div>
       </form>
-      <strong className="title">Customer Service</strong>
+      <strong className="title">{t('Customer Service')}</strong>
       <Button outline type="button">
-        Contact Customer service <Image src={call} alt="call" />
+        {t('Contact Customer service')} <Image src={call} alt="call" />
       </Button>
     </PaymentWrapper>
   );

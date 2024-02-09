@@ -3,6 +3,7 @@ import { GiSettingsKnobs } from 'react-icons/gi';
 import { PiMapPinBold } from 'react-icons/pi';
 import { SearchForm } from './SearchLocation.styles';
 import Suggestion from '../Suggestion';
+import { useTranslation } from '@/helpers/useTranslation';
 
 function SearchLocation({
   open,
@@ -14,7 +15,8 @@ function SearchLocation({
   const [handelInputDrop, setHandelInputDrop] = useState(false);
   const [location, setLocation] = useState('');
   const InputRef = useRef(null);
-
+  const { t } = useTranslation();
+  
   const handleClickOutsideInput = event => {
     if (InputRef.current && !InputRef.current.contains(event.target)) {
       setHandelInputDrop(false);
@@ -40,7 +42,7 @@ function SearchLocation({
         <div className="input-search" ref={InputRef}>
           <input
             type="search"
-            placeholder={placeholder}
+            placeholder={t(placeholder)}
             onClick={() => setHandelInputDrop(true)}
             value={location}
             onChange={e => onType(e.target.value)}

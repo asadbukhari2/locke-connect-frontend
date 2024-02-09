@@ -17,11 +17,12 @@ import Modal from '../Modal';
 import { AuthContext } from '@/context/authContext';
 import { useContextHook } from 'use-context-hook';
 import peoplesService from '@/services/peoples';
+import { useTranslation } from '@/helpers/useTranslation';
 
 export default function CardSlider({ agents }) {
   const [people, setPeople] = useState(agents);
   const [shareContacts, setShareContacts] = useState(false);
-
+  const { t } = useTranslation();
   const { user } = useContextHook(AuthContext, ['user']);
 
   useEffect(() => {
@@ -72,13 +73,17 @@ export default function CardSlider({ agents }) {
                   <CardText>
                     <span className="name">{elem.displayName !== '' ? elem.displayName : 'John Doe'}</span>
                     <span className="info">
-                      <span>License : {elem.licenseNumber} </span>
+                      <span>
+                        {t('License')} : {elem.licenseNumber}{' '}
+                      </span>
                       <span className="dot">
                         <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
                           <circle cx="1.5" cy="2" r="1.5" fill="white" />
-                        </svg>{' '}
+                        </svg>
                       </span>
-                      <span>Since : {elem.creation}</span>
+                      <span>
+                        {t('Since')} : {elem.creation}
+                      </span>
                     </span>
                     <div className="socialIocn">
                       <div className="iconWrapp">

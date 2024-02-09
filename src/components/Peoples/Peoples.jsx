@@ -30,6 +30,7 @@ import { AuthContext } from '@/context/authContext';
 import Toast from '../Toast';
 import ShareContact from '../chat/ChatModal/ShareContact';
 import { debounce } from '@/helpers/common';
+import { useTranslation } from '@/helpers/useTranslation';
 export const FilterItem = ['New York', 'For Buy', 'Duplex', '$250-500k', 'Last 3 Weeks', 'Apartments'];
 
 const Peoples = () => {
@@ -49,7 +50,7 @@ const Peoples = () => {
   const { peoples_data, peoples_loading } = peoplesService.GetPeoples(searchQuery);
 
   const [modal, setModal] = useState(false);
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -158,8 +159,10 @@ const Peoples = () => {
         <FilterHeader>
           <div className="wrap">
             <div className="heading-box">
-              <h2>Peoples</h2>
-              <span className="text">Total {peoples_data.totalItems} peoples</span>
+              <h2>{t('Peoples')}</h2>
+              <span className="text">
+                {t('Total')} {peoples_data.totalItems} {t('peoples')}
+              </span>
             </div>
             <ul className="btn-list">
               <li>
@@ -177,7 +180,7 @@ const Peoples = () => {
           <FilterWrap open={filterDropDown}>
             <SearchLocation
               handelFilter={handelProperFilter}
-              placeholder="Search Peoples"
+              placeholder={t("Search Peoples")}
               onChangeHandler={handleSearchChange}
             />
             <div className="handelDropDown">
@@ -216,13 +219,17 @@ const Peoples = () => {
                 <CardTextPeople>
                   <span className="name">{elem.displayName !== '' ? elem.displayName : 'John Doe'}</span>
                   <span className="info">
-                    <span>License : {elem.licenseNumber} </span>
+                    <span>
+                      {t('License')} : {elem.licenseNumber}{' '}
+                    </span>
                     <span className="dot">
                       <svg xmlns="http://www.w3.org/2000/svg" width="3" height="4" viewBox="0 0 3 4" fill="none">
                         <circle cx="1.5" cy="2" r="1.5" fill="white" />
                       </svg>{' '}
                     </span>
-                    <span>Since : {elem.creation}</span>
+                    <span>
+                      {t('Since')}: {elem.creation}
+                    </span>
                   </span>
                   {elem.id !== user.id && (
                     <div className="socialIocn">
@@ -250,7 +257,7 @@ const Peoples = () => {
               </PeopleCardWrapper>
             ))
           ) : (
-            <NoRecordFound>No Agents Found</NoRecordFound>
+            <NoRecordFound>{t('No Agents Found')}</NoRecordFound>
           )}
         </StyledPropertyCards>
 

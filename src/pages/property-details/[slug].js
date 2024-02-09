@@ -14,10 +14,11 @@ import DateSlider from '@/components/DateSlider/DateSlider';
 import Modal from '@/components/Modal';
 import ModalBooking from '@/components/ModalAdvanceOption/ModalBooking';
 import EditProfileModal from '@/components/EditProfileModal';
+import { useTranslation } from '@/helpers/useTranslation';
 const PropertyDetails = () => {
   const [scroll, setScroll] = useState(false);
   const [modal, setModal] = useState(false);
-
+  const { t } = useTranslation();
   useEffect(() => {
     function handleScroll() {
       // Check the scroll position to determine if the shadow should be shown
@@ -53,8 +54,8 @@ const PropertyDetails = () => {
           <SchoolNearby />
           <Neighborhood />
           <PropertyHistory />
-          <PropertySaleSlider title="Similar homes for sale" />
-          <PropertySaleSlider title="Recently sold nearby" />
+          <PropertySaleSlider title={t('Similar homes for sale')} />
+          <PropertySaleSlider title={t('Recently sold nearby')} />
         </div>
         <aside className={scroll ? `fixed-scroll fix` : 'fixed-scroll'}>
           <Recommended />

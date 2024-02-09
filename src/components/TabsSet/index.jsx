@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { TabsList, TabButton, TabContent } from "./TabsSet.styles";
+import React, { useState } from 'react';
+import { TabsList, TabButton, TabContent } from './TabsSet.styles';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const TabsSet = ({ tabs, todayRate, responsive }) => {
   const [activeTab, setActiveTab] = useState(0);
+  const { t } = useTranslation();
 
-  const handleTabClick = (index) => {
+  const handleTabClick = index => {
     setActiveTab(index);
   };
 
@@ -17,9 +19,8 @@ const TabsSet = ({ tabs, todayRate, responsive }) => {
             $todayRate={todayRate}
             key={index}
             isActive={index === activeTab}
-            onClick={() => handleTabClick(index)}
-          >
-            {tab.label}
+            onClick={() => handleTabClick(index)}>
+            {t(tab.label)}
           </TabButton>
         ))}
       </TabsList>

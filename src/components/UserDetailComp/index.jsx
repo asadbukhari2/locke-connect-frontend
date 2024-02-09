@@ -1,62 +1,49 @@
-import React, { useState } from "react";
-import us from "../../../public/us.png";
-import china from "../../../public/china.png";
-import spain from "../../../public/spanish.png";
-import message from "../../../public/message.svg";
-import share from "../../../public/share.svg";
-import location from "../../../public/locationIcon.svg";
-import heart from "../../../public/heartdanger.svg";
-import Image from "next/image";
-import Button from "../Button";
-import { UserDetailText, UserDetailWrapper } from "./UserDetail.styles";
-import { useContextHook } from "use-context-hook";
-import { AuthContext } from "@/context/authContext";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getMessages,
-  setCurrentConversation,
-  setMessages,
-} from "@/features/messageSlice";
-import { useRouter } from "next/router";
-import Toast from "../Toast";
-import BoughtSold from "../BoughtSold";
-import { FaHeart } from "react-icons/fa6";
-const services = [
-  "Staging",
-  "Photography",
-  "Marketing",
-  "Open House",
-  "Negotiating",
-];
-const Commission = [
-  "Seller 2.5 ; Seller Pays",
-  "Buyer 25% ; Seller Pays Or Buyer Pays",
-  "Negotiable",
-];
+import React, { useState } from 'react';
+import us from '../../../public/us.png';
+import china from '../../../public/china.png';
+import spain from '../../../public/spanish.png';
+import message from '../../../public/message.svg';
+import share from '../../../public/share.svg';
+import location from '../../../public/locationIcon.svg';
+import heart from '../../../public/heartdanger.svg';
+import Image from 'next/image';
+import Button from '../Button';
+import { UserDetailText, UserDetailWrapper } from './UserDetail.styles';
+import { useContextHook } from 'use-context-hook';
+import { AuthContext } from '@/context/authContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMessages, setCurrentConversation, setMessages } from '@/features/messageSlice';
+import { useRouter } from 'next/router';
+import Toast from '../Toast';
+import BoughtSold from '../BoughtSold';
+import { FaHeart } from 'react-icons/fa6';
+import { useTranslation } from '@/helpers/useTranslation';
+const services = ['Staging', 'Photography', 'Marketing', 'Open House', 'Negotiating'];
+const Commission = ['Seller 2.5 ; Seller Pays', 'Buyer 25% ; Seller Pays Or Buyer Pays', 'Negotiable'];
 const language = [
-  { img: us, lang: "English" },
-  { img: china, lang: "Chinese" },
-  { img: spain, lang: "Spanish" },
+  { img: us, lang: 'English' },
+  { img: china, lang: 'Chinese' },
+  { img: spain, lang: 'Spanish' },
 ];
 const HomeClosed = [
-  { img: location, loc: "San Francisco" },
-  { img: location, loc: "Castro" },
-  { img: location, loc: "Noe Valley" },
-  { img: location, loc: "Barkelley" },
-  { img: location, loc: "Sacremento" },
-  { img: location, loc: "Oakland" },
-  { img: location, loc: "El Ceritto" },
-  { img: location, loc: "Albany" },
+  { img: location, loc: 'San Francisco' },
+  { img: location, loc: 'Castro' },
+  { img: location, loc: 'Noe Valley' },
+  { img: location, loc: 'Barkelley' },
+  { img: location, loc: 'Sacremento' },
+  { img: location, loc: 'Oakland' },
+  { img: location, loc: 'El Ceritto' },
+  { img: location, loc: 'Albany' },
 ];
 
 const UserDetail = ({ setModal, detail }) => {
-  console.log("msg detail user", detail);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { user } = useContextHook(AuthContext, ["user"]);
+  const { user } = useContextHook(AuthContext, ['user']);
 
-  const { conversations } = useSelector((state) => state.chat);
+  const { conversations } = useSelector(state => state.chat);
 
   const conversationHandler = async () => {
     try {
@@ -64,14 +51,10 @@ const UserDetail = ({ setModal, detail }) => {
       const userId = user.id;
 
       const existingConversationIndex = conversations.findIndex(
-        (conv) =>
-          conv.participants.includes(detailId) &&
-          conv.participants.includes(userId)
+        conv => conv.participants.includes(detailId) && conv.participants.includes(userId),
       );
       const conversation = conversations?.find(
-        (itm) =>
-          itm?.participants?.includes(detailId) &&
-          itm?.participants.includes(userId)
+        itm => itm?.participants?.includes(detailId) && itm?.participants.includes(userId),
       );
       if (existingConversationIndex !== -1) {
         setModal(false);
@@ -79,7 +62,7 @@ const UserDetail = ({ setModal, detail }) => {
         dispatch(setCurrentConversation(conversation));
         const { author, reviever, _id } = conversation;
         dispatch(getMessages({ author, reviever, conversationId: _id }));
-        router.push("/chat");
+        router.push('/chat');
       } else {
         const newConversation = {
           saved: false,
@@ -90,17 +73,17 @@ const UserDetail = ({ setModal, detail }) => {
           photoURL: detail.photoURL,
           participants: [detailId, userId],
           channelName: detail.displayName,
-          lastMessage: { text: "No Message" },
+          lastMessage: { text: 'No Message' },
         };
 
         dispatch(setCurrentConversation(newConversation));
         dispatch(setMessages([]));
-        router.replace("/chat");
+        router.replace('/chat');
         setModal(false);
       }
     } catch (error) {
       console.log(error);
-      Toast({ type: "error", message: error.message });
+      Toast({ type: 'error', message: error.message });
     }
   };
   const [fav, setFav] = useState(false);
@@ -116,14 +99,16 @@ const UserDetail = ({ setModal, detail }) => {
         <UserDetailText>
           <div className="name">
             <h2>{detail.displayName}</h2>
-            <p>License #{detail.licenseNumber}</p>
+            <p>
+              {t('License')} #{detail.licenseNumber}
+            </p>
           </div>
           <div className="userInfo">
-            <span>About me</span>
+            <span>{t('About me')}</span>
             <p>{detail.about}</p>
           </div>
           <div className="userService">
-            <span>Services included</span>
+            <span>{t('Services included')}</span>
             <ul>
               {services.map((elem, ind) => (
                 <li key={ind}>{elem}</li>
@@ -131,20 +116,20 @@ const UserDetail = ({ setModal, detail }) => {
             </ul>
           </div>
           <div className="userService">
-            <span>Language skills</span>
+            <span>{t('Language skills')}</span>
             <ul>
               {language.map((elem, ind) => (
                 <li key={ind}>
                   <figure className="img">
                     <Image src={elem.img} alt="state" />
-                  </figure>{" "}
+                  </figure>
                   {elem.lang}
                 </li>
               ))}
             </ul>
           </div>
           <div className="userService">
-            <span>Home closed in</span>
+            <span>{t('Home closed in')}</span>
             <ul>
               {HomeClosed.map((elem, ind) => (
                 <li key={ind}>
@@ -155,7 +140,7 @@ const UserDetail = ({ setModal, detail }) => {
             </ul>
           </div>
           <div className="userService">
-            <span>Commission</span>
+            <span>{t('Commission')}</span>
             <ul>
               {Commission.map((elem, ind) => (
                 <li key={ind}>{elem}</li>
@@ -165,22 +150,15 @@ const UserDetail = ({ setModal, detail }) => {
         </UserDetailText>
         <div className="buttonWrapper">
           <Button variant="primary" onClick={conversationHandler}>
-            <Image src={message} alt="message" /> Send Message
+            <Image src={message} alt="message" />
+            {t('Send Message')}
           </Button>
           <Button outline>
             <Image src={share} alt="share" />
-            Share
+            {t('Share')}
           </Button>
-          <Button
-            outline
-            className="like lastButton"
-            onClick={() => setFav(!fav)}
-          >
-            {fav ? (
-              <FaHeart size={25} color="var(--danger-500)" />
-            ) : (
-              <Image src={heart} alt="fav" />
-            )}
+          <Button outline className="like lastButton" onClick={() => setFav(!fav)}>
+            {fav ? <FaHeart size={25} color="var(--danger-500)" /> : <Image src={heart} alt="fav" />}
           </Button>
         </div>
       </div>

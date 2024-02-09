@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { LuBox } from "react-icons/lu";
-import Img01 from "../../../public/img02.jpg";
-import { DetailBlock, Description, ExpandView } from "./HomeInfo.styles";
-import Modal from "../Modal";
-import ThreeDView from "../PropertySlider/PropertyModal/ThreeDView";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { LuBox } from 'react-icons/lu';
+import Img01 from '../../../public/img02.jpg';
+import { DetailBlock, Description, ExpandView } from './HomeInfo.styles';
+import Modal from '../Modal';
+import ThreeDView from '../PropertySlider/PropertyModal/ThreeDView';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const HomeInfo = ({}) => {
   const [street, setStreet] = useState(false);
-
+  const { t } = useTranslation();
   return (
     <>
       <Modal open={street} setOpen={setStreet}>
@@ -17,8 +18,7 @@ const HomeInfo = ({}) => {
       </Modal>
       <DetailBlock>
         <span className="text">
-          Listing provided courtesy of Mark Besta, Windermere Real Estate Co..
-          Source NWMLS.
+          {t('Listing provided courtesy of')} Mark Besta, Windermere Real Estate Co.. Source NWMLS.
         </span>
         <div className="holder">
           <div className="left-col">
@@ -50,31 +50,27 @@ const HomeInfo = ({}) => {
           </Link>
         </div>
         <Description>
-          <strong className="title">Description</strong>
+          <strong className="title">{t('Description')}</strong>
           <p>
-            Having a hard time jumping into the current market? Consider this
-            cottage gem, freshly painted with gleaming hardwood floors & bundled
-            with all the hallmarks of a warm & comfortable home-just waiting for
-            you to bring back her deserving glory. Using vision & a little bit
-            of elbow grease, this 2-bed, 2-bath home with bright living room,
-            gas-burning fireplace, dining room &.
+            Having a hard time jumping into the current market? Consider this cottage gem, freshly painted with gleaming
+            hardwood floors & bundled with all the hallmarks of a warm & comfortable home-just waiting for you to bring
+            back her deserving glory. Using vision & a little bit of elbow grease, this 2-bed, 2-bath home with bright
+            living room, gas-burning fireplace, dining room &.
           </p>
           <p>
-            Having a hard time jumping into the current market? Consider this
-            cottage gem, freshly painted with gleaming hardwood floors & bundled
-            with all the hallmarks of a warm & comfortable home-just waiting for
-            you to bring back her deserving glory. Using vision & a little bit
-            of elbow grease, this 2-bed, 2-bath home with bright living room,
-            gas-burning fireplace, dining room & ...
+            Having a hard time jumping into the current market? Consider this cottage gem, freshly painted with gleaming
+            hardwood floors & bundled with all the hallmarks of a warm & comfortable home-just waiting for you to bring
+            back her deserving glory. Using vision & a little bit of elbow grease, this 2-bed, 2-bath home with bright
+            living room, gas-burning fireplace, dining room & ...
           </p>
           <Link className="read-more" href="/">
-            read more
+            {t('read more')}
           </Link>
         </Description>
         <ExpandView>
           <Image src={Img01} alt="img description" />
           <button type="button" onClick={() => setStreet(true)}>
-            <LuBox size="20" /> Expand 3D View
+            <LuBox size="20" /> {t('Expand 3D View')}
           </button>
         </ExpandView>
       </DetailBlock>

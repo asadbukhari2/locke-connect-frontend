@@ -15,6 +15,7 @@ import SelectedDocumentsList from '@/components/chat/SelectedDocumetsList';
 import Modal from '@/components/Modal';
 import UserDetail from '@/components/UserDetailComp';
 import Loaders from '@/components/Loaders';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const chat = () => {
   const router = useRouter();
@@ -26,7 +27,7 @@ const chat = () => {
   const [selectedProperty, setSelectedProperty] = useState({});
   const [selectedContact, setSelectedContact] = useState({});
   const inputRef = useRef();
-
+  const { t } = useTranslation();
   const scrollContainerRef = useRef();
 
   const online = useSelector(state => state.onlineUsers);
@@ -188,11 +189,11 @@ const chat = () => {
       <div className="chat-container">
         <div className="history">
           <button className="btnBack" onClick={() => router.push('/')}>
-            <IoIosArrowRoundBack size="24" /> Go back
+            <IoIosArrowRoundBack size="24" /> {t('Go back')}
           </button>
         </div>
         {!currentConversation ? (
-          'Select any chat to continue'
+          t('Select any chat to continue')
         ) : (
           <>
             <ChatHeader

@@ -7,10 +7,11 @@ import userService from '@/services/auth';
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import Toast from '../Toast';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const EditProfileModal = ({ user, onClose }) => {
   const [loading, setLoading] = useState(false);
-
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     displayName: user.displayName,
     phoneNumber: formatPhoneNumber(user?.phoneNumber?.slice(2)),
@@ -54,9 +55,9 @@ const EditProfileModal = ({ user, onClose }) => {
 
   return (
     <StyledEditProfileModal>
-      <strong className="title">Edit Profile</strong>
+      <strong className="title">{t('Edit Profile')}</strong>
       <Input
-        label="Name"
+        label={t('Name')}
         placeholder="John"
         type="text"
         name="displayName"
@@ -66,8 +67,8 @@ const EditProfileModal = ({ user, onClose }) => {
         onChange={handleChange}
       />
       <Input
-        label="Email"
-        placeholder="Email"
+        label={t('Email')}
+        placeholder={t('Email')}
         type="email"
         name="email"
         disabled={true}
@@ -76,8 +77,8 @@ const EditProfileModal = ({ user, onClose }) => {
         value={user.email}
       />
       <Input
-        label="Phone Number"
-        placeholder="Phone Number"
+        label={t('Phone Number')}
+        placeholder={t('Phone Number')}
         type="text"
         name="phoneNumber"
         Field_Name="phoneNumber"
@@ -86,8 +87,8 @@ const EditProfileModal = ({ user, onClose }) => {
         onChange={handlePhoneNumberChange}
       />
       <Input
-        label="Address"
-        placeholder="Address"
+        label={t('Address')}
+        placeholder={t('Address')}
         type="text"
         name="address"
         Field_Name="Address"
@@ -97,7 +98,7 @@ const EditProfileModal = ({ user, onClose }) => {
       />
       <div className="buttonWrapper">
         <Button type="button" onClick={editHandler} loader={loading} disabled={loading}>
-          Save
+          {t('Save')}
         </Button>
       </div>
     </StyledEditProfileModal>

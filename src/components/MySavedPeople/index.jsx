@@ -14,12 +14,14 @@ import peoplesService from '@/services/peoples';
 import Toast from '../Toast';
 import { AuthContext } from '@/context/authContext';
 import { useContextHook } from 'use-context-hook';
+import { useTranslation } from '@/helpers/useTranslation';
 
 function MySavedPeople() {
   const [searchQuery, setSearchQuery] = useState({
     page: 1,
     pageSize: 3,
   });
+  const { t } = useTranslation();
 
   const { refetch, setRefetch } = useContextHook(AuthContext, ['refetch', 'setRefetch']);
 
@@ -69,7 +71,7 @@ function MySavedPeople() {
     </div>
   );
 
-  const columnNames = ['Name And License', 'Joined Since', 'Agent Type', ''];
+  const columnNames = [t('Name And License'), t('Joined Since'), t('Agent Type'), ''];
 
   const { favPeoples, totalCount } = useMemo(() => {
     return {
@@ -80,7 +82,7 @@ function MySavedPeople() {
           </div>
           <div className="text-box">
             <strong className="title">{itm.displayName}</strong>
-            <span className="subtitle">License : #{itm.licenseNumber}</span>
+            <span className="subtitle">{t('License')} : #{itm.licenseNumber}</span>
           </div>
         </div>,
         itm.joined ?? '----',
@@ -97,7 +99,7 @@ function MySavedPeople() {
   return (
     <>
       <TableLayout
-        title="My Saved People"
+        title={t("My Saved People")}
         onChangeFilters={filters => {
           setSearchQuery(_ => ({
             ..._,

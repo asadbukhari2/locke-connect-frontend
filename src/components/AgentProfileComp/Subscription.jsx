@@ -4,7 +4,9 @@ import CheckBox from '../CheckBox';
 import { useJsApiLoader, GoogleMap, Autocomplete, Marker } from '@react-google-maps/api';
 import Button from '../Button';
 import Payment from './Payment';
+import { useTranslation } from '@/helpers/useTranslation';
 const Subscription = () => {
+  const { t } = useTranslation();
   const [subscriptionType, setSubscriptionType] = useState({ month: false, year: false });
   const center = { lat: 38.889805, lng: -77.009056 };
   const { isLoaded, loadError } = useJsApiLoader({
@@ -20,7 +22,7 @@ const Subscription = () => {
             <strong className="duration">per month</strong>
           </span>
           <span className="checkBox">
-            <label htmlFor="month">Locke Basic Agent Service</label>
+            <label htmlFor="month">{t('Locke Basic Agent Service')}</label>
             <CheckBox
               fieldName="month"
               type="circle"
@@ -34,7 +36,7 @@ const Subscription = () => {
             <strong className="duration">per year</strong>
           </span>
           <span className="checkBox">
-            <label htmlFor="year">Locke Basic Agent Service</label>
+            <label htmlFor="year">{t('Locke Basic Agent Service')}</label>
             <CheckBox
               fieldName="year"
               type="circle"
@@ -45,7 +47,7 @@ const Subscription = () => {
       </div>
       <div className="addArea">
         <div className="map">
-          <span className="title">Add More Area’s</span>
+          <span className="title">{t('Add More Area’s')}</span>
           <div className="map-container">
             {isLoaded ? (
               <>
@@ -75,7 +77,7 @@ const Subscription = () => {
           </div>
         </div>
         <div className="list-wrapper">
-          <span className="title">My list</span>
+          <span className="title">{t('My list')}</span>
           <div className="list">
             <ul>
               <li>
@@ -102,8 +104,8 @@ const Subscription = () => {
             </ul>
           </div>
           <div className="button-wrap">
-            <Button outline>Cancel</Button>
-            <Button variant="primary">Add to Subscriptions</Button>
+            <Button outline>{t('Cancel')}</Button>
+            <Button variant="primary">{t('Add to Subscriptions')}</Button>
           </div>
         </div>
       </div>

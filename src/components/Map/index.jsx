@@ -1,102 +1,93 @@
-import React, { useState } from "react";
-import {
-  CardsWrapper,
-  MapWrapper,
-  PropertyCardWrapper,
-  StyledMap,
-} from "./Map.styles";
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Autocomplete,
-  Marker,
-} from "@react-google-maps/api";
-import PropertyCard from "../propertyCard/PropertyCard";
-import property1 from "../../../public/propertyCard/property1.jpg";
-import property2 from "../../../public/propertyCard/property2.jpg";
-import property3 from "../../../public/propertyCard/property3.jpg";
-import property4 from "../../../public/propertyCard/property4.jpg";
-import property5 from "../../../public/propertyCard/property5.jpg";
-import property6 from "../../../public/propertyCard/property6.jpg";
-import UserSearchFilter from "../UserSearchFilter";
-import { GiSettingsKnobs } from "react-icons/gi";
-import { BiArrowBack } from "react-icons/bi";
-import { CgMenuRightAlt } from "react-icons/cg";
-import { RxCross1 } from "react-icons/rx";
-import { useRouter } from "next/navigation";
-import Pagination from "../Pagination";
+import React, { useState } from 'react';
+import { CardsWrapper, MapWrapper, PropertyCardWrapper, StyledMap } from './Map.styles';
+import { useJsApiLoader, GoogleMap, Autocomplete, Marker } from '@react-google-maps/api';
+import PropertyCard from '../propertyCard/PropertyCard';
+import property1 from '../../../public/propertyCard/property1.jpg';
+import property2 from '../../../public/propertyCard/property2.jpg';
+import property3 from '../../../public/propertyCard/property3.jpg';
+import property4 from '../../../public/propertyCard/property4.jpg';
+import property5 from '../../../public/propertyCard/property5.jpg';
+import property6 from '../../../public/propertyCard/property6.jpg';
+import UserSearchFilter from '../UserSearchFilter';
+import { GiSettingsKnobs } from 'react-icons/gi';
+import { BiArrowBack } from 'react-icons/bi';
+import { CgMenuRightAlt } from 'react-icons/cg';
+import { RxCross1 } from 'react-icons/rx';
+import { useRouter } from 'next/navigation';
+import Pagination from '../Pagination';
+import { useTranslation } from '@/helpers/useTranslation';
 export const PropertyDetail = [
   {
     id: 1,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property1,
     isFav: false,
   },
   {
     id: 2,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property2,
     isFav: false,
   },
   {
     id: 3,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property3,
     isFav: false,
   },
   {
     id: 4,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property4,
     isFav: false,
   },
   {
     id: 5,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
     img: property5,
     isFav: false,
-    link: "Luxury-Mansion",
+    link: 'Luxury-Mansion',
   },
   {
     id: 6,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
     img: property6,
     isFav: false,
-    link: "Riche-Mansion",
+    link: 'Riche-Mansion',
   },
 ];
 const Map = () => {
@@ -106,10 +97,11 @@ const Map = () => {
   const router = useRouter();
 
   const { isLoaded, loadError } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y",
+    id: 'google-map-script',
+    googleMapsApiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
   });
 
+  const { t } = useTranslation();
   return (
     <StyledMap $showSideBar={sideBar}>
       <div className="hamburger" onClick={() => SetsideBar(!sideBar)}>
@@ -122,8 +114,8 @@ const Map = () => {
               center={center}
               zoom={15}
               mapContainerStyle={{
-                width: "100%",
-                height: "100%",
+                width: '100%',
+                height: '100%',
               }}
               options={{
                 mapTypeControl: false,
@@ -131,20 +123,18 @@ const Map = () => {
                 streetViewControl: true,
                 zoomControl: true,
                 mapTypeControlOptions: {
-                  mapTypeIds: ["roadmap", "satellite", "terrain", "hybrid"],
+                  mapTypeIds: ['roadmap', 'satellite', 'terrain', 'hybrid'],
                 },
-                mapTypeId: "terrain",
-              }}
-            >
+                mapTypeId: 'terrain',
+              }}>
               <Marker position={center} />
             </GoogleMap>
             <div className="back">
               <button
                 onClick={() => {
-                  router.push("/");
-                }}
-              >
-                <BiArrowBack size={20} /> Go Back
+                  router.push('/');
+                }}>
+                <BiArrowBack size={20} /> {t('Go Back')}
               </button>
             </div>
           </>
@@ -154,11 +144,8 @@ const Map = () => {
       </MapWrapper>
       <PropertyCardWrapper $open={filterDropDown} $showSideBar={sideBar}>
         <div className="headerProperty">
-          <strong className="title">Properties</strong>
-          <div
-            className="btn-search"
-            onClick={() => setFilterDropDown(!filterDropDown)}
-          >
+          <strong className="title">{t('Properties')}</strong>
+          <div className="btn-search" onClick={() => setFilterDropDown(!filterDropDown)}>
             <GiSettingsKnobs size="20px" />
           </div>
           <div className="handelDropDown">
@@ -166,7 +153,7 @@ const Map = () => {
           </div>
         </div>
         <CardsWrapper>
-          {PropertyDetail.map((elem) => (
+          {PropertyDetail.map(elem => (
             <PropertyCard
               className="propertyCardMap"
               link={`property-details/${elem.link}`}
@@ -182,13 +169,7 @@ const Map = () => {
             />
           ))}
         </CardsWrapper>
-        <Pagination
-          page={1}
-          pageSize={10}
-          totalCount={20}
-          totalPages={3}
-          onPageChange={() => {}}
-        />
+        <Pagination page={1} pageSize={10} totalCount={20} totalPages={3} onPageChange={() => {}} />
       </PropertyCardWrapper>
     </StyledMap>
   );
