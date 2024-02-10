@@ -601,7 +601,7 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 const pagesWithLayout = ['/sign-in', '/sign-up', '/map', '/forgot-password', '/reset-password', '/home-page'];
-const pagesForAuth = ['/sign-in', '/sign-up', '/reset-password', '/forgot-password'];
+const pagesForAuth = ['/sign-in', '/sign-up', '/reset-password', '/forgot-password', '/home-page'];
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -618,45 +618,6 @@ export default function App({ Component, pageProps }) {
     }
   }, [isAuth, pathname, router]);
 
-  const googleTranslateElementInit = (language = 'en') => {
-    return new window.google.translate.TranslateElement(
-      {
-        pageLanguage: language,
-        autoDisplay: false,
-      },
-      'google_translate_element',
-    );
-  };
-  useEffect(() => {
-    const scriptUrl = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-
-    const existingScript = document.querySelector(`script[src="${scriptUrl}"]`);
-
-    if (!existingScript) {
-      var addScript = document.createElement('script');
-      addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
-      document.body.appendChild(addScript);
-      window.googleTranslateElementInit = googleTranslateElementInit;
-    }
-
-    // return () => {
-    //   const translateElement = document.getElementById(
-    //     'google_translate_element'
-    //   );
-    //   console.log('i am unmounting', { translateElement });
-    //   if (translateElement) {
-    //     translateElement.remove();
-    //   }
-
-    //   // To remove the script, you need to access the actual script element
-    //   const scriptToRemove = document.querySelector(
-    //     `script[src="${scriptUrl}"]`
-    //   );
-    //   if (scriptToRemove) {
-    //     scriptToRemove.parentNode.removeChild(scriptToRemove);
-    //   }
-    // };
-  }, []);
   const [rate, setRate] = useState(false);
 
   useEffect(() => {
@@ -670,14 +631,15 @@ export default function App({ Component, pageProps }) {
     <>
       <Provider store={store}>
         <GlobalStyles />
-        <Modal open={rate} setOpen={setRate} width="920px">
-          <TodayRateModal setOpen={setRate} />
-        </Modal>
+
         <span className="overlay" />
         <div id={!showLayout ? 'content-wrap' : ''}>
           <AuthContextProvider>
             <SocketContextProvider>
               <MyContextProvider>
+                <Modal open={rate} setOpen={setRate} width="920px">
+                  <TodayRateModal setOpen={setRate} />
+                </Modal>
                 <Header />
                 {!showLayout ? (
                   <>
@@ -693,7 +655,6 @@ export default function App({ Component, pageProps }) {
             </SocketContextProvider>
           </AuthContextProvider>
         </div>
-        <div id="google_translate_element" style={{ display: 'none', opacity: '0', visibility: 'hidden' }}></div>
         <ToastContainer autoClose={5000} hideProgressBar={true} />
       </Provider>
     </>

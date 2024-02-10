@@ -70,7 +70,7 @@ export function AuthContextProvider(props) {
     if (isLoggedIn) {
       getCurrentUser();
     }
-    const lang = JSON.parse(
+    const language = JSON.parse(
       getCookie('_lang') ??
         `${JSON.stringify({
           label: LanguageData[0].language,
@@ -78,8 +78,8 @@ export function AuthContextProvider(props) {
           img: LanguageData[0].img,
         })}`,
     );
-
-    setLang(lang);
+    console.log({ language });
+    setLang(language);
 
     // listen to event
     window.addEventListener('FETCH_CURRENT_USER', () => {
@@ -134,7 +134,7 @@ export function AuthContextProvider(props) {
         setCookie('_lang', JSON.stringify(x));
         setLang(x);
       },
-      lang,
+      lang: lang,
     }),
     [isLoggedIn, onLogin, user],
   );

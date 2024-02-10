@@ -198,4 +198,5 @@ export default {
   'write here': '在这里写',
   'Select any chat to continue': '选择任何聊天以继续',
   Photos: '照片',
+  'No Agents found':"未找到经纪人"
 };

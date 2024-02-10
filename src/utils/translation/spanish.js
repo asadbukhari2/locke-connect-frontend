@@ -203,4 +203,5 @@ export default {
   'write here': 'escribe aquí',
   'Select any chat to continue': 'Seleccione cualquier chat para continuar',
   Photos: 'Fotos',
+  'No Agents found': 'No se encontraron agentes',
 };

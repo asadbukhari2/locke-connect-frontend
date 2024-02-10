@@ -28,7 +28,7 @@ export default function CardSlider({ agents }) {
   useEffect(() => {
     const updatedPeoples = agents.map(person => ({
       ...person,
-      isFav: user.likedPeoples.includes(person.id),
+      isFav: user?.likedPeoples?.includes(person.id),
     }));
     setPeople(updatedPeoples);
   }, [agents]);
