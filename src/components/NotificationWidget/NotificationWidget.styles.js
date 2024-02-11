@@ -18,6 +18,7 @@ export const ChatWidgetStyles = styled.div`
     }
   }
   .viewAll {
+    cursor: pointer;
     padding-left: 20px;
     color: var(--primary-500);
     font-size: 16px;

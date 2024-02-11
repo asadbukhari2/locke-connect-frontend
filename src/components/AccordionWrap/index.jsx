@@ -1,15 +1,16 @@
-import React from "react";
-import Accordion from "../Accordion";
-import { AccordionHolder, InfoContent } from "./AccordionWrap.styles";
+import React from 'react';
+import Accordion from '../Accordion';
+import { AccordionHolder, InfoContent } from './AccordionWrap.styles';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const AccordionWrap = () => {
-
+  const { t } = useTranslation();
   return (
     <AccordionHolder>
-      <Accordion title="Property, Lot, Community & Exterior Features">
+      <Accordion title={t('Property, Lot, Community & Exterior Features')}>
         <InfoContent>
           <div className="column">
-            <strong className="title">Water & Sewer Info</strong>
+            <strong className="title">{t('Water & Sewer Info')}</strong>
             <ul className="list">
               <li>Water Source: Public</li>
               <li>Hot Water Source: Electric</li>
@@ -34,14 +35,26 @@ const AccordionWrap = () => {
           </div>
         </InfoContent>
       </Accordion>
-      <Accordion title="Utilities & Other Information">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium laboriosam ipsam itaque sapiente asperiores modi mollitia voluptatem, delectus repellat consequatur nam dolorum rerum, aut ratione, tempore et. Quod, libero velit!</p>
+      <Accordion title={t('Utilities & Other Information')}>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium laboriosam ipsam itaque sapiente
+          asperiores modi mollitia voluptatem, delectus repellat consequatur nam dolorum rerum, aut ratione, tempore et.
+          Quod, libero velit!
+        </p>
       </Accordion>
-      <Accordion title="Listing Details, Costs & Financing Information">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium laboriosam ipsam itaque sapiente asperiores modi mollitia voluptatem, delectus repellat consequatur nam dolorum rerum, aut ratione, tempore et. Quod, libero velit!</p>
+      <Accordion title={t('Listing Details, Costs & Financing Information')}>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium laboriosam ipsam itaque sapiente
+          asperiores modi mollitia voluptatem, delectus repellat consequatur nam dolorum rerum, aut ratione, tempore et.
+          Quod, libero velit!
+        </p>
       </Accordion>
-      <Accordion title="School Neighborhood & Directions">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium laboriosam ipsam itaque sapiente asperiores modi mollitia voluptatem, delectus repellat consequatur nam dolorum rerum, aut ratione, tempore et. Quod, libero velit!</p>
+      <Accordion title={t('School Neighborhood & Directions')}>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium laboriosam ipsam itaque sapiente
+          asperiores modi mollitia voluptatem, delectus repellat consequatur nam dolorum rerum, aut ratione, tempore et.
+          Quod, libero velit!
+        </p>
       </Accordion>
     </AccordionHolder>
   );

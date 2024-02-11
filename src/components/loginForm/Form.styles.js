@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledFormUser = styled.div`
   display: flex;
@@ -51,7 +51,7 @@ export const StyledFormUser = styled.div`
       margin-bottom: 25px;
     }
     .buttonWrapper {
-      max-width: 110px;
+      max-width: 115px;
       margin: 0 auto;
     }
     .span {
@@ -230,9 +230,7 @@ export const Item = styled.div`
   border: 2px solid #f5f6f7;
   cursor: pointer;
 
-  background: ${({ $active }) =>
-    $active ? "var(--primary-200)" : "transparent"};
-  color: ${({ $active }) => ($active ? "var(--white)" : "#6b7a99")};
-  border-color: ${({ $active }) =>
-    $active ? "var(--primary-200)" : "#f5f6f7"};
+  background: ${({ $active }) => ($active ? 'var(--primary-200)' : 'transparent')};
+  color: ${({ $active }) => ($active ? 'var(--white)' : '#6b7a99')};
+  border-color: ${({ $active }) => ($active ? 'var(--primary-200)' : '#f5f6f7')};
 `;

@@ -1,26 +1,28 @@
-import React from "react";
-import { FactsDetail } from "./HomeDetails.styles";
+import React from 'react';
+import { FactsDetail } from './HomeDetails.styles';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const HomeDetails = ({}) => {
+  const { t } = useTranslation();
   return (
     <FactsDetail>
-      <strong className="heading">Home Details</strong>
+      <strong className="heading">{t('Home Details')}</strong>
       <div className="holder">
         <div className="column">
           <div className="box">
-            <strong className="subtitle">Appliances</strong>
+            <strong className="subtitle">{t('Appliances')}</strong>
             <ul className="list">
               <li>
-                <span className="text">Dishwasher</span>
+                <span className="text">{t('Dishwasher')}</span>
               </li>
               <li>
-                <span className="text">Drayer</span>
+                <span className="text">{t('Drayer')}</span>
               </li>
               <li>
-                <span className="text">Refrigerator</span>
+                <span className="text">{t('Refrigerator')}</span>
               </li>
               <li>
-                <span className="text">Stove/Range</span>
+                <span className="text">{t('Stove/Range')}</span>
               </li>
               <li>
                 <span className="text">Washer</span>
@@ -28,7 +30,7 @@ const HomeDetails = ({}) => {
             </ul>
           </div>
           <div className="box">
-            <strong className="subtitle">Flooring</strong>
+            <strong className="subtitle">{t('Flooring')}</strong>
             <ul className="list">
               <li>
                 <span className="text">Hardwood</span>
@@ -44,7 +46,7 @@ const HomeDetails = ({}) => {
         </div>
         <div className="column">
           <div className="box">
-            <strong className="subtitle">Interior</strong>
+            <strong className="subtitle">{t('Interior')}</strong>
             <ul className="list">
               <li>
                 <span className="text">Hardwood</span>
@@ -59,12 +61,12 @@ const HomeDetails = ({}) => {
                 <span className="text">Dining Room</span>
               </li>
               <li>
-                <span className="text">Fireplace</span>
+                <span className="text">{t('Fireplace')}</span>
               </li>
             </ul>
           </div>
           <div className="box">
-            <strong className="subtitle">Bathroom</strong>
+            <strong className="subtitle">{t('Bathroom')}</strong>
             <ul className="list">
               <li>
                 <span className="text">1 Full bath</span>
@@ -80,7 +82,7 @@ const HomeDetails = ({}) => {
         </div>
         <div className="column">
           <div className="box">
-            <strong className="subtitle">Fireplace</strong>
+            <strong className="subtitle">{t('Fireplace')}</strong>
             <ul className="list">
               <li>
                 <span className="text">Has Fireplace</span>
@@ -94,7 +96,7 @@ const HomeDetails = ({}) => {
             </ul>
           </div>
           <div className="box">
-            <strong className="subtitle">Heating & Cooling</strong>
+            <strong className="subtitle">{t('Heating & Cooling')}</strong>
             <ul className="list">
               <li>
                 <span className="text">Cooling available</span>

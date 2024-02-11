@@ -15,11 +15,12 @@ import Toast from '../Toast';
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import ToggleSwitch from '../UserSearchFilter/ToggleSwitch';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const ProfileHeaderAgent = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-
+  const { t } = useTranslation();
   const { fetchUser } = useContextHook(AuthContext, ['fetchUser']);
   const [imageUrl, setImageUrl] = useState();
 
@@ -123,11 +124,11 @@ const ProfileHeaderAgent = ({ user }) => {
             </ul>
             <ul className="list">
               <li>
-                <span className="text">Enable Locke instant Chat with cellphone</span>
+                <span className="text">{t('Enable Locke instant Chat with cellphone')}</span>
                 <ToggleSwitch fieldName="instantChat" sm />
               </li>
               <li>
-                <span className="text">Night Mode (message between 8am to 8pm)</span>
+                <span className="text">{t('Night Mode')} (message between 8am to 8pm)</span>
                 <ToggleSwitch fieldName="nightMode" sm />
               </li>
             </ul>
@@ -136,7 +137,7 @@ const ProfileHeaderAgent = ({ user }) => {
         <div className="btn-holder" onClick={() => setModal(true)}>
           <Button>
             <IoSettingsOutline />
-            Edit Profile
+            {t('Edit Profile')}
           </Button>
         </div>
       </ProfileHead>

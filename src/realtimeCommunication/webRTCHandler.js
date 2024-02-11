@@ -115,11 +115,11 @@ let peer = null;
 export const prepareNewPeerConnection = (from, isInitiator) => {
   const localStream = store.getState().room.localStream;
 
-  // if (isInitiator) {
-  //   console.log("preparing new peer connection as initiator");
-  // } else {
-  //   console.log("preparing new peer connection as not initiator");
-  // }
+  if (isInitiator) {
+    console.log('preparing new peer connection as initiator');
+  } else {
+    console.log('preparing new peer connection as not initiator');
+  }
 
   peer = new Peer({
     initiator: isInitiator,
@@ -138,8 +138,8 @@ export const prepareNewPeerConnection = (from, isInitiator) => {
   });
 
   peer.on('stream', remoteStream => {
-    // console.log("remote stream came from other user");
-    // console.log("direct connection has been established");
+    console.log('remote stream came from other user');
+    console.log('direct connection has been established');
     addNewRemoteStream(remoteStream);
   });
 };

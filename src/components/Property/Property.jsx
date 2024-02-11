@@ -1,128 +1,120 @@
-import React, { useContext, useEffect, useState } from "react";
-import property1 from "../../../public/propertyCard/property1.jpg";
-import property2 from "../../../public/propertyCard/property2.jpg";
-import property3 from "../../../public/propertyCard/property3.jpg";
-import property4 from "../../../public/propertyCard/property4.jpg";
-import property5 from "../../../public/propertyCard/property5.jpg";
-import property6 from "../../../public/propertyCard/property6.jpg";
-import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { MdClose } from "react-icons/md";
-import { TfiMenuAlt } from "react-icons/tfi";
-import { TbMapPin } from "react-icons/tb";
-import PropertyCard from "../propertyCard/PropertyCard";
-import {
-  StyledProperty,
-  StyledPropertyCards,
-  FilterHeader,
-  FilterWrap,
-} from "./Property.styles";
-import SearchLocation from "../SearchLocation";
-import UserSearchFilter from "../UserSearchFilter";
-import Link from "next/link";
-import Pagination from "../Pagination";
+import React, { useContext, useEffect, useState } from 'react';
+import property1 from '../../../public/propertyCard/property1.jpg';
+import property2 from '../../../public/propertyCard/property2.jpg';
+import property3 from '../../../public/propertyCard/property3.jpg';
+import property4 from '../../../public/propertyCard/property4.jpg';
+import property5 from '../../../public/propertyCard/property5.jpg';
+import property6 from '../../../public/propertyCard/property6.jpg';
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import { MdClose } from 'react-icons/md';
+import { TfiMenuAlt } from 'react-icons/tfi';
+import { TbMapPin } from 'react-icons/tb';
+import PropertyCard from '../propertyCard/PropertyCard';
+import { StyledProperty, StyledPropertyCards, FilterHeader, FilterWrap } from './Property.styles';
+import SearchLocation from '../SearchLocation';
+import UserSearchFilter from '../UserSearchFilter';
+import Link from 'next/link';
+import Pagination from '../Pagination';
+import { useTranslation } from '@/helpers/useTranslation';
 
 export const PropertyDetail = [
   {
     id: 1,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
 
     img: property1,
     isFav: false,
   },
   {
     id: 2,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property2,
     isFav: false,
   },
   {
     id: 3,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property3,
     isFav: false,
   },
   {
     id: 4,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
-    link: "Riche-Luxury-Mansion",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
+    link: 'Riche-Luxury-Mansion',
     img: property4,
     isFav: false,
   },
   {
     id: 5,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
     img: property5,
     isFav: false,
-    link: "Luxury-Mansion",
+    link: 'Luxury-Mansion',
   },
   {
     id: 6,
-    price: "$50,500",
-    name: "Riche Luxury Mansion",
-    location: "St.Constitution Drive, West",
-    dimension: "6x8 m²",
-    beds: "4 Beds",
-    bath: "2 Baths",
+    price: '$50,500',
+    name: 'Riche Luxury Mansion',
+    location: 'St.Constitution Drive, West',
+    dimension: '6x8 m²',
+    beds: '4 Beds',
+    bath: '2 Baths',
     img: property6,
     isFav: false,
-    link: "Riche-Mansion",
+    link: 'Riche-Mansion',
   },
 ];
-export const FilterItem = [
-  "New York",
-  "For Buy",
-  "Duplex",
-  "$250-500k",
-  "Last 3 Weeks",
-  "Apartments",
-];
+export const FilterItem = ['New York', 'For Buy', 'Duplex', '$250-500k', 'Last 3 Weeks', 'Apartments'];
 const Property = () => {
   // pagination
   const [filterData, setFilterData] = useState(FilterItem);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterDropDown, setFilterDropDown] = useState(false);
+  const { t } = useTranslation();
 
   function handelProperFilter() {
     setFilterDropDown(!filterDropDown);
   }
   function handelFilter(item) {
-    setFilterData((prev) => prev.filter((elem) => elem !== item));
+    setFilterData(prev => prev.filter(elem => elem !== item));
   }
   return (
     <StyledProperty id="buyFilter">
       <FilterHeader>
         <div className="wrap">
           <div className="heading-box">
-            <h2>Top Properties</h2>
-            <span className="text">Total 315 properies</span>
+            <h2>{t('Top Properties')}</h2>
+            <span className="text">
+              {t('Total')} 315 {t('properies')}
+            </span>
           </div>
           <ul className="btn-list">
             <li>
@@ -138,10 +130,7 @@ const Property = () => {
           </ul>
         </div>
         <FilterWrap open={filterDropDown}>
-          <SearchLocation
-            handelFilter={handelProperFilter}
-            open={filterDropDown}
-          />
+          <SearchLocation handelFilter={handelProperFilter} open={filterDropDown} />
           <div className="handelDropDown">
             <UserSearchFilter setPopUp={setFilterDropDown} />
           </div>
@@ -149,11 +138,7 @@ const Property = () => {
             {filterData.map((elem, ind) => (
               <li key={ind}>
                 <span className="text">{elem}</span>
-                <button
-                  className="btn-close"
-                  type="button"
-                  onClick={() => handelFilter(elem)}
-                >
+                <button className="btn-close" type="button" onClick={() => handelFilter(elem)}>
                   <MdClose size="14" />
                 </button>
               </li>
@@ -162,7 +147,7 @@ const Property = () => {
         </FilterWrap>
       </FilterHeader>
       <StyledPropertyCards>
-        {PropertyDetail?.map((elem) => (
+        {PropertyDetail?.map(elem => (
           <PropertyCard
             link={`property-details/${elem.link}`}
             key={elem.id}
@@ -177,13 +162,7 @@ const Property = () => {
           />
         ))}
       </StyledPropertyCards>
-      <Pagination
-        page={1}
-        pageSize={10}
-        totalCount={20}
-        totalPages={3}
-        onPageChange={() => {}}
-      />
+      <Pagination page={1} pageSize={10} totalCount={20} totalPages={3} onPageChange={() => {}} />
     </StyledProperty>
   );
 };

@@ -94,7 +94,6 @@ const peoplesService = {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getDocuments(searchQuery))
         .then(res => {
-          console.log({ res });
           setDocuments(() => res);
           setStatus(STATUS.SUCCESS);
         })
@@ -106,6 +105,58 @@ const peoplesService = {
       documents_data: documents,
     };
   },
+
+  GetMyFavouritePeoples(searchQuery, refetch) {
+    const [favPeoples, setFavPeoples] = useState({
+      totalItems: 0,
+      items: [],
+      hasNextPage: false,
+      lastPage: 0,
+    });
+    const { cancellablePromise } = useCancellablePromise();
+    const [status, setStatus] = useState(STATUS.LOADING);
+    useEffect(() => {
+      setStatus(STATUS.LOADING);
+      cancellablePromise(this.getMyFavouritePeoples(searchQuery))
+        .then(res => {
+          setFavPeoples(() => res);
+          setStatus(STATUS.SUCCESS);
+        })
+        .catch(() => setStatus(STATUS.ERROR));
+    }, [searchQuery, refetch]);
+    return {
+      fav_peoples_loading: status === STATUS.LOADING,
+      fav_peoples_error: status === STATUS.ERROR ? status : '',
+      fav_peoples_data: favPeoples,
+    };
+  },
+
+  GetNotifications(searchQuery) {
+    const [notifications, setNotifications] = useState({
+      totalItems: 0,
+      items: [],
+      hasNextPage: false,
+      lastPage: 0,
+      nextPage,
+    });
+    const { cancellablePromise } = useCancellablePromise();
+    const [status, setStatus] = useState(STATUS.LOADING);
+    useEffect(() => {
+      setStatus(STATUS.LOADING);
+      cancellablePromise(this.getNotifications(searchQuery))
+        .then(res => {
+          setNotifications(() => res);
+          setStatus(STATUS.SUCCESS);
+        })
+        .catch(() => setStatus(STATUS.ERROR));
+    }, []);
+    return {
+      notifications_loading: status === STATUS.LOADING,
+      notifications_error: status === STATUS.ERROR ? status : '',
+      notifications_data: notifications,
+    };
+  },
+
   async getRecomenderAgents() {
     let res = await Fetch.get(`${_url}/recommender/agents`);
     if (res.status >= 200 && res.status < 300) {
@@ -119,8 +170,8 @@ const peoplesService = {
     throw new Error(message ?? 'Something went wrong');
   },
 
-  async getPeoples({ page = 1, pageSize = 10, licenseNumber = '' }) {
-    let res = await Fetch.get(`${_url}/agents?page=${page}&pageSize=${pageSize}&licenseNumber=${licenseNumber}`);
+  async getPeoples({ page = 1, pageSize = 10, address = '' }) {
+    let res = await Fetch.get(`${_url}/agents?page=${page}&pageSize=${pageSize}&address=${address}`);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return {
@@ -188,6 +239,63 @@ const peoplesService = {
   },
   async addPeopleToConversation(id, body) {
     let res = await Fetch.put(`${_url}/add-people/${id}`, body);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async toggleFavouritePeople(payload) {
+    let res = await Fetch.post(`${_url}/toggle-favourite-people`, payload);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async getMyFavouritePeoples({ page = '', pageSize = '' }) {
+    let res = await Fetch.get(`${_url}/my-liked-peoples?page=${page}&pageSize=${pageSize}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return {
+        items: res?.data?.items,
+        totalItems: res?.data?.totalItems,
+        hasNextPage: res?.data?.hasNextPage,
+        lastPage: res?.data?.lastPage,
+      };
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async getNotifications({ page = '1', pageSize = '10', all = '' }) {
+    let res = await Fetch.get(`${_url}/notifications?page=${page}&pageSize=${pageSize}&all=${all}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return {
+        items: res?.data?.items,
+        totalItems: res?.data?.totalItems,
+        hasNextPage: res?.data?.hasNextPage,
+        lastPage: res?.data?.lastPage,
+        nextPage: res?.data?.nextPage,
+        currentPage: res?.data?.currentPage,
+      };
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async markNotificationRead(id) {
+    let res = await Fetch.put(`${_url}/read-notification/${id}`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async deleteNotification(id) {
+    let res = await Fetch.delete(`${_url}/notification/${id}`);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return res;

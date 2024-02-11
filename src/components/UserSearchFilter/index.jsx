@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FilterHeader,
   FilterOption,
@@ -6,62 +6,63 @@ import {
   FilterOptionPropertyDetail,
   FilterOptionWrapper,
   UserFilterStyle,
-} from "./UserSearchFilter.styles";
-import { IoMdClose } from "react-icons/io";
-import { BiPlus } from "react-icons/bi";
-import { AiOutlineMinus } from "react-icons/ai";
-import ToggleSwitch from "./ToggleSwitch";
-import Slider from "rc-slider";
-import "rc-slider/assets/index.css";
-import "rc-tooltip/assets/bootstrap.css";
-import Tooltip from "rc-tooltip";
-import Input from "../TextField";
-import Button from "../Button";
-import Select from "../DropDown/PropertyDropDown";
-import { MaxSize, MinSize, YearFrom, YearTo } from "../Constants";
+} from './UserSearchFilter.styles';
+import { IoMdClose } from 'react-icons/io';
+import { BiPlus } from 'react-icons/bi';
+import { AiOutlineMinus } from 'react-icons/ai';
+import ToggleSwitch from './ToggleSwitch';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
+import Tooltip from 'rc-tooltip';
+import Input from '../TextField';
+import Button from '../Button';
+import Select from '../DropDown/PropertyDropDown';
+import { MaxSize, MinSize, YearFrom, YearTo } from '../Constants';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const detail = [
   {
-    title: "Home Type",
+    title: 'Home Type',
     propertyType: [
-      { type: "Home", qty: 150 },
-      { type: "Townhouse", qty: 120 },
-      { type: "Condo", qty: 45 },
-      { type: "Multi - Family", qty: 6 },
-      { type: "Land", qty: 75 },
-      { type: "Panthouse", qty: 75 },
+      { type: 'Home', qty: 150 },
+      { type: 'Townhouse', qty: 120 },
+      { type: 'Condo', qty: 45 },
+      { type: 'Multi - Family', qty: 6 },
+      { type: 'Land', qty: 75 },
+      { type: 'Panthouse', qty: 75 },
     ],
   },
   {
-    title: "Beds",
+    title: 'Beds',
     propertyType: [
-      { type: "Any", qty: 150 },
-      { type: "1+", qty: 120 },
-      { type: "2+", qty: 45 },
-      { type: "3+", qty: 6 },
-      { type: "4+", qty: 75 },
-      { type: "5+", qty: 75 },
+      { type: 'Any', qty: 150 },
+      { type: '1+', qty: 120 },
+      { type: '2+', qty: 45 },
+      { type: '3+', qty: 6 },
+      { type: '4+', qty: 75 },
+      { type: '5+', qty: 75 },
     ],
   },
   {
-    title: "Baths",
+    title: 'Baths',
     propertyType: [
-      { type: "Any", qty: 150 },
-      { type: "1+", qty: 120 },
-      { type: "2+", qty: 45 },
-      { type: "3+", qty: 6 },
-      { type: "4+", qty: 75 },
-      { type: "5+", qty: 75 },
+      { type: 'Any', qty: 150 },
+      { type: '1+', qty: 120 },
+      { type: '2+', qty: 45 },
+      { type: '3+', qty: 6 },
+      { type: '4+', qty: 75 },
+      { type: '5+', qty: 75 },
     ],
   },
 ];
 const status = [
   {
-    title: "Status",
+    title: 'Status',
     propertyType: [
-      { type: "Available", qty: 150 },
-      { type: "Pending", qty: 120 },
-      { type: "Closed", qty: 45 },
+      { type: 'Available', qty: 150 },
+      { type: 'Pending', qty: 120 },
+      { type: 'Closed', qty: 45 },
     ],
   },
 ];
@@ -70,6 +71,8 @@ const UserSearchFilter = ({ setPopUp, width }) => {
   const [indValue, setIndValue] = useState(null);
   const [indValueTwo, setIndValueTwo] = useState(null);
   const [rangeValue, setRangeValue] = useState([250, 500]);
+  const { t } = useTranslation();
+
   function handelIndexValue(ind) {
     if (ind == indValue) {
       setIndValue(null);
@@ -84,25 +87,25 @@ const UserSearchFilter = ({ setPopUp, width }) => {
       setIndValueTwo(ind);
     }
   }
-  const handleTipFormatter = (value) => {
+  const handleTipFormatter = value => {
     return <span className="tooltip">${value}k</span>;
   };
-  const handleRangeChange = (val) => {
+  const handleRangeChange = val => {
     setRangeValue(val);
   };
   const ref = useRef();
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (ref.current && !ref.current.contains(event.target)) {
       setPopUp(false);
     }
   };
   useEffect(() => {
     // Attach the event listener when the component mounts
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
   return (
@@ -111,21 +114,21 @@ const UserSearchFilter = ({ setPopUp, width }) => {
         <div className="closer" onClick={() => setPopUp(false)}>
           <IoMdClose size={20} />
         </div>
-        <p>Preferences</p>
+        <p>{t('Preferences')}</p>
         <Button variant="primary" width="80px">
-          Apply
+          {t('Apply')}
         </Button>
       </FilterHeader>
       <FilterOption>
         <FilterOptionWrapper>
           <div className="price">
-            <span>Price Range</span>
+            <span>{t('Price Range')}</span>
             <div className="priceWrapper">
               <span>
-                Min:<span translate="no">${rangeValue[0]}</span>k
+                {t('Min')}:<span translate="no">${rangeValue[0]}</span>k
               </span>
               <span>
-                Max :<span translate="no">${rangeValue[1]}</span>k
+                {t('Max')} :<span translate="no">${rangeValue[1]}</span>k
               </span>
             </div>
             <Slider.Range
@@ -161,14 +164,8 @@ const UserSearchFilter = ({ setPopUp, width }) => {
         {detail.map((elem, ind) => (
           <FilterOptionWrapper key={ind}>
             <div className="title" onClick={() => handelIndexValue(ind)}>
-              <span>{elem.title}</span>
-              <div className="icon">
-                {indValue == ind ? (
-                  <AiOutlineMinus size="20" />
-                ) : (
-                  <BiPlus size="20" />
-                )}
-              </div>
+              <span>{t(elem.title)}</span>
+              <div className="icon">{indValue == ind ? <AiOutlineMinus size="20" /> : <BiPlus size="20" />}</div>
             </div>
             <FilterOptionDetail $height={indValue == ind ? true : false}>
               {elem.propertyType.map((item, index) => (
@@ -184,20 +181,14 @@ const UserSearchFilter = ({ setPopUp, width }) => {
           </FilterOptionWrapper>
         ))}
         <div className="requirement">
-          <span>Must Have Garage</span>
+          <span>{t('Must Have Garage')}</span>
           <ToggleSwitch />
         </div>
         {status.map((elem, ind) => (
           <FilterOptionWrapper key={ind}>
             <div className="title" onClick={() => handelIndexValue(5)}>
-              <span>{elem.title}</span>
-              <div className="icon">
-                {indValue == 5 ? (
-                  <AiOutlineMinus size="20" />
-                ) : (
-                  <BiPlus size="20" />
-                )}
-              </div>
+              <span>{t(elem.title)}</span>
+              <div className="icon">{indValue == 5 ? <AiOutlineMinus size="20" /> : <BiPlus size="20" />}</div>
             </div>
             <FilterOptionDetail $height={indValue == 5 ? true : false}>
               {elem.propertyType.map((item, index) => (
@@ -214,66 +205,36 @@ const UserSearchFilter = ({ setPopUp, width }) => {
         ))}
         <FilterOptionWrapper>
           <div className="title" onClick={() => handelIndexValue(6)}>
-            <span>Property Details</span>
-            <div className="icon">
-              {indValue == 6 ? (
-                <AiOutlineMinus size="20" />
-              ) : (
-                <BiPlus size="20" />
-              )}
-            </div>
+            <span>{t('Property Details')}</span>
+            <div className="icon">{indValue == 6 ? <AiOutlineMinus size="20" /> : <BiPlus size="20" />}</div>
           </div>
           <FilterOptionPropertyDetail $height={indValue == 6 ? true : false}>
             <li>
-              <span className="span">Size</span>
+              <span className="span">{t('Size')}</span>
 
               <div className="dropDown">
-                <Select
-                  title="No min"
-                  onChange={(val) => console.log(val, "val")}
-                  option={MinSize}
-                />
-                <Select
-                  title="No max"
-                  onChange={(val) => console.log(val, "val")}
-                  option={MaxSize}
-                />
+                <Select title="No min" onChange={val => console.log(val, 'val')} option={MinSize} />
+                <Select title="No max" onChange={val => console.log(val, 'val')} option={MaxSize} />
               </div>
             </li>
             <li>
-              <span className="span">Lot Size (Sq.Ft)</span>
+              <span className="span">{t('Lot Size')} (Sq.Ft)</span>
 
               <div className="dropDown">
-                <Select
-                  title="No min"
-                  onChange={(val) => console.log(val, "val")}
-                  option={MinSize}
-                />
-                <Select
-                  option={MaxSize}
-                  title="No max"
-                  onChange={(val) => console.log(val, "val")}
-                />
+                <Select title="No min" onChange={val => console.log(val, 'val')} option={MinSize} />
+                <Select option={MaxSize} title="No max" onChange={val => console.log(val, 'val')} />
               </div>
             </li>
             <li>
-              <span className="span">Year Built</span>
+              <span className="span">{t('Year Built')}</span>
               <div className="dropDown">
-                <Select
-                  option={YearFrom}
-                  title="From"
-                  onChange={(val) => console.log(val, "val")}
-                />
-                <Select
-                  option={YearTo}
-                  title="To"
-                  onChange={(val) => console.log(val, "val")}
-                />
+                <Select option={YearFrom} title="From" onChange={val => console.log(val, 'val')} />
+                <Select option={YearTo} title="To" onChange={val => console.log(val, 'val')} />
               </div>
             </li>
           </FilterOptionPropertyDetail>
         </FilterOptionWrapper>
-        <Button variant="danger">Reset</Button>
+        <Button variant="danger">{t('Reset')}</Button>
       </FilterOption>
     </UserFilterStyle>
   );

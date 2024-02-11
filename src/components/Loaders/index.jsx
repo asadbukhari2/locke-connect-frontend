@@ -2,6 +2,7 @@ import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import LockeyLogo from '../../../public/logo.svg';
 import {
   PageLoaderWrapper,
@@ -15,7 +16,7 @@ import {
   ViewLoader,
 } from './Loaders.styles';
 
-function Loaders({ pageLoader, viewLoader, notificationLoader, buttonLoader, height, loading, children }) {
+function Loaders({ pageLoader, viewLoader, notificationLoader, buttonLoader, height, loading, children, count = 1 }) {
   return (
     <>
       {pageLoader && (
@@ -76,46 +77,48 @@ function Loaders({ pageLoader, viewLoader, notificationLoader, buttonLoader, hei
           </svg>
         </BtnLoader>
       )}
-      {notificationLoader && (
-        <div
-          css={`
-            display: flex;
-            flex-direction: column;
-          `}>
-          <Skeleton
-            count={1}
-            width={150}
-            height={15}
-            css={`
-              border-radius: 10px;
-            `}
-          />
-          <Skeleton
-            count={1}
-            width={130}
-            height={15}
-            css={`
-              border-radius: 10px;
-            `}
-          />
-          <Skeleton
-            count={1}
-            width={280}
-            height={15}
-            css={`
-              border-radius: 10px;
-            `}
-          />
-          <Skeleton
-            count={1}
-            width={150}
-            height={15}
-            css={`
-              border-radius: 10px;
-            `}
-          />
-        </div>
-      )}
+      {notificationLoader &&
+        Array.from({ length: count }).map(_ => {
+          return (
+            <div
+              css={`
+                display: flex;
+                /* flex-direction: column; */
+              `}>
+              <Skeleton
+                count={1}
+                width={50}
+                height={50}
+                css={`
+                  border-radius: 10px;
+                `}
+              />
+              <div
+                css={`
+                  width: 100%;
+                `}>
+                <Skeleton
+                  count={1}
+                  width="100%"
+                  height={25}
+                  css={`
+                    border-radius: 10px;
+                    margin-left: 5px;
+                  `}
+                />
+                <Skeleton
+                  count={1}
+                  width={280}
+                  height={15}
+                  css={`
+                    border-radius: 10px;
+                    margin-left: 5px;
+                  `}
+                />
+              </div>
+            </div>
+          );
+        })}
     </>
   );
 }

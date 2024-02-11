@@ -1,22 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  ChatFooterWidget,
-  ChatShortCut,
-  StyledChatFooter,
-} from "./ChatFooter.styles";
-import messageSend from "../../../../public/messageSend.svg";
-import home from "../../../../public/home.svg";
-import imagepreview from "../../../../public/imagepreview.svg";
-import userAdd from "../../../../public/userAdd.svg";
-import contact from "../../../../public/contact.svg";
-import Image from "next/image";
-import { MdOutlineAdd } from "react-icons/md";
-import { IoDocumentTextOutline } from "react-icons/io5";
-import UploadDoc from "../ChatModal/UploadDoc";
-import Modal from "@/components/Modal";
-import AddPeople from "../ChatModal/AddPeople";
-import ShareContact from "../ChatModal/ShareContact";
-import AddProperty from "../ChatModal/AddProperty";
+import React, { useEffect, useRef, useState } from 'react';
+import { ChatFooterWidget, ChatShortCut, StyledChatFooter } from './ChatFooter.styles';
+import messageSend from '../../../../public/messageSend.svg';
+import home from '../../../../public/home.svg';
+import imagepreview from '../../../../public/imagepreview.svg';
+import userAdd from '../../../../public/userAdd.svg';
+import contact from '../../../../public/contact.svg';
+import Image from 'next/image';
+import { MdOutlineAdd } from 'react-icons/md';
+import { IoDocumentTextOutline } from 'react-icons/io5';
+import UploadDoc from '../ChatModal/UploadDoc';
+import Modal from '@/components/Modal';
+import AddPeople from '../ChatModal/AddPeople';
+import ShareContact from '../ChatModal/ShareContact';
+import AddProperty from '../ChatModal/AddProperty';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const ChatFooter = ({
   inputMessage,
@@ -36,21 +33,21 @@ const ChatFooter = ({
   const [addProperty, setAddProperty] = useState(false);
 
   const ChatWidget = useRef();
-
-  const handleClickOutsideChatWidget = (event) => {
+  const { t } = useTranslation();
+  const handleClickOutsideChatWidget = event => {
     if (ChatWidget.current && !ChatWidget.current.contains(event.target)) {
       setMenuOpen(false);
     }
   };
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutsideChatWidget);
+    document.addEventListener('mousedown', handleClickOutsideChatWidget);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutsideChatWidget);
+      document.removeEventListener('mousedown', handleClickOutsideChatWidget);
     };
   }, []);
 
-  const handleKeyPress = (event) => {
-    if (event?.key === "Enter" && event?.target?.value?.length) {
+  const handleKeyPress = event => {
+    if (event?.key === 'Enter' && event?.target?.value?.length) {
       handleSendMessage(event);
     }
   };
@@ -59,7 +56,7 @@ const ChatFooter = ({
     <>
       <StyledChatFooter>
         <input
-          placeholder="Write here..."
+          placeholder={`${t('Write here')}...`}
           value={inputMessage}
           onChange={handleMessageChange}
           onKeyDown={handleKeyPress}
@@ -87,10 +84,7 @@ const ChatFooter = ({
                 <Image src={home} alt="home" />
               </li>
             </ul>
-            <div
-              className="openShortCut"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
+            <div className="openShortCut" onClick={() => setMenuOpen(!menuOpen)}>
               <MdOutlineAdd size={22} />
             </div>
           </ChatShortCut>
@@ -100,25 +94,16 @@ const ChatFooter = ({
         </ChatFooterWidget>
       </StyledChatFooter>
       <Modal open={doc} setOpen={setDoc} width="1020px">
-        <UploadDoc
-          handleSelectFiles={handleSelectFiles}
-          onClose={() => setDoc(false)}
-        />
+        <UploadDoc handleSelectFiles={handleSelectFiles} onClose={() => setDoc(false)} />
       </Modal>
       {/* <Modal open={addPeople} setOpen={setAddPeople} width="1020px">
         <AddPeople onClose={() => setAddPeople(false)} />
       </Modal> */}
       <Modal open={shareContact} setOpen={setShareContact} width="1020px">
-        <ShareContact
-          handleSelectContact={handleSelectContact}
-          onClose={() => setShareContact(false)}
-        />
+        <ShareContact handleSelectContact={handleSelectContact} onClose={() => setShareContact(false)} />
       </Modal>
       <Modal open={addProperty} setOpen={setAddProperty} width="1020px">
-        <AddProperty
-          handleSelectProperty={handleSelectProperty}
-          onClose={() => setAddProperty(false)}
-        />
+        <AddProperty handleSelectProperty={handleSelectProperty} onClose={() => setAddProperty(false)} />
       </Modal>
     </>
   );

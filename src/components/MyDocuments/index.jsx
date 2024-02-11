@@ -17,9 +17,12 @@ import peoplesService from '@/services/peoples';
 import { AuthContext } from '@/context/authContext';
 import { useContextHook } from 'use-context-hook';
 import { getFileType } from '@/helpers/common';
+import { useTranslation } from '@/helpers/useTranslation';
 
 function MyDocuments() {
   const fileInputRef = useRef(null);
+  const { t } = useTranslation();
+
   const { refetch, setRefetch } = useContextHook(AuthContext, ['refetch', 'setRefetch']);
   const [photos, setPhotos] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -155,12 +158,12 @@ function MyDocuments() {
     </div>
   );
 
-  const columnNames = ['Document Type', 'Name', 'Upload Date / Time', ''];
+  const columnNames = [t('Document Type'), t('Name'), t('Upload Date / Time'), ''];
   const FilterBtns = () => (
     <>
       <PropertySelect
         className="selectProfile"
-        title="Document Type"
+        title={t('Document Type')}
         option={DocumentType}
         onChange={val => console.log(val, 'val')}
       />
@@ -168,13 +171,13 @@ function MyDocuments() {
         <label htmlFor="upload_doc" onClick={handleButtonClick}>
           <Button width="200px" sm disable={uploadLoading} loader={uploadLoading}>
             <FiPlus />
-            Upload A Document
+            {t('Upload A Document')}
           </Button>
         </label>
         <input ref={fileInputRef} type="file" id="upload_doc" onChange={uploadDocument} />
       </ButtonWrapp>
       <Button width="200px" variant="success" sm>
-        I Need a Loan
+        {t('I Need a Loan')}
       </Button>
     </>
   );
@@ -195,11 +198,17 @@ function MyDocuments() {
         <ModalDelete setOpen={setPhotos} />
       </Modal>
       <TableLayout
-        title="My Documents"
+        onChangeFilters={() => {
+          setSearchQuery(_ => ({
+            ..._,
+          }));
+        }}
+        title={t('My Documents')}
         filterBtns={FilterBtns}
         currentPage={searchQuery.page}
         totalCount={totalCount ?? 0}
         pageSize={searchQuery.pageSize}
+        totalPages={totalCount ? Math.ceil(totalCount / searchQuery.pageSize) : 2}
         noNegativeMargin>
         <Table loading={documents_loading} columnNames={columnNames} rowsData={documents} noPadding />
       </TableLayout>

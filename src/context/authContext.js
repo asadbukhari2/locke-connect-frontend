@@ -8,7 +8,9 @@ import { useRouter } from 'next/router';
 import { useCancellablePromise } from '@/helpers/promiseHandler';
 import { socketServer } from '@/utils/socketServerConnection';
 import { useDispatch } from 'react-redux';
-import { onLogout as CLEAR } from '../features/messageSlice';
+import { onLogout as CLEAR, fetchAllConversations } from '../features/messageSlice';
+import { getNotifications } from '@/features/commonSlice';
+import { LanguageData } from '@/components/Constants';
 
 const context = {};
 
@@ -21,6 +23,8 @@ export function AuthContextProvider(props) {
   const [loading_user, setLoadingUser] = useState(false);
   const [fetchUser, setFetchUser] = useState(false);
   const [refetch, setRefetch] = useState(false);
+  const [lang, setLang] = useState();
+
   const { cancellablePromise } = useCancellablePromise();
   const dispatch = useDispatch();
 
@@ -66,6 +70,17 @@ export function AuthContextProvider(props) {
     if (isLoggedIn) {
       getCurrentUser();
     }
+    const language = JSON.parse(
+      getCookie('_lang') ??
+        `${JSON.stringify({
+          label: LanguageData[0].language,
+          value: LanguageData[0].value,
+          img: LanguageData[0].img,
+        })}`,
+    );
+    console.log({ language });
+    setLang(language);
+
     // listen to event
     window.addEventListener('FETCH_CURRENT_USER', () => {
       getCurrentUser();
@@ -81,12 +96,14 @@ export function AuthContextProvider(props) {
     setLoadingUser(true);
     try {
       const res = await userService.signin({ email, password });
-      console.log({ res });
+
       if (!res?.accessToken) {
         throw new Error(res?.message || 'Error Logging in');
       }
       Toast({ type: 'success', message: 'Logged in' });
       setCookie(process.env.NEXT_PUBLIC_TOKEN, res.accessToken);
+      // dispatch(getNotifications({ page: 1, pageSize: 5, all: false }));
+      // dispatch(fetchAllConversations());
       setIsLoggedIn(true);
       redirect();
 
@@ -113,6 +130,11 @@ export function AuthContextProvider(props) {
       refetch: refetch,
       user,
       loading_user,
+      setLang: x => {
+        setCookie('_lang', JSON.stringify(x));
+        setLang(x);
+      },
+      lang: lang,
     }),
     [isLoggedIn, onLogin, user],
   );

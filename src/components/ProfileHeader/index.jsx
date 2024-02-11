@@ -14,8 +14,11 @@ import userService from '@/services/auth';
 import Toast from '../Toast';
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const ProfileHeader = ({ user }) => {
+  const { t } = useTranslation();
+
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
 
@@ -118,7 +121,7 @@ const ProfileHeader = ({ user }) => {
         <div className="btn-holder" onClick={() => setModal(true)}>
           <Button>
             <IoSettingsOutline />
-            Edit Profile
+            {t('Edit Profile')}
           </Button>
         </div>
       </ProfileHead>

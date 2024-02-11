@@ -1,30 +1,27 @@
-import React, { useMemo, useState } from "react";
-import {
-  ChatModalContent,
-  StyledChatModal,
-  UploadDocumentWrapper,
-} from "./ChatModal.styles";
-import Image from "next/image";
-import Button from "@/components/Button";
-import { MdAdd } from "react-icons/md";
-import peoplesService from "@/services/peoples";
-import Loaders from "@/components/Loaders";
-import { NoRecordFound } from "@/components/NoRecordFound/NoRecord.styles";
+import React, { useMemo, useState } from 'react';
+import { ChatModalContent, StyledChatModal, UploadDocumentWrapper } from './ChatModal.styles';
+import Image from 'next/image';
+import Button from '@/components/Button';
+import { MdAdd } from 'react-icons/md';
+import peoplesService from '@/services/peoples';
+import Loaders from '@/components/Loaders';
+import { NoRecordFound } from '@/components/NoRecordFound/NoRecord.styles';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const ShareContact = ({ handleSelectContact, onClose }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState({
     page: 1,
     pageSize: 100,
-    startDate: "",
-    endDate: "",
-    filterText: "",
+    startDate: '',
+    endDate: '',
+    filterText: '',
   });
-  const { peoples_data, peoples_loading } =
-    peoplesService.GetPeoples(searchQuery);
+  const { peoples_data, peoples_loading } = peoplesService.GetPeoples(searchQuery);
 
   const { peoples } = useMemo(() => {
     return {
-      peoples: peoples_data?.peoples?.map((itm) => ({
+      peoples: peoples_data?.peoples?.map(itm => ({
         id: itm?.id,
         name: itm.displayName,
         License: itm?.licenseNumber,
@@ -37,24 +34,19 @@ const ShareContact = ({ handleSelectContact, onClose }) => {
 
   return (
     <StyledChatModal>
-      <strong className="title">Share Contact</strong>
+      <strong className="title">{t('Share Contact')}</strong>
       <ChatModalContent>
         <UploadDocumentWrapper>
           <ul>
             {peoples_loading ? (
               <Loaders loading={peoples_loading} height={100} />
             ) : peoples?.length ? (
-              peoples.map((elem) => (
+              peoples.map(elem => (
                 <li key={elem.id}>
                   <div className="addpeopleWrapper">
                     <div className="profileInfo">
                       <figure className="imageWrapper">
-                        <Image
-                          src={elem.contactimg}
-                          alt="user"
-                          width={64}
-                          height={64}
-                        />
+                        <Image src={elem.contactimg} alt="user" width={64} height={64} />
                       </figure>
                       <div className="text">
                         <strong className="strong-title">{elem.name}</strong>
@@ -67,8 +59,7 @@ const ShareContact = ({ handleSelectContact, onClose }) => {
                       onClick={() => {
                         handleSelectContact(elem);
                         onClose();
-                      }}
-                    >
+                      }}>
                       <MdAdd size="22" />
                       Add
                     </Button>
@@ -76,7 +67,7 @@ const ShareContact = ({ handleSelectContact, onClose }) => {
                 </li>
               ))
             ) : (
-              <NoRecordFound>No Agents Found</NoRecordFound>
+              <NoRecordFound>{t('No Agents Found')}</NoRecordFound>
             )}
           </ul>
         </UploadDocumentWrapper>

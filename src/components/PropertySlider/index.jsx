@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import Image from "next/image";
-import bgImg01 from "../../../public/img01.jpg";
-import buildingImg from "../../../public/building-icon.svg";
-import { LiaMapMarkedAltSolid } from "react-icons/lia";
-import { TbPhoto } from "react-icons/tb";
-import { SliderHolder } from "./PropertySlider.styles";
-import Modal from "../Modal";
-import PhotoModal from "./PropertyModal/PhotoModal";
-import StreetView from "./PropertyModal/StreetView";
+import React, { useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import Image from 'next/image';
+import bgImg01 from '../../../public/img01.jpg';
+import buildingImg from '../../../public/building-icon.svg';
+import { LiaMapMarkedAltSolid } from 'react-icons/lia';
+import { TbPhoto } from 'react-icons/tb';
+import { SliderHolder } from './PropertySlider.styles';
+import Modal from '../Modal';
+import PhotoModal from './PropertyModal/PhotoModal';
+import StreetView from './PropertyModal/StreetView';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const PropertySlider = ({}) => {
+  const { t } = useTranslation();
   const [photos, setPhotos] = useState(false);
   const [street, setStreet] = useState(false);
   const settings = {
@@ -40,16 +42,16 @@ const PropertySlider = ({}) => {
             <div className="inner">
               <div className="time-info">
                 <Image src={buildingImg} width="22" alt="img" />
-                <span className="text">Open at 11 Sept : 12:00pm - 2:00pm</span>
+                <span className="text">{t('Open at')} 11 Sept : 12:00pm - 2:00pm</span>
               </div>
               <div className="btn-holder">
                 <button type="button" onClick={() => setPhotos(true)}>
                   <TbPhoto size="18" />
-                  Photos
+                  {t('Photos')}
                 </button>
                 <button type="button" onClick={() => setStreet(true)}>
                   <LiaMapMarkedAltSolid size="19" />
-                  street View
+                  {t('street View')}
                 </button>
               </div>
             </div>
@@ -59,16 +61,16 @@ const PropertySlider = ({}) => {
             <div className="inner">
               <div className="time-info">
                 <Image src={buildingImg} width="22" alt="img" />
-                <span className="text">Open at 11 Sept : 12:00pm - 2:00pm</span>
+                <span className="text">{t('Open at')} 11 Sept : 12:00pm - 2:00pm</span>
               </div>
               <div className="btn-holder">
                 <button type="button">
                   <TbPhoto size="18" />
-                  Photos
+                  {t('Photos')}
                 </button>
                 <button type="button">
                   <LiaMapMarkedAltSolid size="19" />
-                  street View
+                  {t('street View')}
                 </button>
               </div>
             </div>
