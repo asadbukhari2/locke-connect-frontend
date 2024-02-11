@@ -1,16 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AccountDetailStyled } from './AgentProfileComp.styles';
 import Input from '../TextField';
 import Select from '../DropDown/PropertyDropDown';
 import { LicenseTypes, UsStates } from '../Constants';
 import Button from '../Button';
 import { useTranslation } from '@/helpers/useTranslation';
+import { useContextHook } from 'use-context-hook';
+import { AuthContext } from '@/context/authContext';
+import { formatPhoneNumber } from '@/helpers/common';
 
 const AcountDetail = () => {
   const { t } = useTranslation();
+  const { user } = useContextHook(AuthContext, ['user']);
+  console.log({ user });
+  const [formData, setFormData] = useState({
+    displayName: user?.displayName,
+    phoneNumber: formatPhoneNumber(user?.phoneNumber?.slice(2)),
+    address: user?.address || '',
+  });
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  };
+
+  const handlePhoneNumberChange = event => {
+    const rawPhoneNumber = event.target.value;
+    const formattedPhoneNumber = formatPhoneNumber(rawPhoneNumber);
+    handleChange({
+      target: { name: 'phoneNumber', value: formattedPhoneNumber },
+    });
+  };
   return (
     <AccountDetailStyled>
-      <div className="inputWrap">
+      {/* <div className="inputWrap">
         <label htmlFor="profile-image" className="field_title">
           {t('Upload Profile Picture')}
         </label>
@@ -31,7 +54,7 @@ const AcountDetail = () => {
             </Button>
           </label>
         </div>
-      </div>
+      </div> */}
       <div className="inputWrap">
         <label htmlFor="name" className="field_title">
           {t('Name')}
@@ -76,7 +99,7 @@ const AcountDetail = () => {
       </div>
       <div className="inputWrap">
         <label htmlFor="phn_no" className="field_title">
-          {t('Acconut Deletation')}
+          {t('Account Deletion')}
         </label>
         <span className="deleteAccount">{t('Delete Account')}</span>
       </div>

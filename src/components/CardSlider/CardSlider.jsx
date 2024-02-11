@@ -37,13 +37,15 @@ export default function CardSlider({ agents }) {
   const handelFavourite = async id => {
     try {
       const userToFav = { id };
+      setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: !elem.isFav } : elem)));
       const response = await peoplesService.toggleFavouritePeople(userToFav);
-      if (response.success) {
-        setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: !elem.isFav } : elem)));
+      if (!response?.success) {
+        setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: false } : elem)));
       }
       console.log(response);
     } catch (error) {
       console.log(error);
+      setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: false } : elem)));
     }
   };
 
