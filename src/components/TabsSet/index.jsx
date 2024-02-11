@@ -20,7 +20,7 @@ const TabsSet = ({ tabs, todayRate, responsive }) => {
             key={index}
             isActive={index === activeTab}
             onClick={() => handleTabClick(index)}>
-            {t(tab.label)}
+            {t(tab?.label)}
           </TabButton>
         ))}
       </TabsList>

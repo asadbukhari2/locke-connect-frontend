@@ -20,6 +20,7 @@
     "env-cmd": "^10.1.0",
     "firebase": "^10.7.1",
     "highcharts": "^11.3.0",
+    "jwt-decode": "^4.0.0",
     "next": "^14.0.4",
     "rc-slider": "^9.7.5",
     "rc-tooltip": "^6.1.3",

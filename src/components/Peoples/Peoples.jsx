@@ -61,7 +61,7 @@ const Peoples = () => {
   useEffect(() => {
     const updatedPeoples = peoples_data.peoples.map(person => ({
       ...person,
-      isFav: user.likedPeoples.includes(person.id),
+      isFav: user?.likedPeoples?.includes(person.id),
     }));
     setPeoples({ totalItems: peoples_data.totalItems, peoples: updatedPeoples });
   }, [peoples_loading]);

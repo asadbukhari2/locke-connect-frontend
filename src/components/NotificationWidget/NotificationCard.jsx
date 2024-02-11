@@ -9,6 +9,7 @@ import dots from '../../../public/dots.png';
 import user1 from '../../../public/payment.png';
 import user2 from '../../../public/user.png';
 import user3 from '../../../public/setting.png';
+import { useTranslation } from '@/helpers/useTranslation';
 
 const NotificationCard = ({
   clickHandler,
@@ -19,6 +20,7 @@ const NotificationCard = ({
   elem,
   ind,
 }) => {
+  const { t } = useTranslation('');
   return (
     <li onClick={() => clickHandler(elem)}>
       <div className="chatImageText">
@@ -56,9 +58,9 @@ const NotificationCard = ({
             <span className="icon">
               <Image src={trash} alt="trash" />
             </span>
-            <p>Delete</p>
+            <p>{t('Delete')}</p>
           </div>
-          <div className="wrap">
+          {/* <div className="wrap">
             <span className="icon">
               <Image src={archive} alt="archive" />
             </span>
@@ -69,7 +71,7 @@ const NotificationCard = ({
               <Image src={mute} alt="mute" />
             </span>
             <p>Mute</p>
-          </div>
+          </div> */}
         </NotificationDropDown>
       </div>
     </li>
