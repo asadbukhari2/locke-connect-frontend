@@ -100,26 +100,21 @@ const ProfileHeaderAgent = ({ user }) => {
             )}
           </div>
           <div className="text-box">
-            <strong className="title">
-              John Adams <span className="licence">(DRE#3213214 CA)</span>
-            </strong>
+        
 
-            {/* <strong className="title">{user?.displayName}</strong> */}
+            <strong className="title">{user?.displayName}</strong>
             <ul className="list">
               <li>
                 <TbMapPin />
-                <span className="text">St.Constitution Drive, West</span>
-                {/* <span className="text">{user?.address}</span> */}
+                <span className="text">{user?.address}</span>
               </li>
               <li>
                 <PiPhoneCallBold />
-                <span className="text">+1 123 456 7890</span>
-                {/* <span className="text">{user?.phoneNumber}</span> */}
+                <span className="text">{user?.phoneNumber}</span>
               </li>
               <li>
                 <FaRegEnvelope />
-                <span className="text">johnadams@gmail.com</span>
-                {/* <span className="text">{user?.email}</span> */}
+                <span className="text">{user?.email}</span>
               </li>
             </ul>
             <ul className="list">
