@@ -158,7 +158,8 @@ export const NotificationDropDown = styled.div`
   z-index: 2;
   box-sizing: border-box;
   position: absolute;
-  top: 70px;
+  top: 20px;
+  right: 50px;
   box-shadow: 0px 48px 64px -16px rgba(29, 41, 57, 0.1);
   width: 113px;
   display: flex;
@@ -169,7 +170,7 @@ export const NotificationDropDown = styled.div`
   border-radius: 12px;
   border: 1px solid var(--gray-50);
   background: var(--white);
-  height: ${({ $show }) => ($show ? '128px' : '0')};
+  max-height: ${({ $show }) => ($show ? '128px' : '0')};
   overflow: hidden;
   visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
   transition: 0.3s all ease-in;

@@ -18,6 +18,7 @@ import { AuthContext } from '@/context/authContext';
 import { useContextHook } from 'use-context-hook';
 import peoplesService from '@/services/peoples';
 import { useTranslation } from '@/helpers/useTranslation';
+import ShareContactLink from '../ShareContact';
 
 export default function CardSlider({ agents }) {
   const [people, setPeople] = useState(agents);
@@ -52,6 +53,9 @@ export default function CardSlider({ agents }) {
       <Modal open={shareContacts} setOpen={setShareContacts} width="900px">
         <ShareContact />
       </Modal>
+      {/* <Modal open={true} width="600px">
+        <ShareContactLink onClick={e => console.log(e)} />
+      </Modal> */}
       <SliderMain>
         <Swiper
           effect={'cards'}

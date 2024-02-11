@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledChatProfile = styled.div``;
 
@@ -119,9 +119,9 @@ export const NotificationDropDown = styled.div`
   border-radius: 12px;
   border: 1px solid var(--gray-50);
   background: var(--white);
-  height: ${({ $show }) => ($show ? "128px" : "0")};
+  max-height: ${({ $show }) => ($show ? '128px' : '0')};
   overflow: hidden;
-  visibility: ${({ $show }) => ($show ? "visible" : "hidden")};
+  visibility: ${({ $show }) => ($show ? 'visible' : 'hidden')};
   transition: 0.3s all ease-in;
 
   .wrap {

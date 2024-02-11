@@ -121,21 +121,25 @@ const Notification = () => {
   return (
     <div>
       <ChatMessageMain ref={NotificationRef} $height>
-        {notifications &&
-          notifications.map((elem, ind) => (
-            <>
-              <NotificationCard
-                ind={ind}
-                elem={elem}
-                clickHandler={clickHandler}
-                onDropDown={handelDropDown}
-                onDeleteNotification={onDeleteNotification}
-                dropdownRef={dropdownRef}
-                toggleDropDown={toggleDropDown}
-                page={true}
-              />
-            </>
-          ))}
+        {notifications && (
+          <>
+            <h2>Recent Notification</h2>
+            {notifications.map((elem, ind) => (
+              <>
+                <NotificationCard
+                  ind={ind}
+                  elem={elem}
+                  clickHandler={clickHandler}
+                  onDropDown={handelDropDown}
+                  onDeleteNotification={onDeleteNotification}
+                  dropdownRef={dropdownRef}
+                  toggleDropDown={toggleDropDown}
+                  page={true}
+                />
+              </>
+            ))}
+          </>
+        )}
       </ChatMessageMain>
 
       {isLoading && <Loaders notificationLoader={true} />}
