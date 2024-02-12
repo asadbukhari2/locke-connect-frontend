@@ -1,19 +1,10 @@
-import React from "react";
-import { InputStyled, StyledTextField } from "./TextField.styles";
-import info from "../../../public/infoIcon.svg";
-import question from "../../../public/question.svg";
-import Image from "next/image";
+import React from 'react';
+import { InputStyled, StyledTextField } from './TextField.styles';
+import info from '../../../public/infoIcon.svg';
+import question from '../../../public/question.svg';
+import Image from 'next/image';
 
-const Input = ({
-  Field_Name,
-  label,
-  error,
-  toolTip,
-  className,
-  hasIcon,
-  disabled,
-  ...rest
-}) => {
+const Input = ({ Field_Name, label, error, toolTip, className, hasIcon, disabled, ...rest }) => {
   return (
     <StyledTextField className={className}>
       {label && (
@@ -21,12 +12,7 @@ const Input = ({
           {label}
         </label>
       )}
-      <InputStyled
-        $error={error}
-        className="inputstyle_custom"
-        $hasIcon={hasIcon}
-        $disable={disabled}
-      >
+      <InputStyled $error={error} className="inputstyle_custom" $hasIcon={hasIcon} $disable={disabled}>
         <div className="iconWrapper">{hasIcon}</div>
         <input {...rest} id={Field_Name} disabled={disabled} />
       </InputStyled>

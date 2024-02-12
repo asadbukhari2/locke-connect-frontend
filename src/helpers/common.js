@@ -36,14 +36,14 @@ export const clearCookie = name => {
 };
 
 export const formatPhoneNumber = inputValue => {
-  const phoneNumber = inputValue.replace(/[^\d]/g, '');
+  const phoneNumber = inputValue?.replace(/[^\d]/g, '');
 
   if (phoneNumber?.length <= 3) {
     return phoneNumber;
-  } else if (phoneNumber.length <= 6) {
-    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+  } else if (phoneNumber?.length <= 6) {
+    return `(${phoneNumber?.slice(0, 3)}) ${phoneNumber?.slice(3)}`;
   } else {
-    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+    return `(${phoneNumber?.slice(0, 3)}) ${phoneNumber?.slice(3, 6)}-${phoneNumber?.slice(6, 10)}`;
   }
 };
 
@@ -124,7 +124,7 @@ export const LangConverter = (content = '', lang = 'en') => {
     }
     return newObj;
   };
- 
+
   if (lang === 'es' && content) {
     return toLowerCaseKeysObject(spanishVocab)[content.trim().toLowerCase().replace(/-/, ' ')] ?? content;
   }
