@@ -19,7 +19,7 @@ const Notification = () => {
   const fetchNotifications = async r => {
     try {
       setIsLoading(true);
-      const res = await peoplesService.getNotifications({ page: nextPage, pageSize: 10, all: true });
+      const res = await peoplesService.getNotifications({ page: nextPage, pageSize: 5, all: true });
       setNotifications(prevNotifications => {
         const uniqueItems = res.items.filter(
           newItem => !prevNotifications.some(prevItem => prevItem.id === newItem.id),
@@ -79,7 +79,6 @@ const Notification = () => {
         setToggleDropDown(null);
       }
     };
-    console.log('down run');
     document.addEventListener('mousedown', handleClickOutsideNotification);
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideNotification);

@@ -42,6 +42,7 @@ import Suggestion from '../Suggestion';
 import ChatAside from '../chat/ChatAside';
 import { MyContext } from '@/context/card';
 import { useTranslation } from '@/helpers/useTranslation';
+import { useSelector } from 'react-redux';
 
 const location = [
   'New York ,US',
@@ -61,6 +62,9 @@ function Header() {
 
   const { t } = useTranslation();
 
+  const { unreadMessages } = useSelector(state => state.chat);
+  const { unreadNotification } = useSelector(state => state.common);
+  console.log(unreadNotification);
   const handleClick = () => {
     document?.body.classList.toggle('nav-active');
     document?.body.classList.remove('aside-active');
@@ -301,7 +305,10 @@ function Header() {
           <>
             {/* Notification drop down */}
 
-            <Notification onClick={() => sethandelNotification(!handelNotification)} ref={NotificationRef}>
+            <Notification
+              onClick={() => sethandelNotification(!handelNotification)}
+              ref={NotificationRef}
+              $notification={unreadNotification}>
               <button type="button">
                 <PiBellBold size="26" color={!handelNotification ? 'var(--body-text)' : 'var(--primary-500)'} />
               </button>
@@ -313,7 +320,7 @@ function Header() {
             </Notification>
             {/* Chat drop down */}
 
-            <Chat onClick={() => sethandelChat(!handelChat)} ref={ChatRef} $message={true}>
+            <Chat onClick={() => sethandelChat(!handelChat)} ref={ChatRef} $message={unreadMessages}>
               <button type="button">
                 <BiMessageAlt size="26" color={!handelChat ? 'var(--body-text)' : 'var(--primary-500)'} />
               </button>

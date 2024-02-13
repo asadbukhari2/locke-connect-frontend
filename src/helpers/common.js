@@ -36,6 +36,7 @@ export const clearCookie = name => {
 };
 
 export const formatPhoneNumber = inputValue => {
+  if (!inputValue) return;
   const phoneNumber = inputValue?.replace(/[^\d]/g, '');
 
   if (phoneNumber?.length <= 3) {

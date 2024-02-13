@@ -6,6 +6,7 @@ const Select = ({ className, title = 'Select...', option, placeholder, onChange 
   const [value, setValue] = useState(title);
   const [dropDown, setDropDown] = useState(false);
   const closeRef = useRef();
+
   function handelChange(elem) {
     setValue(elem);
     setDropDown(!dropDown);
@@ -17,10 +18,8 @@ const Select = ({ className, title = 'Select...', option, placeholder, onChange 
     }
   };
   useEffect(() => {
-    // Attach the event listener when the component mounts
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Detach the event listener when the component unmounts
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

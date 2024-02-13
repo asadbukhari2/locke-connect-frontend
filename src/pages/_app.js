@@ -14,10 +14,12 @@ import Modal from '@/components/Modal';
 import TodayRateModal from '@/components/TodayRateModal';
 import { SocketContextProvider } from '@/context/socketContext';
 import { Provider } from 'react-redux';
-import store from '../features/store';
+import { store, persistor } from '../features/store';
 
 import { fetchAllConversations } from '@/features/messageSlice';
 import { getNotifications } from '@/features/commonSlice';
+import { PersistGate } from 'redux-persist/integration/react';
+
 const Styling = css`
   /* theme css variables */
   ${Variables}
@@ -622,40 +624,42 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     if (isAuth) {
-      store.dispatch(getNotifications({ page: 1, pageSize: 5, all: true }));
-      store.dispatch(fetchAllConversations());
+      // store.dispatch(getNotifications({ page: 1, pageSize: 5, all: true }));
+      // store.dispatch(fetchAllConversations());
     }
   }, [pathname]);
 
   return (
     <>
       <Provider store={store}>
-        <GlobalStyles />
+        <PersistGate loading={null} persistor={persistor}>
+          <GlobalStyles />
 
-        <span className="overlay" />
-        <div id={!showLayout ? 'content-wrap' : ''}>
-          <AuthContextProvider>
-            <SocketContextProvider>
-              <MyContextProvider>
-                <Modal open={rate} setOpen={setRate} width="920px">
-                  <TodayRateModal setOpen={setRate} />
-                </Modal>
-                <Header />
-                {!showLayout ? (
-                  <>
-                    <Sidebar setRateModal={setRate} />
-                    <Component {...pageProps} />
-                  </>
-                ) : (
-                  <>
-                    <Component {...pageProps} />
-                  </>
-                )}
-              </MyContextProvider>
-            </SocketContextProvider>
-          </AuthContextProvider>
-        </div>
-        <ToastContainer autoClose={5000} hideProgressBar={true} />
+          <span className="overlay" />
+          <div id={!showLayout ? 'content-wrap' : ''}>
+            <AuthContextProvider>
+              <SocketContextProvider>
+                <MyContextProvider>
+                  <Modal open={rate} setOpen={setRate} width="920px">
+                    <TodayRateModal setOpen={setRate} />
+                  </Modal>
+                  <Header />
+                  {!showLayout ? (
+                    <>
+                      <Sidebar setRateModal={setRate} />
+                      <Component {...pageProps} />
+                    </>
+                  ) : (
+                    <>
+                      <Component {...pageProps} />
+                    </>
+                  )}
+                </MyContextProvider>
+              </SocketContextProvider>
+            </AuthContextProvider>
+          </div>
+          <ToastContainer autoClose={5000} hideProgressBar={true} />
+        </PersistGate>
       </Provider>
     </>
   );

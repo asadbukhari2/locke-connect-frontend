@@ -64,6 +64,33 @@ const userService = {
     const { message } = await res.json();
     throw message;
   },
+  async updateCurrentAgent(body) {
+    let res = await Fetch.patch(`${_url}/update-agent`, body);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw message;
+  },
+  async updateIntroduction(body) {
+    let res = await Fetch.patch(`${_url}/update-introduction`, body);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw message;
+  },
+  async deleteMyAccount() {
+    let res = await Fetch.delete(`${_url}/delete-my-account`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw message;
+  },
 
   async upload(body) {
     let res = await Fetch.upload(`${_url}/upload`, body);

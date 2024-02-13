@@ -1,6 +1,6 @@
 import * as webRTCHandler from './webRTCHandler';
 import * as socketConnection from '../utils/socketServerConnection';
-import store from '@/features/store';
+import { store } from '@/features/store';
 import {
   setAudioCallModal,
   setCallAccepted,

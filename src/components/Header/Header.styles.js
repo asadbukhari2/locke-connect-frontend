@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const HeaderStyles = styled.div`
   position: fixed;
@@ -275,7 +275,7 @@ export const MianNav = styled.div`
 
       &::before {
         display: none;
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         bottom: 0;
@@ -528,6 +528,23 @@ export const Notification = styled.div`
   @media (max-width: 991px) {
     display: none;
   }
+  ${({ $notification }) =>
+    $notification &&
+    css`
+      button {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          height: 10px;
+          width: 10px;
+          right: -2px;
+          top: -2px;
+          border-radius: 50%;
+          background: red;
+        }
+      }
+    `}
 `;
 
 export const Chat = styled.div`
@@ -540,7 +557,7 @@ export const Chat = styled.div`
       button {
         position: relative;
         &::before {
-          content: "";
+          content: '';
           position: absolute;
           height: 10px;
           width: 10px;
@@ -559,8 +576,8 @@ export const Language = styled.div`
     position: absolute;
     top: 37px;
     right: 0px;
-    opacity: ${({ open }) => (open ? "1" : "0")};
-    visibility: ${({ open }) => (open ? "visible" : "hidden")};
+    opacity: ${({ open }) => (open ? '1' : '0')};
+    visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
     ${({ open }) =>
       open == true &&
       css`
@@ -629,7 +646,7 @@ export const NavOpener = styled.button`
 
   &:before,
   &:after {
-    content: "";
+    content: '';
     top: 30%;
   }
 

@@ -1,36 +1,40 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Defaults to localStorage for web
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2'; // Helps with state reconciliation
+import storage from 'redux-persist/lib/storage';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 
 import { onlineUsersReducer } from './onlineUsersSlice';
 import { messagesReducer } from './messageSlice';
 import { roomReducer } from './roomSlice';
 import { commonReducer } from './commonSlice';
 
-// Define persistConfig for all reducers
-const persistConfig = {
-  key: 'root', // key for the root state in storage
-  storage, // storage engine (e.g., localStorage)
-  stateReconciler: autoMergeLevel2,
-  whitelist: ['room', 'chat', 'onlineUsers', 'common'], // reducers to persist
-};
-
-// Combine reducers
 const rootReducer = combineReducers({
   room: roomReducer,
   chat: messagesReducer,
-  onlineUsers: onlineUsersReducer,
   common: commonReducer,
+  onlineUsers: onlineUsersReducer,
 });
 
-// Wrap rootReducer with persistConfig
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+  stateReconciler: autoMergeLevel2,
+};
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Create the Redux store
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

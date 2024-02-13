@@ -1,38 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AccountDetailStyled, DeleteModalWrapper } from './AgentProfileComp.styles';
-import Input from '../TextField';
-import Select from '../DropDown/PropertyDropDown';
-import { LicenseTypes, UsStates } from '../Constants';
-import Button from '../Button';
+// import Input from '../TextField';
+// import Select from '../DropDown/PropertyDropDown';
+// import { LicenseTypes, UsStates } from '../Constants';
+// import Button from '../Button';
 import { useTranslation } from '@/helpers/useTranslation';
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import { formatPhoneNumber } from '@/helpers/common';
+import userService from '@/services/auth';
+import Toast from '../Toast';
 import Modal from '../Modal';
+import Button from '../Button';
 
-const AcountDetail = () => {
+const AcountDetail = ({ activeTab }) => {
   const { t } = useTranslation();
-  const { user } = useContextHook(AuthContext, ['user']);
-  console.log({ user });
+  const [loading, setLoading] = useState(false);
+  const { user, onLogout } = useContextHook(AuthContext, ['user', 'onLogout']);
+
+  const [deleteAccount, setDeleteAccount] = useState(false);
   const [formData, setFormData] = useState({
-    displayName: user?.displayName,
-    phoneNumber: formatPhoneNumber(user?.phoneNumber?.slice(2)),
-    address: user?.address || '',
+    displayName: '',
+    address: '',
+    licence: '',
+    brokerage: '',
+    licenseType: '',
+    licensingState: '',
+    phoneNumber: '',
   });
 
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+  useEffect(() => {
+    setFormData({
+      displayName: user.displayName || '',
+      address: user.address || '',
+      licence: user.licenseNumber || '',
+      brokerage: user.brokerageName || '',
+      licenseType: user.licenseType || '',
+      licensingState: user.licensingState || '',
+      phoneNumber: user?.phoneNumber?.slice(0, 2) + ' ' + formatPhoneNumber(user?.phoneNumber?.slice(2)),
+    });
+  }, [activeTab]);
+
+  const deleteAccountHandler = async () => {
+    setLoading(true);
+    try {
+      const res = await userService.deleteMyAccount();
+      if (res) {
+        setLoading(false);
+        onLogout();
+        Toast({ type: 'success', message: 'Success' });
+      }
+      setDeleteAccount(false);
+    } catch (error) {
+      console.log(error);
+      onLogout();
+      setDeleteAccount(false);
+      Toast({ type: 'success', message: 'Error' });
+    }
   };
 
-  const handlePhoneNumberChange = event => {
-    const rawPhoneNumber = event.target.value;
-    const formattedPhoneNumber = formatPhoneNumber(rawPhoneNumber);
-    handleChange({
-      target: { name: 'phoneNumber', value: formattedPhoneNumber },
-    });
-  };
-  const [deleteAccount, setDeleteAccount] = useState(false);
   return (
     <>
       <Modal open={deleteAccount} setOpen={setDeleteAccount} width="500px">
@@ -43,7 +69,7 @@ const AcountDetail = () => {
             <Button variant="success" onClick={() => setDeleteAccount(false)}>
               Cancel
             </Button>
-            <Button variant="danger" onClick={() => setDeleteAccount(false)}>
+            <Button variant="danger" onClick={deleteAccountHandler}>
               Delete
             </Button>
           </div>
@@ -77,43 +103,50 @@ const AcountDetail = () => {
           <label htmlFor="name" className="field_title">
             {t('Name')}
           </label>
-          <Input Field_Name="name" type="text" />
+          {/* <Input Field_Name="name" type="text" value={formData.displayName} /> */}
+          <span>{formData.displayName}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="Name" className="field_title">
             {t('Type of Licence')}
           </label>
-          <Select option={LicenseTypes} onChange={e => console.log(e)} />
+          {/* <Select option={LicenseTypes} onChange={e => console.log(e)} title={formData.licenseType} /> */}
+          <span>{formData.licenseType}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="Name" className="field_title">
             {t('Licence State')}
           </label>
-          <Select option={UsStates} onChange={e => console.log(e)} />
+          {/* <Select option={UsStates} onChange={e => console.log(e)} title={formData.licensingState} /> */}
+          <span>{formData.licensingState}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="licence_num" className="field_title">
             {t('Licence Number')}
           </label>
-          <Input Field_Name="licence_num" type="text" />
+          {/* <Input Field_Name="licence_num" type="text" value={formData.licence} /> */}
+          <span>{formData.licence}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="brokerage_name" className="field_title">
             {t('Brokerage Name')}
           </label>
-          <Input Field_Name="brokerage_name" type="text" />
+          {/* <Input Field_Name="brokerage_name" type="text" value={formData.brokerage} /> */}
+          <span>{formData.brokerage}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="address" className="field_title">
             {t('Address')}
           </label>
-          <Input Field_Name="address" type="text" />
+          {/* <Input Field_Name="address" type="text" value={formData.address} /> */}
+          <span>{formData.address}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="phn_no" className="field_title">
             {t('Phone Number')}
           </label>
-          <Input Field_Name="phn_no" type="text" />
+          {/* <Input Field_Name="phn_no" type="text" value={formData.phoneNumber} /> */}
+          <span>{formData.phoneNumber}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="phn_no" className="field_title">
@@ -123,12 +156,12 @@ const AcountDetail = () => {
             {t('Delete Account')}
           </span>
         </div>
-        <div className="buttonWrapper">
-          <Button variant="outline" type="button">
-            {t('Cancel')}
-          </Button>
-          <Button variant="primary">{t('Save Changes')}</Button>
-        </div>
+        {/* <div className="buttonWrapper">
+        <Button variant="outline" type="button">
+          {t('Cancel')}
+        </Button>
+        <Button variant="primary">{t('Save Changes')}</Button>
+      </div> */}
       </AccountDetailStyled>
     </>
   );

@@ -12,6 +12,7 @@ const getMessages = createAsyncThunk('messages/getMessages', async (author, rece
 const fetchAllConversations = createAsyncThunk('messages/fetchAllConversations', async () => {
   try {
     const response = await peoplesService.getAllConversations();
+    console.log({ response });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -22,6 +23,7 @@ const initState = {
   messages: [],
   conversations: [],
   currentConversation: null,
+  unreadMessages: null,
   error: '',
   errorChat: '',
   loading: false,
@@ -46,6 +48,9 @@ const messagesSlice = createSlice({
         }
         return conversation;
       });
+      const hasUnreadMessages = updatedConversations.some(conversation => conversation.unreadcount > 0);
+
+      state.unreadMessages = hasUnreadMessages;
       state.conversations = updatedConversations;
     },
 
@@ -82,6 +87,7 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchAllConversations.fulfilled, (state, action) => {
         state.conversations = action.payload;
+        state.unreadMessages = action.payload?.some(conversation => conversation.unreadcount > 0);
         state.loading = false;
       })
       .addCase(fetchAllConversations.rejected, (state, action) => {

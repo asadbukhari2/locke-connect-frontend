@@ -16,6 +16,8 @@ import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import ToggleSwitch from '../UserSearchFilter/ToggleSwitch';
 import { useTranslation } from '@/helpers/useTranslation';
+import { formatPhoneNumber } from '@/helpers/common';
+import EditAgentProfileModal from '../EditProfileModal/agentProfileModal';
 
 const ProfileHeaderAgent = ({ user }) => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +59,7 @@ const ProfileHeaderAgent = ({ user }) => {
   return (
     <>
       <Modal open={modal} setOpen={setModal}>
-        <EditProfileModal
+        <EditAgentProfileModal
           user={user}
           onClose={() => {
             setModal(false);
@@ -100,8 +102,6 @@ const ProfileHeaderAgent = ({ user }) => {
             )}
           </div>
           <div className="text-box">
-        
-
             <strong className="title">{user?.displayName}</strong>
             <ul className="list">
               <li>
@@ -110,7 +110,8 @@ const ProfileHeaderAgent = ({ user }) => {
               </li>
               <li>
                 <PiPhoneCallBold />
-                <span className="text">{user?.phoneNumber}</span>
+                {user?.phoneNumber &&
+                  user?.phoneNumber?.slice(0, 2) + ' ' + formatPhoneNumber(user?.phoneNumber?.slice(2))}
               </li>
               <li>
                 <FaRegEnvelope />

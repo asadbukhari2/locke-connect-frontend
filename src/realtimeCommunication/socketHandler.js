@@ -1,4 +1,4 @@
-import store from '@/features/store';
+import { store } from '@/features/store';
 import * as webRTCHandler from './webRTCHandler';
 import {
   setAudioCallModal,
