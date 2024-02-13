@@ -15,6 +15,7 @@ import Toast from '../Toast';
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import { useTranslation } from '@/helpers/useTranslation';
+import { formatPhoneNumber } from '@/helpers/common';
 
 const ProfileHeader = ({ user }) => {
   const { t } = useTranslation();
@@ -109,7 +110,9 @@ const ProfileHeader = ({ user }) => {
               </li>
               <li>
                 <PiPhoneCallBold />
-                <span className="text">{user?.phoneNumber}</span>
+                <span className="text">
+                  {user?.phoneNumber?.slice(0, 2) + ' ' + formatPhoneNumber(user?.phoneNumber?.slice(2))}
+                </span>
               </li>
               <li>
                 <FaRegEnvelope />

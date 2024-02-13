@@ -9,8 +9,9 @@ import { useCancellablePromise } from '@/helpers/promiseHandler';
 import { socketServer } from '@/utils/socketServerConnection';
 import { useDispatch } from 'react-redux';
 import { onLogout as CLEAR, fetchAllConversations } from '../features/messageSlice';
-import { getNotifications } from '@/features/commonSlice';
+
 import { LanguageData } from '@/components/Constants';
+import { getNotifications } from '@/features/commonSlice';
 
 const context = {};
 
@@ -33,14 +34,13 @@ export function AuthContextProvider(props) {
   const onLogout = async () => {
     try {
       if (isLoggedIn) setLoadingUser(true);
-      await userService.signout();
       clearCookie(process.env.NEXT_PUBLIC_TOKEN);
       sessionStorage.removeItem('currentUser');
-
-      socket?.disconnect();
-      dispatch(CLEAR());
       router.push('/sign-in');
       setUser({});
+      socket?.disconnect();
+      dispatch(CLEAR());
+      await userService.signout();
     } catch (ex) {
       clearCookie(process.env.NEXT_PUBLIC_TOKEN);
       Toast({ type: 'error', message: ex?.message });
@@ -102,8 +102,8 @@ export function AuthContextProvider(props) {
       }
       Toast({ type: 'success', message: 'Logged in' });
       setCookie(process.env.NEXT_PUBLIC_TOKEN, res.accessToken);
-      // dispatch(getNotifications({ page: 1, pageSize: 5, all: false }));
-      // dispatch(fetchAllConversations());
+      dispatch(getNotifications({ page: 1, pageSize: 5, all: true }));
+      dispatch(fetchAllConversations());
       setIsLoggedIn(true);
       redirect();
 

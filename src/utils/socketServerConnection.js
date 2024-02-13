@@ -1,10 +1,9 @@
 import { setConversations, setMessages } from '@/features/messageSlice';
 import { setOnlineUsers } from '@/features/onlineUsersSlice';
 import { setCallAccepted, setReceivingCall, setStartTime, setCallRingtone } from '@/features/roomSlice';
-import store from '@/features/store';
+import { store } from '@/features/store';
 import { callEndedHandler, receiveCallHandler } from '@/realtimeCommunication/socketHandler';
 import { handleSignalingData, prepareNewPeerConnection } from '@/realtimeCommunication/webRTCHandler';
-import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 let socket = null;
 

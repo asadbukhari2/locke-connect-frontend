@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ServiceWrapper, StyledAgentIntroduction } from './AgentProfileComp.styles';
 import BoughtSold from '../BoughtSold';
 import CheckBox from '../../../public/checkbox.svg';
@@ -9,32 +9,88 @@ import { LicenseTypes } from '../Constants';
 import Input from '../TextField';
 import Button from '../Button';
 import { useTranslation } from '@/helpers/useTranslation';
-const Introduction = () => {
+import { AuthContext } from '@/context/authContext';
+import { useContextHook } from 'use-context-hook';
+import Toast from '../Toast';
+import userService from '@/services/auth';
+
+const Introduction = ({ activeTab }) => {
   const { t } = useTranslation();
-  const services = ['Buy', 'Sell', 'Marketing', 'Staging', 'Photography'];
-  const [data, setData] = useState(services);
+  const [loading, setLoading] = useState(false);
+
   const [inputData, setInputData] = useState('');
+
+  const { user, fetchUser } = useContextHook(AuthContext, ['user', 'fetchUser']);
+
+  const [formData, setFormData] = useState({
+    about: '',
+    displayName: '',
+    services: [],
+    commissionType: '',
+    commissionPercentage: '',
+  });
+
+  useEffect(() => {
+    setFormData({
+      about: user?.about || '',
+      displayName: user?.displayName || '',
+      services: user?.services || [],
+      commissionType: user?.commissionType || '',
+      commissionPercentage: user?.commissionPercentage || '',
+    });
+  }, [activeTab]);
+
   function handelvalue(e) {
-    setInputData(e.target.value);
+    setInputData(e.target.value.trim());
   }
-  function handelService() {
+  const handleService = () => {
     if (!inputData) return;
-    setData(prev => [inputData, ...prev]);
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      services: [inputData, ...prevFormData.services],
+    }));
     setInputData('');
-  }
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  };
+
+  const editHandler = async () => {
+    setLoading(true);
+    try {
+      delete formData.displayName;
+      const res = await userService.updateIntroduction(formData);
+      if (res) {
+        setLoading(false);
+        fetchUser();
+
+        Toast({ type: 'success', message: 'Introduction Updated Successfully' });
+      }
+    } catch (error) {
+      setLoading(false);
+
+      Toast({
+        type: 'error',
+        message: error.message || 'Something went wrong!',
+      });
+    }
+  };
+
   return (
     <StyledAgentIntroduction>
       <div className="totalsold">
-        <BoughtSold />
+        <BoughtSold bought={200} sold={1200} />
       </div>
       <label htmlFor="about" className="label">
-        {t('About')} John (150 {t('words')})
+        {t('About')} {formData?.displayName ?? ''} (150 {t('words')})
       </label>
-      <textarea name="" id="about" cols="30" rows="10"></textarea>
+      <textarea name="about" id="about" cols="30" rows="10" value={formData?.about} onChange={handleChange} />
       <span className="title">{t('Service providing')}:</span>
       <ServiceWrapper>
         <ul className="service">
-          {data.map((elem, ind) => (
+          {formData.services.map((elem, ind) => (
             <li key={ind}>
               <Image src={CheckBox} alt="CheckBox" />
               {elem}
@@ -43,35 +99,52 @@ const Introduction = () => {
         </ul>
         <div className="add-more-service">
           <input type="text" placeholder="Add more" value={inputData} onChange={handelvalue} />
-          <div className="icon" onClick={handelService}>
+          <div className="icon" onClick={handleService}>
             <MdAdd size="22px" color="var(--gray-400)" />
           </div>
         </div>
       </ServiceWrapper>
       <div className="formWrapper">
-        <div className="inputWrap">
+        {/* <div className="inputWrap">
           <label htmlFor="Name" className="field_title">
             {t('Commission')}
           </label>
           <Select option={LicenseTypes} title="Select..." onChange={e => console.log(e)} />
+        </div> */}
+        <div className="inputWrap">
+          <label htmlFor="Name" className="field_title">
+            {t('Commission Type')}
+          </label>
+          <Select
+            option={LicenseTypes}
+            title="Select..."
+            onChange={e => {
+              handleChange({ target: { name: 'commissionType', value: e.value } });
+            }}
+          />
         </div>
         <div className="inputWrap">
           <label htmlFor="commission" className="field_title">
             {t('Commission')} %
           </label>
-          <Input type="text" Field_Name="commission" placeholder="2.5%" />
+          <Input
+            placeholder="2.5%"
+            type="text"
+            name="commissionPercentage"
+            Field_Name="commission"
+            className="input-group"
+            value={formData.commissionPercentage}
+            onChange={handleChange}
+          />
         </div>
-        <div className="inputWrap">
-          <label htmlFor="Name" className="field_title">
-            {t('Commission')}
-          </label>
-          <Select option={LicenseTypes} title="Select..." onChange={e => console.log(e)} />
-        </div>
+
         <div className="buttonWrapper">
           <Button variant="outline" type="button">
             {t('Cancel')}
           </Button>
-          <Button variant="primary">{t('Save Changes')}</Button>
+          <Button variant="primary" onClick={editHandler} loader={loading} disabled={loading}>
+            {t('Save Changes')}
+          </Button>
         </div>
       </div>
     </StyledAgentIntroduction>

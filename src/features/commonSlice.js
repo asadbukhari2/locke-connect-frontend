@@ -13,6 +13,7 @@ const getNotifications = createAsyncThunk('messages/getNotifications', async sea
 const initState = {
   notifications: [],
   totalNotification: null,
+  unreadNotification: null,
   hasNextPage: null,
   lastPage: null,
   nextPage: null,
@@ -27,6 +28,7 @@ const commonSlice = createSlice({
   reducers: {
     setNotifications: (state, action) => {
       state.notifications = action.payload;
+      state.unreadNotification = action.payload.some(notification => !notification.is_read);
     },
   },
   extraReducers: builder => {
@@ -42,6 +44,10 @@ const commonSlice = createSlice({
         state.lastPage = action.payload?.lastPage;
         state.nextPage = action.payload?.nextPage;
         state.currentPage = action.payload?.currentPage;
+        state.unreadNotification = action.payload?.items.some(notification => {
+          console.log(notification.is_read === false, notification.is_read);
+          return notification.is_read === false;
+        });
         state.notificationsLoading = false;
         state.notificationsError = '';
       })

@@ -1,4 +1,4 @@
-import store from '../features/store';
+import { store } from '../features/store';
 import Peer from 'simple-peer';
 import { setAudioCallModal, setLocalStream, setRemoteStream, setVideoCallModal } from '@/features/roomSlice';
 import { signalPeerData } from '@/utils/socketServerConnection';

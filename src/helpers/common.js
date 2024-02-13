@@ -36,7 +36,8 @@ export const clearCookie = name => {
 };
 
 export const formatPhoneNumber = inputValue => {
-  const phoneNumber = inputValue.replace(/[^\d]/g, '');
+  if (!inputValue) return;
+  const phoneNumber = inputValue?.replace(/[^\d]/g, '');
 
   if (phoneNumber?.length <= 3) {
     return phoneNumber;
@@ -124,7 +125,7 @@ export const LangConverter = (content = '', lang = 'en') => {
     }
     return newObj;
   };
- 
+
   if (lang === 'es' && content) {
     return toLowerCaseKeysObject(spanishVocab)[content.trim().toLowerCase().replace(/-/, ' ')] ?? content;
   }
