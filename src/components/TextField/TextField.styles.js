@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledTextField = styled.div`
   width: 100%;
@@ -79,7 +79,7 @@ export const StyledTextField = styled.div`
         box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
         &:before {
           bottom: -20px;
-          content: " ";
+          content: ' ';
           display: block;
           height: 20px;
           left: 0;
@@ -91,7 +91,7 @@ export const StyledTextField = styled.div`
           border-right: solid transparent 5px;
           border-top: solid var(--primary-200) 5px;
           bottom: -5px;
-          content: " ";
+          content: ' ';
           height: 0;
           right: 5px;
           position: absolute;
@@ -111,8 +111,7 @@ export const InputStyled = styled.div`
   position: relative;
   width: 100%;
   border-radius: 8px;
-  border: 1px solid
-    ${({ $error }) => ($error ? "var(--danger-500)" : "var(--gray-50) ")};
+  border: 1px solid ${({ $error }) => ($error ? 'var(--danger-500)' : 'var(--gray-50) ')};
   background: var(--white);
   box-sizing: border-box;
   margin-bottom: 8px;
@@ -140,7 +139,7 @@ export const InputStyled = styled.div`
     height: 48px;
     border: none;
     outline: none;
-    font-family: "Jost";
+    font-family: 'Jost';
     ${({ $disable }) =>
       $disable &&
       css`

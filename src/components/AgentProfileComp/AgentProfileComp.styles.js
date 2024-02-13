@@ -1,5 +1,35 @@
 import styled from 'styled-components';
 
+export const DeleteModalWrapper = styled.div`
+  width: 100%;
+  background: var(--white);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: left;
+  color: var(--danger-500);
+
+  .title {
+    display: block;
+    margin-bottom: 15px;
+    padding-right: 25px;
+    color: var(--body-text);
+    text-transform: capitalize;
+    font-size: 20px;
+    line-height: 24px;
+  }
+  .info {
+    display: block;
+    margin-bottom: 10px;
+  }
+  .buttonWrapper {
+    max-width: 300px;
+    margin-top: 25px;
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+  }
+`;
+
 export const AccountDetailStyled = styled.form`
   max-width: 1440px;
   color: var(--body-text);

@@ -87,7 +87,7 @@ const messagesSlice = createSlice({
       })
       .addCase(fetchAllConversations.fulfilled, (state, action) => {
         state.conversations = action.payload;
-        state.unreadMessages = action.payload.some(conversation => conversation.unreadcount > 0);
+        state.unreadMessages = action.payload?.some(conversation => conversation.unreadcount > 0);
         state.loading = false;
       })
       .addCase(fetchAllConversations.rejected, (state, action) => {
