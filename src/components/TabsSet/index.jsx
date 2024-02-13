@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { TabsList, TabButton, TabContent } from './TabsSet.styles';
 import { useTranslation } from '@/helpers/useTranslation';
 
-const TabsSet = ({ tabs, todayRate, responsive, onTabChange }) => {
+const TabsSet = ({ tabs, todayRate, responsive, onTabChange = () => {} }) => {
   const [activeTab, setActiveTab] = useState(0);
   const { t } = useTranslation();
 

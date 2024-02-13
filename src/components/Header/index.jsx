@@ -64,7 +64,6 @@ function Header() {
 
   const { unreadMessages } = useSelector(state => state.chat);
   const { unreadNotification } = useSelector(state => state.common);
-  console.log(unreadNotification);
   const handleClick = () => {
     document?.body.classList.toggle('nav-active');
     document?.body.classList.remove('aside-active');

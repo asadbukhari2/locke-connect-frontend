@@ -12,7 +12,6 @@ const getMessages = createAsyncThunk('messages/getMessages', async (author, rece
 const fetchAllConversations = createAsyncThunk('messages/fetchAllConversations', async () => {
   try {
     const response = await peoplesService.getAllConversations();
-    console.log({ response });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -56,6 +55,7 @@ const messagesSlice = createSlice({
 
     setConversations: (state, action) => {
       state.conversations = action.payload;
+      state.unreadMessages = action.payload.some(conversation => conversation.unreadcount > 0);
     },
     onLogout: (state, action) => {
       state.messages = [];
@@ -64,6 +64,7 @@ const messagesSlice = createSlice({
       state.error = '';
       state.errorChat = '';
       state.loading = false;
+      state.unreadMessages = null;
       state.loadingChat = false;
     },
   },
