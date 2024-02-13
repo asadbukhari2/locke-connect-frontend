@@ -19,7 +19,9 @@ const TabsSet = ({ tabs, todayRate, responsive }) => {
             $todayRate={todayRate}
             key={index}
             isActive={index === activeTab}
-            onClick={() => handleTabClick(index)}>
+            onClick={() => {
+              handleTabClick(index);
+            }}>
             {t(tab?.label)}
           </TabButton>
         ))}

@@ -16,7 +16,6 @@ const tabs = [
   { label: 'Introduction', content: <Introduction /> },
   { label: 'Subscription', content: <Subscription /> },
 ];
-
 function AgentProfile() {
   const { user } = useContextHook(AuthContext, ['user']);
   useEffect(() => {

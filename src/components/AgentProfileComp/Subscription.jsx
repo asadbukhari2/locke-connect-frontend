@@ -5,7 +5,9 @@ import { useJsApiLoader, GoogleMap, Autocomplete, Marker } from '@react-google-m
 import Button from '../Button';
 import Payment from './Payment';
 import { useTranslation } from '@/helpers/useTranslation';
+import stripeService from '@/services/stripe';
 const Subscription = () => {
+  console.log('in subscription');
   const { t } = useTranslation();
   const [subscriptionType, setSubscriptionType] = useState({ month: false, year: false });
   const center = { lat: 38.889805, lng: -77.009056 };
@@ -13,6 +15,9 @@ const Subscription = () => {
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
   });
+
+  const { products_data, products_loading } = stripeService.GetProducts();
+  console.log({ products_data });
   return (
     <SubcriptionStyled>
       <div className="Subscription-main-wrapper">
