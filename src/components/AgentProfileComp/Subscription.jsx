@@ -1,16 +1,50 @@
 import React, { useState } from 'react';
 import { SubcriptionStyled, SubscriptionTypeWrapper } from './AgentProfileComp.styles';
 import CheckBox from '../CheckBox';
-import { useJsApiLoader, GoogleMap, Autocomplete, Marker } from '@react-google-maps/api';
+import { useJsApiLoader, GoogleMap, Polygon, OverlayView } from '@react-google-maps/api';
 import Button from '../Button';
 import Payment from './Payment';
 import { useTranslation } from '@/helpers/useTranslation';
 import stripeService from '@/services/stripe';
+
 const Subscription = () => {
-  console.log('in subscription');
   const { t } = useTranslation();
+  const [mapChooseList, setMapChooseList] = useState([]);
   const [subscriptionType, setSubscriptionType] = useState({ month: false, year: false });
-  const center = { lat: 38.889805, lng: -77.009056 };
+
+  const center = { lat: 31.077376, lng: 74.434724 };
+
+  const polygons = [
+    {
+      id: 1,
+      paths: [
+        { lat: 31.0775, lng: 74.4345 },
+        { lat: 31.0775, lng: 74.4555 },
+        { lat: 31.0885, lng: 74.4555 },
+        { lat: 31.0885, lng: 74.4345 },
+      ],
+      cityName: 'Lahore',
+      price: 10.9,
+      fillColor: 'red',
+      strokeColor: 'blue',
+      strokeWeight: 2,
+    },
+    {
+      id: 2,
+      paths: [
+        { lat: 31.0975, lng: 74.4345 },
+        { lat: 31.0975, lng: 74.4555 },
+        { lat: 31.1085, lng: 74.4555 },
+        { lat: 31.1085, lng: 74.4345 },
+      ],
+      cityName: 'Lahore',
+      price: 10.9,
+      fillColor: 'red',
+      strokeColor: 'blue',
+      strokeWeight: 2,
+    },
+    // Add more polygons as needed
+  ];
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
@@ -18,6 +52,26 @@ const Subscription = () => {
 
   const { products_data, products_loading } = stripeService.GetProducts();
   console.log({ products_data });
+
+  const handlePolygonClicked = item => {
+    const index = mapChooseList.findIndex(selectedItem => selectedItem.id === item.id);
+    if (index !== -1) {
+      setMapChooseList(prev => prev.filter(selectedItem => selectedItem.id !== item.id));
+    } else {
+      setMapChooseList(prev => [...prev, item]);
+    }
+  };
+  function getPolygonCenter(polygon) {
+    let latSum = 0;
+    let lngSum = 0;
+    polygon.paths.forEach(point => {
+      latSum += point.lat;
+      lngSum += point.lng;
+    });
+    const latCenter = latSum / polygon.paths.length;
+    const lngCenter = lngSum / polygon.paths.length;
+    return { lat: latCenter, lng: lngCenter };
+  }
   return (
     <SubcriptionStyled>
       <div className="Subscription-main-wrapper">
@@ -73,7 +127,37 @@ const Subscription = () => {
                     },
                     mapTypeId: 'terrain',
                   }}>
-                  <Marker position={center} />
+                  {polygons.map(polygon => (
+                    <React.Fragment key={polygon.id}>
+                      <Polygon
+                        paths={polygon.paths}
+                        options={{
+                          fillColor: polygon.fillColor,
+                          strokeColor: polygon.strokeColor,
+                          strokeWeight: polygon.strokeWeight,
+                        }}
+                        onClick={() => handlePolygonClicked(polygon)}
+                      />
+
+                      <OverlayView position={getPolygonCenter(polygon)} mapPaneName={OverlayView.OVERLAY_LAYER}>
+                        <button
+                          style={{
+                            position: 'absolute',
+                            left: '50%',
+                            top: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            zIndex: 9999,
+                            background: 'white',
+                            padding: '10px',
+                            borderRadius: '5px',
+                            cursor: 'pointer',
+                          }}>
+                          <div>{mapChooseList.find(_ => _.id == polygon.id) ? '-' : '+'}</div>
+                          <p>{polygon.price}</p>
+                        </button>
+                      </OverlayView>
+                    </React.Fragment>
+                  ))}
                 </GoogleMap>
               </>
             ) : (
@@ -85,27 +169,15 @@ const Subscription = () => {
           <span className="title">{t('My list')}</span>
           <div className="list">
             <ul>
-              <li>
-                <div className="area">
-                  <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={e => console.log(e)} />
-                  <label htmlFor="brooklyn">Brooklyn</label>
-                </div>
-                $9.99
-              </li>
-              <li>
-                <div className="area">
-                  <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={e => console.log(e)} />
-                  <label htmlFor="brooklyn">Brooklyn</label>
-                </div>
-                $9.99
-              </li>
-              <li>
-                <div className="area">
-                  <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={e => console.log(e)} />
-                  <label htmlFor="brooklyn">Brooklyn</label>
-                </div>
-                $9.99
-              </li>
+              {mapChooseList.map(listItem => (
+                <li>
+                  <div className="area">
+                    <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={e => console.log(e)} />
+                    <label htmlFor="brooklyn">{listItem.cityName}</label>
+                  </div>
+                  ${listItem.price}
+                </li>
+              ))}
             </ul>
           </div>
           <div className="button-wrap">
