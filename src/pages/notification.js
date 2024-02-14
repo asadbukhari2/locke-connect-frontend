@@ -4,50 +4,31 @@ import NotificationCard from '@/components/NotificationWidget/NotificationCard';
 import peoplesService from '@/services/peoples';
 import Toast from '@/components/Toast';
 import Loaders from '@/components/Loaders';
+import { getNotifications, setNotifications } from '@/features/commonSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Notification = () => {
-  const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [nextPage, setNextPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [initialDataFetched, setInitialDataFetched] = useState(false);
 
   const [toggleDropDown, setToggleDropDown] = useState(null);
   const dropdownRef = useRef(null);
   const NotificationRef = useRef(null);
 
-  const fetchNotifications = async r => {
-    try {
-      setIsLoading(true);
-      const res = await peoplesService.getNotifications({ page: nextPage, pageSize: 5, all: true });
-      setNotifications(prevNotifications => {
-        const uniqueItems = res.items.filter(
-          newItem => !prevNotifications.some(prevItem => prevItem.id === newItem.id),
-        );
+  const { notifications, hasNextPage, nextPage } = useSelector(state => state.common);
 
-        return [...prevNotifications, ...uniqueItems];
-      });
-      setNextPage(res.nextPage);
-      setHasNextPage(res.hasNextPage);
-      setInitialDataFetched(true);
-    } catch (error) {
-      console.error('Error fetching notifications:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!initialDataFetched) {
-      fetchNotifications();
-    }
-  }, [initialDataFetched]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handleScroll = () => {
       const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-      if (scrollTop + clientHeight >= scrollHeight && !isLoading && hasNextPage) {
-        fetchNotifications();
+      const atBottom = scrollTop + clientHeight + 10 >= scrollHeight;
+
+      if (atBottom && !isLoading && hasNextPage) {
+        setIsLoading(true);
+        dispatch(getNotifications({ page: nextPage, pageSize: 5, all: true })).then(() => {
+          setIsLoading(false);
+          window.scrollTo({ top: scrollHeight - clientHeight - 100, behavior: 'smooth' });
+        });
       }
     };
 
@@ -55,21 +36,10 @@ const Notification = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isLoading, hasNextPage]);
+  }, [dispatch, isLoading, hasNextPage, nextPage]);
 
   function handelDropDown(e, ind) {
     e.stopPropagation();
-    // const targetElement = e.currentTarget;
-    // const dropdown = dropdownRef.current;
-    // const rect = targetElement.getBoundingClientRect();
-    // const windowHeight = window?.innerHeight;
-    // const spaceBelow = windowHeight - rect.bottom;
-    // const spaceAbove = rect.top;
-    // if (spaceBelow >= dropdown?.clientHeight || spaceBelow >= spaceAbove) {
-    //   dropdown.style.top = null;
-    // } else {
-    //   dropdown.style.top = `${-dropdown?.clientHeight}px`;
-    // }
     setToggleDropDown(prev => (prev === ind ? null : ind));
   }
 
@@ -90,14 +60,11 @@ const Notification = () => {
     if (!itm.is_read) {
       try {
         await peoplesService.markNotificationRead(itm.id);
-
-        setNotifications(prevNotifications =>
-          prevNotifications.map(notification =>
-            notification.id === itm.id ? { ...notification, is_read: true } : notification,
-          ),
+        const updatedNotifications = notifications.map(notification =>
+          notification.id === itm.id ? { ...notification, is_read: true } : notification,
         );
 
-        console.log('Notification marked as read:', itm);
+        dispatch(setNotifications(updatedNotifications));
       } catch (error) {
         console.error('Error marking notification as read:', error);
       }

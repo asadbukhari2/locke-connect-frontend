@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { onLogout as CLEAR, fetchAllConversations } from '../features/messageSlice';
 
 import { LanguageData } from '@/components/Constants';
-import { getNotifications } from '@/features/commonSlice';
+import { RESET_STATE, getNotifications } from '@/features/commonSlice';
 
 const context = {};
 
@@ -40,6 +40,7 @@ export function AuthContextProvider(props) {
       setUser({});
       socket?.disconnect();
       dispatch(CLEAR());
+      dispatch(RESET_STATE());
       await userService.signout();
     } catch (ex) {
       clearCookie(process.env.NEXT_PUBLIC_TOKEN);

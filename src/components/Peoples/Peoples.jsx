@@ -180,7 +180,7 @@ const Peoples = () => {
           <FilterWrap open={filterDropDown}>
             <SearchLocation
               handelFilter={handelProperFilter}
-              placeholder={t("Search Peoples")}
+              placeholder={t('Search Peoples')}
               onChangeHandler={handleSearchChange}
             />
             <div className="handelDropDown">

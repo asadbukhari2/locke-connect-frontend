@@ -1,5 +1,6 @@
 import spanishVocab from '../utils/translation/spanish.js';
 import chineseVocab from '../utils/translation/chinese.js';
+
 export const setCookie = (name, value, days) => {
   let expires = '';
   if (days) {

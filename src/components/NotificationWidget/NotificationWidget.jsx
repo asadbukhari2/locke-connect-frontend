@@ -105,7 +105,7 @@ const NotificationWidget = ({ $marginB }) => {
   const router = useRouter();
 
   const { notifications, notificationsLoading } = useSelector(state => state.common);
-  console.log(notifications);
+
   function handelDropDown(e, ind) {
     e.stopPropagation();
 
