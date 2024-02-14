@@ -6,6 +6,7 @@ export const StyleBoughtSold = styled.div`
   align-items: center;
   justify-content: center;
   gap: 15px;
+  overflow: hidden;
 
   .col {
     display: flex;
@@ -23,6 +24,9 @@ export const StyleBoughtSold = styled.div`
 
     &.active {
       color: var(--primary-500);
+      input {
+        color: var(--primary-500);
+      }
     }
 
     .number {
@@ -43,8 +47,22 @@ export const StyleBoughtSold = styled.div`
       line-height: 20px;
       font-weight: 400;
     }
+  }
+  input {
+    padding: 0 20px;
+    width: 100%;
+    font-size: 30px;
+    line-height: 34px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    outline: none;
+    border: none;
     &:hover {
       color: var(--primary-500);
+    }
+    @media screen and (max-width: 768px) {
+      font-size: 26px;
+      line-height: 30px;
     }
   }
 `;

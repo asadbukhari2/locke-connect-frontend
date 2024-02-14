@@ -12,6 +12,8 @@ import userService from '@/services/auth';
 import Toast from '../Toast';
 import Modal from '../Modal';
 import Button from '../Button';
+import CheckBox from '../CheckBox';
+import ToggleSwitch from '../UserSearchFilter/ToggleSwitch';
 
 const AcountDetail = ({ activeTab }) => {
   const { t } = useTranslation();
@@ -99,6 +101,13 @@ const AcountDetail = ({ activeTab }) => {
           </label>
         </div>
       </div> */}
+        <div className="inputWrap">
+          <label htmlFor="name" className="field_title">
+            {t('Switch Profile')}
+          </label>
+          {/* <Input Field_Name="name" type="text" value={formData.displayName} /> */}
+          <ToggleSwitch fieldName="switchProfile" sm />
+        </div>
         <div className="inputWrap">
           <label htmlFor="name" className="field_title">
             {t('Name')}

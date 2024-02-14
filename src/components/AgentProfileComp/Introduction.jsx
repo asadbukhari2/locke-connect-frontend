@@ -81,7 +81,7 @@ const Introduction = ({ activeTab }) => {
   return (
     <StyledAgentIntroduction>
       <div className="totalsold">
-        <BoughtSold bought={200} sold={1200} />
+        <BoughtSold bought={200} sold={1200} type="input" />
       </div>
       <label htmlFor="about" className="label">
         {t('About')} {formData?.displayName ?? ''} (150 {t('words')})

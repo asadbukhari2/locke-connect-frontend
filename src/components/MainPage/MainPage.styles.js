@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Landingbg from '../../../public/Landingbg.jpg';
+import Landingbg from '../../../public/Landingbg.png';
 export const StyledMainPageStyles = styled.div`
   position: relative;
   background-image: url(${Landingbg.src});
   min-height: 100vh;
-  background-size: cover;
+  background-size: contain;
   background-repeat: repeat;
   display: flex;
   align-items: center;
@@ -104,5 +104,16 @@ export const HomeFooter = styled.div`
         height: auto;
       }
     }
+  }
+`;
+
+export const FloatingImages = styled.div`
+  /* max-width: 175px; */
+  position: absolute;
+  top: 205px;
+  left: 15%;
+  img {
+    max-width: 100%;
+    height: auto;
   }
 `;
