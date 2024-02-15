@@ -12,7 +12,7 @@ const STATUS = {
 const _url = `${process.env.NEXT_PUBLIC_API_URL}/routes/v1`;
 
 const stripeService = {
-  GetProducts() {
+  GetProducts(searchQuery) {
     const [products, setProducts] = useState({
       items: [],
       totalItems: 0,
@@ -21,12 +21,16 @@ const stripeService = {
     const [status, setStatus] = useState(STATUS.LOADING);
     useEffect(() => {
       setStatus(STATUS.LOADING);
-      cancellablePromise(this.getProducts())
+      cancellablePromise(this.getProducts(searchQuery))
         .then(res => {
+          console.log({ res });
           setProducts(() => res);
           setStatus(STATUS.SUCCESS);
         })
-        .catch(() => setStatus(STATUS.ERROR));
+        .catch(err => {
+          console.log({ err });
+          setStatus(STATUS.ERROR);
+        });
     }, []);
     return {
       products_loading: status === STATUS.LOADING,
@@ -36,16 +40,14 @@ const stripeService = {
   },
 
   async getProducts({ page = 1, pageSize = 100, filterText = '' }) {
-    console.log('sss');
-    let res = await Fetch.get(`${_url}/get-products?page=${page}&pageSize=${pageSize}&filterText=${filterText}`);
+    let res = await Fetch.get(`${_url}/products?page=${page}&pageSize=${pageSize}&filterText=${filterText}`);
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
-      console.log({ res });
       return {
-        items: res?.items,
-        totalItems: res?.totalItems,
-        hasNextPage: res?.hasNextPage,
-        lastPage: res?.lastPage,
+        items: res?.records?.items,
+        totalItems: res?.records?.totalItems,
+        hasNextPage: res?.records?.hasNextPage,
+        lastPage: res?.records?.lastPage,
       };
     }
     const { message } = await res.json();
