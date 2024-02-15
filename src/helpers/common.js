@@ -136,3 +136,15 @@ export const LangConverter = (content = '', lang = 'en') => {
 
   return content;
 };
+
+export const getPolygonCenter = polygon => {
+  let latSum = 0;
+  let lngSum = 0;
+  polygon.paths.forEach(point => {
+    latSum += point.lat;
+    lngSum += point.lng;
+  });
+  const latCenter = latSum / polygon.paths.length;
+  const lngCenter = lngSum / polygon.paths.length;
+  return { lat: latCenter, lng: lngCenter };
+};

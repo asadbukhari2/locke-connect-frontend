@@ -6,6 +6,7 @@ import Button from '../Button';
 import Payment from './Payment';
 import { useTranslation } from '@/helpers/useTranslation';
 import stripeService from '@/services/stripe';
+import { getPolygonCenter } from '@/helpers/common';
 
 const Subscription = () => {
   const { t } = useTranslation();
@@ -61,17 +62,7 @@ const Subscription = () => {
       setMapChooseList(prev => [...prev, item]);
     }
   };
-  function getPolygonCenter(polygon) {
-    let latSum = 0;
-    let lngSum = 0;
-    polygon.paths.forEach(point => {
-      latSum += point.lat;
-      lngSum += point.lng;
-    });
-    const latCenter = latSum / polygon.paths.length;
-    const lngCenter = lngSum / polygon.paths.length;
-    return { lat: latCenter, lng: lngCenter };
-  }
+
   return (
     <SubcriptionStyled>
       <div className="Subscription-main-wrapper">
