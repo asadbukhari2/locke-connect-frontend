@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import Landingbg from '../../../public/Landingbg.png';
+// import Landingbg from '../../../public/Landingbg.png';
+import Landingbg from '../../../public/lp.jpg';
 export const StyledMainPageStyles = styled.div`
   position: relative;
   background-image: url(${Landingbg.src});
   min-height: 100vh;
-  background-size: contain;
+  /* background-size: contain; */
   background-repeat: repeat;
   display: flex;
   align-items: center;
