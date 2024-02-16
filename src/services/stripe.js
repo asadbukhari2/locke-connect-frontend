@@ -23,7 +23,7 @@ const stripeService = {
       setStatus(STATUS.LOADING);
       cancellablePromise(this.getProducts(searchQuery))
         .then(res => {
-          console.log({ res });
+          // console.log({ res });
           setProducts(() => res);
           setStatus(STATUS.SUCCESS);
         })

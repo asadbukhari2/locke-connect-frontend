@@ -1,52 +1,77 @@
 import React, { useMemo, useState } from 'react';
 import { SubcriptionStyled, SubscriptionTypeWrapper } from './AgentProfileComp.styles';
 import CheckBox from '../CheckBox';
-import { useJsApiLoader, GoogleMap, Polygon, OverlayView } from '@react-google-maps/api';
+import { useJsApiLoader } from '@react-google-maps/api';
 import Button from '../Button';
 import Payment from './Payment';
 import { useTranslation } from '@/helpers/useTranslation';
 import stripeService from '@/services/stripe';
-import { getPolygonCenter } from '@/helpers/common';
-import Loaders from '../Loaders';
 
-const Subscription = () => {
+import Loaders from '../Loaders';
+import MapWithPolygons from './MapWithPolygons';
+
+const polygons = [
+  {
+    id: 1,
+    paths: [
+      { lat: 37.095, lng: -95.708 },
+      { lat: 37.092, lng: -95.698 },
+      { lat: 37.088, lng: -95.702 },
+      { lat: 37.085, lng: -95.712 },
+      { lat: 37.088, lng: -95.718 },
+    ],
+    cityName: 'Example City 1',
+    price: 10.9,
+    fillColor: 'red',
+    strokeColor: 'blue',
+    strokeWeight: 2,
+  },
+  {
+    id: 2,
+    paths: [
+      { lat: 37.098, lng: -95.718 },
+      { lat: 37.095, lng: -95.708 },
+      { lat: 37.092, lng: -95.698 },
+      { lat: 37.089, lng: -95.702 },
+      { lat: 37.086, lng: -95.712 },
+      { lat: 37.089, lng: -95.718 },
+      { lat: 37.092, lng: -95.724 },
+    ],
+    cityName: 'Example City 2',
+    price: 10.9,
+    fillColor: 'green',
+    strokeColor: 'blue',
+    strokeWeight: 2,
+  },
+  {
+    id: 3,
+    paths: [
+      { lat: 37.103, lng: -95.712 },
+      { lat: 37.1, lng: -95.702 },
+      { lat: 37.097, lng: -95.698 },
+      { lat: 37.094, lng: -95.704 },
+      { lat: 37.091, lng: -95.714 },
+      { lat: 37.094, lng: -95.72 },
+      { lat: 37.097, lng: -95.726 },
+      { lat: 37.1, lng: -95.722 },
+      { lat: 37.103, lng: -95.712 },
+    ],
+    cityName: 'Example City 3',
+    price: 10.9,
+    fillColor: 'blue',
+    strokeColor: 'blue',
+    strokeWeight: 2,
+  },
+  // Add more polygons as needed
+];
+
+const center = { lat: 37.0902, lng: -95.7129 };
+
+const Subscription = ({ activeTab }) => {
   const { t } = useTranslation();
   const [mapChooseList, setMapChooseList] = useState([]);
   const [subscriptionType, setSubscriptionType] = useState({ month: false, year: false });
 
-  const center = { lat: 31.077376, lng: 74.434724 };
-
-  const polygons = [
-    {
-      id: 1,
-      paths: [
-        { lat: 31.0775, lng: 74.4345 },
-        { lat: 31.0775, lng: 74.4555 },
-        { lat: 31.0885, lng: 74.4555 },
-        { lat: 31.0885, lng: 74.4345 },
-      ],
-      cityName: 'Lahore',
-      price: 10.9,
-      fillColor: 'red',
-      strokeColor: 'blue',
-      strokeWeight: 2,
-    },
-    {
-      id: 2,
-      paths: [
-        { lat: 31.0975, lng: 74.4345 },
-        { lat: 31.0975, lng: 74.4555 },
-        { lat: 31.1085, lng: 74.4555 },
-        { lat: 31.1085, lng: 74.4345 },
-      ],
-      cityName: 'Lahore',
-      price: 10.9,
-      fillColor: 'red',
-      strokeColor: 'blue',
-      strokeWeight: 2,
-    },
-    // Add more polygons as needed
-  ];
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
@@ -54,14 +79,12 @@ const Subscription = () => {
   const [searchQuery, setSearchQuery] = useState({ page: 1, itemsPerPage: 100, filterText: '' });
 
   const { products_data, products_loading } = stripeService.GetProducts(searchQuery);
-  console.log({ products_data });
 
   const { baseProducts } = useMemo(() => {
     const baseProducts = products_data?.items?.filter(itm => itm?.prod_meta?.plan === 'basic');
     return { baseProducts };
   }, [products_data]);
 
-  console.log({ baseProducts });
   const handlePolygonClicked = item => {
     const index = mapChooseList.findIndex(selectedItem => selectedItem.id === item.id);
     if (index !== -1) {
@@ -76,8 +99,8 @@ const Subscription = () => {
       <div className="Subscription-main-wrapper">
         <Loaders loading={products_loading}>
           {baseProducts?.length &&
-            baseProducts.map(prod => (
-              <SubscriptionTypeWrapper $active={subscriptionType.month}>
+            baseProducts.map((prod, id) => (
+              <SubscriptionTypeWrapper $active={subscriptionType.month} key={id}>
                 <span className="priceWrapper">
                   <strong className="price">{prod?.price?.amount}</strong>
                   <strong className="duration">per {prod?.price?.interval}</strong>
@@ -126,60 +149,13 @@ const Subscription = () => {
         <div className="map">
           <span className="title">{t('Add More Area’s')}</span>
           <div className="map-container">
-            {isLoaded ? (
-              <>
-                <GoogleMap
-                  center={center}
-                  zoom={15}
-                  mapContainerStyle={{
-                    width: '100%',
-                    height: '100%',
-                  }}
-                  options={{
-                    mapTypeControl: false,
-                    fullscreenControl: false,
-                    streetViewControl: true,
-                    zoomControl: true,
-                    mapTypeControlOptions: {
-                      mapTypeIds: ['roadmap', 'satellite', 'terrain', 'hybrid'],
-                    },
-                    mapTypeId: 'terrain',
-                  }}>
-                  {polygons.map(polygon => (
-                    <React.Fragment key={polygon.id}>
-                      <Polygon
-                        paths={polygon.paths}
-                        options={{
-                          fillColor: polygon.fillColor,
-                          strokeColor: polygon.strokeColor,
-                          strokeWeight: polygon.strokeWeight,
-                        }}
-                        onClick={() => handlePolygonClicked(polygon)}
-                      />
-
-                      <OverlayView position={getPolygonCenter(polygon)} mapPaneName={OverlayView.OVERLAY_LAYER}>
-                        <button
-                          style={{
-                            position: 'absolute',
-                            left: '50%',
-                            top: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            zIndex: 9999,
-                            background: 'white',
-                            padding: '10px',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                          }}>
-                          <div>{mapChooseList.find(_ => _.id == polygon.id) ? '-' : '+'}</div>
-                          <p>{polygon.price}</p>
-                        </button>
-                      </OverlayView>
-                    </React.Fragment>
-                  ))}
-                </GoogleMap>
-              </>
-            ) : (
-              <div className="loading">Loading...</div>
+            {activeTab == 2 && isLoaded && (
+              <MapWithPolygons
+                center={center}
+                polygons={polygons}
+                mapChooseList={mapChooseList}
+                handlePolygonClicked={handlePolygonClicked}
+              />
             )}
           </div>
         </div>
@@ -187,10 +163,10 @@ const Subscription = () => {
           <span className="title">{t('My list')}</span>
           <div className="list">
             <ul>
-              {mapChooseList.map(listItem => (
-                <li>
+              {mapChooseList.map((listItem, id) => (
+                <li key={id}>
                   <div className="area">
-                    <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={e => console.log(e)} />
+                    <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={() => {}} />
                     <label htmlFor="brooklyn">{listItem.cityName}</label>
                   </div>
                   ${listItem.price}

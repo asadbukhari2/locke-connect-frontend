@@ -1,41 +1,41 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import {
   FilterHeader,
   FilterOption,
   FilterOptionDetail,
   FilterOptionWrapper,
   UserFilterStyle,
-} from "./PeopleSearchFilter.styles";
-import { IoMdClose } from "react-icons/io";
-import { BiPlus } from "react-icons/bi";
-import { AiOutlineMinus } from "react-icons/ai";
-import ToggleSwitch from "./ToggleSwitch";
-import Button from "../Button";
+} from './PeopleSearchFilter.styles';
+import { IoMdClose } from 'react-icons/io';
+import { BiPlus } from 'react-icons/bi';
+import { AiOutlineMinus } from 'react-icons/ai';
+import ToggleSwitch from './ToggleSwitch';
+import Button from '../Button';
 const detail = [
   {
-    title: "People",
+    title: 'People',
     propertyType: [
-      { type: "Relator", qty: 150 },
-      { type: "Real Estate Agent", qty: 120 },
-      { type: "Mortgage Loan Officer", qty: 45 },
-      { type: "Staging Company", qty: 6 },
-      { type: "Photographer", qty: 75 },
-      { type: "Contactor", qty: 75 },
-      { type: "Handyman", qty: 75 },
+      { type: 'Relator', qty: 150 },
+      { type: 'Real Estate Agent', qty: 120 },
+      { type: 'Mortgage Loan Officer', qty: 45 },
+      { type: 'Staging Company', qty: 6 },
+      { type: 'Photographer', qty: 75 },
+      { type: 'contractor', qty: 75 },
+      { type: 'Handyman', qty: 75 },
     ],
   },
 ];
 const language = [
   {
-    title: "Language",
+    title: 'Language',
     propertyType: [
-      { type: "Spanish", qty: 150 },
-      { type: "Chinese", qty: 120 },
-      { type: "Hindi", qty: 45 },
-      { type: "Tagalog", qty: 6 },
-      { type: "Vietnamese", qty: 75 },
-      { type: "Arabic", qty: 75 },
-      { type: "Korean", qty: 75 },
+      { type: 'Spanish', qty: 150 },
+      { type: 'Chinese', qty: 120 },
+      { type: 'Hindi', qty: 45 },
+      { type: 'Tagalog', qty: 6 },
+      { type: 'Vietnamese', qty: 75 },
+      { type: 'Arabic', qty: 75 },
+      { type: 'Korean', qty: 75 },
     ],
   },
 ];
@@ -58,18 +58,18 @@ const PeopleFilter = ({ setPopUp }) => {
     }
   }
   const ref = useRef();
-  const handleClickOutside = (event) => {
+  const handleClickOutside = event => {
     if (ref.current && !ref.current.contains(event.target)) {
       setPopUp(false);
     }
   };
   useEffect(() => {
     // Attach the event listener when the component mounts
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     // Detach the event listener when the component unmounts
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -111,10 +111,10 @@ const PeopleFilter = ({ setPopUp }) => {
             </FilterOptionDetail>
           </FilterOptionWrapper>
         ))}
-        <div className="requirement">
+        {/* <div className="requirement">
           <span>Must Have Garage</span>
           <ToggleSwitch />
-        </div>
+        </div> */}
         {language.map((elem, ind) => (
           <>
             <FilterOptionWrapper key={ind}>

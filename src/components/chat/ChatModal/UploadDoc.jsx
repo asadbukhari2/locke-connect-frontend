@@ -10,7 +10,6 @@ import { getFileType } from '@/helpers/common';
 import Toast from '@/components/Toast';
 import Loaders from '@/components/Loaders';
 import { NoRecordFound } from '@/components/NoRecordFound/NoRecord.styles';
-import userService from '@/services/auth';
 
 const UploadDoc = ({ handleSelectFiles, onClose }) => {
   const [checkedItems, setCheckedItems] = useState({});
@@ -22,7 +21,7 @@ const UploadDoc = ({ handleSelectFiles, onClose }) => {
     filterText: '',
   });
 
-  const { documents_data, documents_loading } = userService.GetDocuments(searchQuery);
+  const { documents_data, documents_loading } = peoplesService.GetDocuments(searchQuery);
 
   const { documents, totalCount } = useMemo(() => {
     return {
