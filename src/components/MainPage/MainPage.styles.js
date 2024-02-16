@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 // import Landingbg from '../../../public/Landingbg.png';
 import Landingbg from '../../../public/lp.jpg';
 export const StyledMainPageStyles = styled.div`
@@ -8,10 +8,17 @@ export const StyledMainPageStyles = styled.div`
   /* background-size: contain; */
   background-repeat: repeat;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 100px 20px 0 20px;
+  overflow: hidden;
+  @media screen and (max-width: 1199px) {
+    background-image: none;
+    background: var(--secondary-25);
+  }
   .text {
+    z-index: 3;
     max-width: 542px;
     width: 100%;
     text-align: center;
@@ -42,7 +49,12 @@ export const StyledMainPageStyles = styled.div`
     }
   }
   .title {
+    z-index: 10;
     margin-bottom: 25px;
+    @media screen and (max-width: 630px) {
+      padding-top: 20px;
+    }
+
     .connect,
     .logo {
       font-size: 35px;
@@ -64,13 +76,20 @@ export const StyledMainPageStyles = styled.div`
       padding: 0;
     }
   }
+  .imagesWrapperfloat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 `;
 
 export const HomeFooter = styled.div`
   padding: 20px;
   max-width: 1200px;
   width: 100%;
-  position: absolute;
+  margin: 0 auto;
+  /* position: absolute; */
   bottom: 20px;
   display: flex;
   align-items: center;
@@ -109,12 +128,39 @@ export const HomeFooter = styled.div`
 `;
 
 export const FloatingImages = styled.div`
-  /* max-width: 175px; */
+  flex-shrink: 0;
   position: absolute;
-  top: 205px;
-  left: 15%;
+  top: ${({ $top }) => ($top ? $top : '')};
+  left: ${({ $left }) => ($left ? $left : '')};
+  right: ${({ $right }) => ($right ? $right : '')};
   img {
     max-width: 100%;
     height: auto;
+  }
+  @media screen and (max-width: 1439px) {
+    top: ${({ $toplg }) => ($toplg ? $toplg : '')};
+    left: ${({ $leftlg }) => ($leftlg ? $leftlg : '')};
+    right: ${({ $rightlg }) => ($rightlg ? $rightlg : '')};
+  }
+  @media screen and (max-width: 1199px) {
+    max-width: 100px;
+    top: ${({ $topmd }) => ($topmd ? $topmd : '')};
+    left: ${({ $leftmd }) => ($leftmd ? $leftmd : '')};
+    right: ${({ $rightmd }) => ($rightmd ? $rightmd : '')};
+  }
+  @media screen and (max-width: 768px) {
+    ${({ $hidden }) =>
+      $hidden &&
+      css`
+        display: none;
+      `}
+  }
+  @media screen and (max-width: 630px) {
+    position: static;
+    ${({ $hidden }) =>
+      $hidden &&
+      css`
+        display: none;
+      `};
   }
 `;

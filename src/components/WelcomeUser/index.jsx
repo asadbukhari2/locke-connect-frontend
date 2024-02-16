@@ -6,6 +6,9 @@ import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import Link from 'next/link';
 import { useTranslation } from '@/helpers/useTranslation';
+import Lottie from 'lottie-react';
+
+import laptopLottie from '../../../public/lottie/Laptop.json';
 
 function WelcomeUser() {
   const { user } = useContextHook(AuthContext, ['user', 'loading_user']);
@@ -23,7 +26,10 @@ function WelcomeUser() {
         <h1 className="h2">{t('Here is your Dashboard')}</h1>
       </div>
       <div className="img-box">
-        <Image src={bgImg} alt="img description" />
+        <div className="lottieWrapper">
+          <Lottie animationData={laptopLottie} loop={true} />
+        </div>
+        {/* <Image src={bgImg} alt="img description" /> */}
       </div>
     </WelcomeBlock>
   );

@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const WelcomeBlock = styled.div`
   width: 100%;
   gap: 15px;
-  min-height: 126px;
+  min-height: 140px;
   overflow: hidden;
   position: relative;
   padding: 16px 16px 114px 16px;
@@ -46,9 +46,8 @@ export const WelcomeBlock = styled.div`
     right: 0;
     bottom: 0;
     width: 140px;
-
-    @media (min-width: 768px) {
-      width: 175px;
-    }
+  }
+  .lottieWrapper {
+    max-width: 200px;
   }
 `;
