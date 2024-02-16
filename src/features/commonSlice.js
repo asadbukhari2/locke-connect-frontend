@@ -39,13 +39,14 @@ const commonSlice = createSlice({
         state.notificationsError = '';
       })
       .addCase(getNotifications.fulfilled, (state, action) => {
-        state.notifications = [
-          ...state.notifications,
-          ...action.payload?.items.filter(
-            newItem => !state.notifications.some(prevItem => prevItem.id === newItem?.id),
-          ),
-        ];
-
+        if (action.payload && action.payload.items && Array.isArray(action.payload.items)) {
+          state.notifications = [
+            ...state.notifications,
+            ...action.payload?.items.filter(
+              newItem => !state.notifications.some(prevItem => prevItem.id === newItem?.id),
+            ),
+          ];
+        }
         state.totalNotification = action.payload?.totalItems;
         state.hasNextPage = action.payload?.hasNextPage;
         state.lastPage = action.payload?.lastPage;
