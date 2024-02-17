@@ -12,60 +12,52 @@ import MapWithPolygons from './MapWithPolygons';
 
 const polygons = [
   {
-    id: 1,
     paths: [
-      { lat: 37.095, lng: -95.708 },
-      { lat: 37.092, lng: -95.698 },
-      { lat: 37.088, lng: -95.702 },
-      { lat: 37.085, lng: -95.712 },
-      { lat: 37.088, lng: -95.718 },
+      { lat: 40.698341, lng: -73.932704 }, // Northwest corner
+      { lat: 40.700745, lng: -73.921756 }, // Northeast corner
+      { lat: 40.693219, lng: -73.913814 }, // Southeast corner
+      { lat: 40.684611, lng: -73.922823 }, // Southwest corner
+      { lat: 40.685865, lng: -73.929306 },
     ],
-    cityName: 'Example City 1',
-    price: 10.9,
+    cityName: 'Bushwick',
     fillColor: 'red',
-    strokeColor: 'blue',
+    strokeColor: 'yellow',
     strokeWeight: 2,
   },
   {
-    id: 2,
     paths: [
-      { lat: 37.098, lng: -95.718 },
-      { lat: 37.095, lng: -95.708 },
-      { lat: 37.092, lng: -95.698 },
-      { lat: 37.089, lng: -95.702 },
-      { lat: 37.086, lng: -95.712 },
-      { lat: 37.089, lng: -95.718 },
-      { lat: 37.092, lng: -95.724 },
+      { lat: 40.882214, lng: -73.934221 }, // Northwest corner (Inwood)
+      { lat: 40.78871, lng: -73.911021 }, // Southwest corner (Battery Park City)
+      { lat: 40.699171, lng: -73.98794 }, // Southeast corner (Lower East Side)
+      { lat: 40.795387, lng: -73.935231 }, // Northeast corner (Harlem)
+      { lat: 40.882214, lng: -73.934221 }, // Close polygon (back to Inwood)
     ],
-    cityName: 'Example City 2',
-    price: 10.9,
+    cityName: 'New York',
     fillColor: 'green',
     strokeColor: 'blue',
     strokeWeight: 2,
   },
   {
-    id: 3,
     paths: [
-      { lat: 37.103, lng: -95.712 },
-      { lat: 37.1, lng: -95.702 },
-      { lat: 37.097, lng: -95.698 },
-      { lat: 37.094, lng: -95.704 },
-      { lat: 37.091, lng: -95.714 },
-      { lat: 37.094, lng: -95.72 },
-      { lat: 37.097, lng: -95.726 },
-      { lat: 37.1, lng: -95.722 },
-      { lat: 37.103, lng: -95.712 },
+      { lat: 40.739446, lng: -74.050296 }, // Northwest corner (near Greenpoint)
+      { lat: 40.635648, lng: -73.93267 }, // Southwest corner (near Coney Island)
+      { lat: 40.702677, lng: -73.896623 }, // Southeast corner (near Canarsie)
+      { lat: 40.694446, lng: -73.884344 }, // East boundary (near East New York)
+      { lat: 40.698583, lng: -73.860246 }, // Southeast boundary (near East Flatbush)
+      { lat: 40.647922, lng: -73.915883 }, // Southwest boundary (near Gravesend)
+      { lat: 40.675499, lng: -74.032274 }, // South boundary (near Bay Ridge)
+      { lat: 40.69167, lng: -74.041442 }, // West boundary (near Sunset Park)
+      { lat: 40.731597, lng: -74.054884 },
     ],
-    cityName: 'Example City 3',
-    price: 10.9,
+    cityName: 'Brooklyn',
     fillColor: 'blue',
-    strokeColor: 'blue',
+    strokeColor: 'red',
     strokeWeight: 2,
   },
   // Add more polygons as needed
 ];
 
-const center = { lat: 37.0902, lng: -95.7129 };
+const center = { lat: 40.739446, lng: -74.050296 };
 
 const Subscription = ({ activeTab }) => {
   const { t } = useTranslation();
@@ -80,15 +72,31 @@ const Subscription = ({ activeTab }) => {
 
   const { products_data, products_loading } = stripeService.GetProducts(searchQuery);
 
-  const { baseProducts } = useMemo(() => {
+  const { baseProducts, mergedData } = useMemo(() => {
     const baseProducts = products_data?.items?.filter(itm => itm?.prod_meta?.plan === 'basic');
-    return { baseProducts };
+    const citiesProducts = products_data?.items?.filter(itm => itm?.prod_meta?.plan !== 'basic');
+    const mergedData = citiesProducts
+      .map(cityProduct => {
+        const matchingPolygon = polygons.find(polygon => polygon.cityName === cityProduct.prod_name);
+
+        if (matchingPolygon) {
+          return {
+            ...cityProduct,
+            ...matchingPolygon,
+          };
+        } else {
+          return null;
+        }
+      })
+      .filter(Boolean);
+
+    return { baseProducts, mergedData };
   }, [products_data]);
 
   const handlePolygonClicked = item => {
-    const index = mapChooseList.findIndex(selectedItem => selectedItem.id === item.id);
+    const index = mapChooseList.findIndex(selectedItem => selectedItem.prod_id === item.prod_id);
     if (index !== -1) {
-      setMapChooseList(prev => prev.filter(selectedItem => selectedItem.id !== item.id));
+      setMapChooseList(prev => prev.filter(selectedItem => selectedItem.prod_id !== item.prod_id));
     } else {
       setMapChooseList(prev => [...prev, item]);
     }
@@ -152,7 +160,7 @@ const Subscription = ({ activeTab }) => {
             {activeTab == 2 && isLoaded && (
               <MapWithPolygons
                 center={center}
-                polygons={polygons}
+                polygons={mergedData}
                 mapChooseList={mapChooseList}
                 handlePolygonClicked={handlePolygonClicked}
               />
@@ -169,7 +177,7 @@ const Subscription = ({ activeTab }) => {
                     <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={() => {}} />
                     <label htmlFor="brooklyn">{listItem.cityName}</label>
                   </div>
-                  ${listItem.price}
+                  ${listItem.price.amount}
                 </li>
               ))}
             </ul>

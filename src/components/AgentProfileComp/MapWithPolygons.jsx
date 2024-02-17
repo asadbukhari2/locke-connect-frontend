@@ -7,7 +7,6 @@ const MapWithPolygons = ({ center, polygons, handlePolygonClicked, mapChooseList
   const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   const handleMapLoad = map => {
-    console.log(map);
     setMap(map);
     setTimeout(() => {
       setIsMapLoaded(true);
@@ -16,7 +15,7 @@ const MapWithPolygons = ({ center, polygons, handlePolygonClicked, mapChooseList
 
   const renderPolygons = () => {
     return polygons.map(polygon => (
-      <React.Fragment key={polygon.id}>
+      <React.Fragment key={polygon.prod_id}>
         <Polygon
           paths={polygon.paths}
           options={{
@@ -43,7 +42,7 @@ const MapWithPolygons = ({ center, polygons, handlePolygonClicked, mapChooseList
             <div style={{ marginRight: 10, fontSize: 12, background: '#fff' }}>
               {mapChooseList.find(_ => _.id == polygon.id) ? '-' : '+'}
             </div>
-            <p>{polygon.price}</p>
+            <p>{polygon.price.amount}</p>
           </button>
         </OverlayView>
       </React.Fragment>
