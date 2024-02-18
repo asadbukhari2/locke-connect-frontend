@@ -635,7 +635,6 @@ export default function App({ Component, pageProps }) {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <GlobalStyles />
-
           <span className="overlay" />
           <div id={!showLayout ? 'content-wrap' : ''}>
             <AuthContextProvider>
