@@ -178,17 +178,31 @@ export const RevolutionizeStyles = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  @media screen and (max-width: 1199px) {
-    background: var(--primary-100);
-    padding: 20px;
-  }
+  ${({ $selling }) =>
+    $selling
+      ? css`
+          margin: 0 -15px;
+          @media screen and (max-width: 1350px) {
+            background: var(--primary-100);
+            padding: 20px;
+          }
+        `
+      : css`
+          margin: 0 auto;
+
+          @media screen and (max-width: 1199px) {
+            background: var(--primary-100);
+            padding: 20px;
+          }
+        `}
+
   .conatiner {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    max-width: 1500px;
+    max-width: ${({ $selling }) => ($selling ? '1220px' : '1500px')};
     margin: 0 auto;
     @media screen and (max-width: 1199px) {
       justify-content: center;
@@ -214,7 +228,7 @@ export const RevolutionizeStyles = styled.div`
       margin-bottom: 20px;
     }
     .text {
-      margin-left: 100px;
+      margin-left: ${({ $selling }) => ($selling ? '20px' : '100px')};
       max-width: 400px;
       @media screen and (max-width: 1199px) {
         margin-left: 0;
@@ -231,18 +245,19 @@ export const RevolutionizeStyles = styled.div`
 
         .connect,
         .logo {
-          font-size: 35px;
-          line-height: 39px;
+          font-size: 30px;
+          line-height: 35px;
           font-weight: 300;
           text-align: center;
           padding-left: 15px;
           color: var(--primary-500);
           @media screen and (min-width: 768px) {
-            font-size: 50px;
-            line-height: 54px;
+            font-size: 35px;
+            line-height: 39px;
           }
           @media screen and (min-width: 992px) {
-            font-size: 60px;
+            font-size: ${({ $selling }) => ($selling ? '40px' : '50px')};
+            line-height: 55px;
           }
         }
         .logo {
@@ -260,21 +275,37 @@ export const RevolutionizeStyles = styled.div`
   }
   .lottiemainWrapper {
     position: absolute;
-    top: -100px;
-    right: 0px;
+    top: ${({ $selling }) => ($selling ? '-50px' : '-100px')};
+    right: ${({ $selling }) => ($selling ? '-30px' : '0px')};
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 1000px;
+    max-width: ${({ $selling }) => ($selling ? '700px' : '1000px')};
     background-image: url(${lottieBg.src});
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
     @media screen and (max-width: 1439px) {
-      top: -40px;
+      top: ${({ $selling }) => ($selling ? '-80px' : '-40px')};
       max-width: 750px;
     }
+    ${({ $selling }) =>
+      $selling
+        ? css`
+            @media screen and (max-width: 1350px) {
+              max-width: 750px;
+              position: static;
+              margin: 0 auto;
+            }
+          `
+        : css`
+            @media screen and (max-width: 1199px) {
+              max-width: 750px;
+              position: static;
+              margin: 0 auto;
+            }
+          `}
     @media screen and (max-width: 1199px) {
       max-width: 750px;
       position: static;
@@ -302,5 +333,19 @@ export const RevolutionizeStyles = styled.div`
     .privacyLinks {
       text-decoration: underline;
     }
+  }
+`;
+export const FloatingWidget = styled.div`
+  position: absolute;
+  top: ${({ $top }) => ($top ? $top : '')};
+  left: ${({ $left }) => ($left ? $left : '')};
+  right: ${({ $right }) => ($right ? $right : '')};
+  ${({ $hidden }) =>
+    $hidden &&
+    css`
+      display: none;
+    `}
+  @media screen and (max-width: 992px) {
+    display: none;
   }
 `;

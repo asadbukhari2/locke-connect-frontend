@@ -6,7 +6,7 @@ import React from 'react';
 
 const selling = () => {
   return (
-    <Revolutionize />
+    <Revolutionize selling />
     // <StyledSelling>
     //   <LeftAside />
     //   <RightAside />
