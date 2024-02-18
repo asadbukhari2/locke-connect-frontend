@@ -18,6 +18,7 @@ import prop4 from '../../../public/prop4.png';
 import prop5 from '../../../public/prop5.png';
 import prop6 from '../../../public/prop6.png';
 import Image from 'next/image';
+import Revolutionize from './Revolutionize';
 const MainPage = () => {
   return (
     <>
@@ -96,6 +97,7 @@ const MainPage = () => {
           </FloatingImages>
         </div>
       </StyledMainPageStyles>
+      <Revolutionize />
       <HomeFooter>
         <span>Terms of use</span>
         <span>Copyright © LockeConnect</span>
