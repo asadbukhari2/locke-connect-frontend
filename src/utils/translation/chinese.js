@@ -46,7 +46,7 @@ export default {
   Min: '最小',
   Max: '最大',
   'Property Details': '物业详情',
-  'Must have garage': '必须有车库',
+  // 'Must have garage': '必须有车库',
   Reset: '重置',
   Size: '尺寸',
   'Lot Size': '地块面积',

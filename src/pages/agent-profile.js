@@ -1,19 +1,20 @@
-/* eslint-disable react/jsx-key */
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, lazy, Suspense } from 'react';
 import TopHead from '@/components/TopHead';
 import TabsSet from '@/components/TabsSet';
 
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import ProfileHeaderAgent from '@/components/ProfileHeaderAgent';
-import AcountDetail from '@/components/AgentProfileComp/AcountDetail';
-import Introduction from '@/components/AgentProfileComp/Introduction';
-import Subscription from '@/components/AgentProfileComp/Subscription';
+
+const AcountDetail = lazy(() => import('@/components/AgentProfileComp/AcountDetail'));
+const Introduction = lazy(() => import('@/components/AgentProfileComp/Introduction'));
+const Subscription = lazy(() => import('@/components/AgentProfileComp/Subscription'));
 
 function AgentProfile() {
   const [activeTab, setActiveTab] = useState(0);
 
   const { user } = useContextHook(AuthContext, ['user']);
+
   useEffect(() => {
     document.body.style.background = '#fff';
 
@@ -24,18 +25,20 @@ function AgentProfile() {
 
   const tabs = useMemo(
     () => [
-      { label: 'Account information', content: <AcountDetail activeTab={activeTab} /> },
-      { label: 'Introduction', content: <Introduction activeTab={activeTab} /> },
+      { label: 'Account information', content: <AcountDetail user={user} /> },
+      { label: 'Introduction', content: <Introduction user={user} /> },
       { label: 'Subscription', content: <Subscription activeTab={activeTab} /> },
     ],
-    [activeTab],
+    [activeTab, user],
   );
 
   return (
     <>
       <TopHead />
       <ProfileHeaderAgent user={user} />
-      <TabsSet tabs={tabs} onTabChange={setActiveTab} responsive />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TabsSet tabs={tabs} onTabChange={setActiveTab} responsive />
+      </Suspense>
     </>
   );
 }

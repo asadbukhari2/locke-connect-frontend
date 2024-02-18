@@ -19,6 +19,7 @@ import { store, persistor } from '../features/store';
 import { fetchAllConversations } from '@/features/messageSlice';
 import { getNotifications } from '@/features/commonSlice';
 import { PersistGate } from 'redux-persist/integration/react';
+import ErrorBoundary from '@/components/ErrorBoundry';
 
 const Styling = css`
   /* theme css variables */
@@ -640,20 +641,22 @@ export default function App({ Component, pageProps }) {
             <AuthContextProvider>
               <SocketContextProvider>
                 <MyContextProvider>
-                  <Modal open={rate} setOpen={setRate} width="920px">
-                    <TodayRateModal setOpen={setRate} />
-                  </Modal>
-                  <Header />
-                  {!showLayout ? (
-                    <>
-                      <Sidebar setRateModal={setRate} />
-                      <Component {...pageProps} />
-                    </>
-                  ) : (
-                    <>
-                      <Component {...pageProps} />
-                    </>
-                  )}
+                  <ErrorBoundary>
+                    <Modal open={rate} setOpen={setRate} width="920px">
+                      <TodayRateModal setOpen={setRate} />
+                    </Modal>
+                    <Header />
+                    {!showLayout ? (
+                      <>
+                        <Sidebar setRateModal={setRate} />
+                        <Component {...pageProps} />
+                      </>
+                    ) : (
+                      <>
+                        <Component {...pageProps} />
+                      </>
+                    )}
+                  </ErrorBoundary>
                 </MyContextProvider>
               </SocketContextProvider>
             </AuthContextProvider>

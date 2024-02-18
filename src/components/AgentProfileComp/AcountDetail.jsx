@@ -15,33 +15,12 @@ import Button from '../Button';
 import CheckBox from '../CheckBox';
 import ToggleSwitch from '../UserSearchFilter/ToggleSwitch';
 
-const AcountDetail = ({ activeTab }) => {
+const AcountDetail = ({ user }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const { user, onLogout } = useContextHook(AuthContext, ['user', 'onLogout']);
+  const { onLogout } = useContextHook(AuthContext, ['onLogout']);
 
   const [deleteAccount, setDeleteAccount] = useState(false);
-  const [formData, setFormData] = useState({
-    displayName: '',
-    address: '',
-    licence: '',
-    brokerage: '',
-    licenseType: '',
-    licensingState: '',
-    phoneNumber: '',
-  });
-
-  useEffect(() => {
-    setFormData({
-      displayName: user.displayName || '',
-      address: user.address || '',
-      licence: user.licenseNumber || '',
-      brokerage: user.brokerageName || '',
-      licenseType: user.licenseType || '',
-      licensingState: user.licensingState || '',
-      phoneNumber: user?.phoneNumber?.slice(0, 2) + ' ' + formatPhoneNumber(user?.phoneNumber?.slice(2)),
-    });
-  }, [activeTab]);
 
   const deleteAccountHandler = async () => {
     setLoading(true);
@@ -108,54 +87,58 @@ const AcountDetail = ({ activeTab }) => {
           {/* <Input Field_Name="name" type="text" value={formData.displayName} /> */}
           <ToggleSwitch fieldName="switchProfile" sm />
         </div>
+        {/* {!user?.displayName ? (
+          'loadingasgdfsdfgh...'
+        ) : (
+          <> */}
         <div className="inputWrap">
           <label htmlFor="name" className="field_title">
             {t('Name')}
           </label>
           {/* <Input Field_Name="name" type="text" value={formData.displayName} /> */}
-          <span>{formData.displayName}</span>
+          <span>{user?.displayName}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="Name" className="field_title">
             {t('Type of Licence')}
           </label>
-          {/* <Select option={LicenseTypes} onChange={e => console.log(e)} title={formData.licenseType} /> */}
-          <span>{formData.licenseType}</span>
+          {/* <Select option={LicenseTypes} onChange={e => console.log(e)} title={user.licenseType} /> */}
+          <span>{user?.licenseType}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="Name" className="field_title">
             {t('Licence State')}
           </label>
-          {/* <Select option={UsStates} onChange={e => console.log(e)} title={formData.licensingState} /> */}
-          <span>{formData.licensingState}</span>
+          {/* <Select option={UsStates} onChange={e => console.log(e)} title={user.licensingState} /> */}
+          <span>{user?.licensingState}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="licence_num" className="field_title">
             {t('Licence Number')}
           </label>
-          {/* <Input Field_Name="licence_num" type="text" value={formData.licence} /> */}
-          <span>{formData.licence}</span>
+          {/* <Input Field_Name="licence_num" type="text" value={user.licence} /> */}
+          <span>{user?.licenseNumber}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="brokerage_name" className="field_title">
             {t('Brokerage Name')}
           </label>
-          {/* <Input Field_Name="brokerage_name" type="text" value={formData.brokerage} /> */}
-          <span>{formData.brokerage}</span>
+          {/* <Input Field_Name="brokerage_name" type="text" value={user.brokerage} /> */}
+          <span>{user?.brokerageName}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="address" className="field_title">
             {t('Address')}
           </label>
-          {/* <Input Field_Name="address" type="text" value={formData.address} /> */}
-          <span>{formData.address}</span>
+          {/* <Input Field_Name="address" type="text" value={user.address} /> */}
+          <span>{user?.address}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="phn_no" className="field_title">
             {t('Phone Number')}
           </label>
-          {/* <Input Field_Name="phn_no" type="text" value={formData.phoneNumber} /> */}
-          <span>{formData.phoneNumber}</span>
+          {/* <Input Field_Name="phn_no" type="text" value={user.phoneNumber} /> */}
+          <span>{user?.phoneNumber?.slice(0, 2) + ' ' + formatPhoneNumber(user?.phoneNumber?.slice(2)) || ''}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="phn_no" className="field_title">
@@ -171,6 +154,8 @@ const AcountDetail = ({ activeTab }) => {
         </Button>
         <Button variant="primary">{t('Save Changes')}</Button>
       </div> */}
+        {/* </>
+        )} */}
       </AccountDetailStyled>
     </>
   );

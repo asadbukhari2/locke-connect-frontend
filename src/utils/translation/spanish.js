@@ -48,7 +48,7 @@ export default {
   Max: 'Máx',
   'Property Details': 'Detalles de la propiedad',
   Reset: 'Restablecer',
-  'Must have garage': 'Debe tener garaje',
+  // 'Must have garage': 'Debe tener garaje',
   Size: 'Tamaño',
   'Lot Size': 'Tamaño del lote',
   'Year built': 'Año de construcción',
