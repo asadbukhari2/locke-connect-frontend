@@ -205,4 +205,20 @@ export default {
   Photos: 'Fotos',
   'No Agents found': 'No se encontraron agentes',
   'Switch Profile': 'Cambiar perfil',
+  'Submit Offer!': '¡Enviar oferta!',
+  'Make an offer!': '¡Haz una oferta!',
+  'This house is listed with Locke Connect! Submit an Offer here!':
+    '¡Esta casa está incluida en Locke Connect! ¡Envíe una oferta aquí!',
+  Accept: 'Aceptar',
+  Modify: 'Modificar',
+  Counter: 'Contador',
+  Resubmit: 'Reenviar',
+  'My Offers': 'Mis ofertas',
+  'My Listings': 'Mi listado',
+  'view offer': 'Ver oferta',
+  'Canceled!': '¡Cancelada!',
+  'Your offer is now canceled!': '¡Tu oferta ya está cancelada!',
+  'Accepted!': '¡Aceptada!',
+  'One of our representative will contact with you very soon again':
+    'Uno de nuestros representantes se comunicará con usted muy pronto nuevamente.',
 };

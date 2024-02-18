@@ -14,8 +14,9 @@ import DateSlider from '../DateSlider/DateSlider';
 import { StatusType } from '../Constants';
 import Select from '../DropDown/PropertyDropDown';
 import { useTranslation } from '@/helpers/useTranslation';
+import ModalBooking from '../ModalAdvanceOption/ModalBooking';
 
-function MyOffers() {
+function MyOfferTab() {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(false);
@@ -28,23 +29,31 @@ function MyOffers() {
     startDate: '',
     endDate: '',
   });
-
-  const actionBtns = () => (
-    <div className="actionBtnList">
-      <li>
-        <Button sm variant="secondary" onClick={() => setModal(true)}>
-          <Image src={scheduleIcon} alt="img" />
-          {t('Reschedule')}
-        </Button>
-      </li>
-      <li>
-        <Button outline>
-          <Image src={deleteIcon} alt="img" />
-        </Button>
-      </li>
-    </div>
+  const acceptModal = {
+    title: 'Accepted!',
+    discreption: 'One of our representative will contact with you very soon again',
+  };
+  const cancelModal = {
+    title: 'Canceled!',
+    discreption: 'Your offer is now canceled!',
+  };
+  const actionBtns = text => (
+    <>
+      <div className="actionBtnList">
+        <li>
+          <Button sm variant={text == 'Accept' ? 'success' : 'secondary'} onClick={() => setModal(true)}>
+            <Image src={scheduleIcon} alt="img" />
+            {t(text)}
+          </Button>
+        </li>
+        <li>
+          <Button outline>
+            <Image src={deleteIcon} alt="img" />
+          </Button>
+        </li>
+      </div>
+    </>
   );
-
   const rows = [
     [
       <div className="info-box">
@@ -59,9 +68,9 @@ function MyOffers() {
           </span>
         </div>
       </div>,
-      '3rd December at 12:30 PM - 1:00 PM',
-      <Status className="visted">Visted</Status>,
-      actionBtns(),
+      '$1,300,000',
+      <Status className="visted">Accepted</Status>,
+      actionBtns('Accept'),
     ],
     [
       <div className="info-box">
@@ -76,13 +85,47 @@ function MyOffers() {
           </span>
         </div>
       </div>,
-      '3rd December at 12:30 PM - 1:00 PM',
-      <Status className="upcoming">Upcoming</Status>,
-      actionBtns(),
+      '$1,300,000',
+      <Status className="upcoming">Submitted</Status>,
+      actionBtns('Modify'),
+    ],
+    [
+      <div className="info-box">
+        <div className="img-box">
+          <Image src={img01} alt="img" />
+        </div>
+        <div className="text-box">
+          <strong className="title">Riche Luxury Mansion</strong>
+          <span className="address">
+            <TbMapPin />
+            St.Constitution Drive, West
+          </span>
+        </div>
+      </div>,
+      '$1,300,000',
+      <Status className="countered">Countered</Status>,
+      actionBtns('Counter'),
+    ],
+    [
+      <div className="info-box">
+        <div className="img-box">
+          <Image src={img01} alt="img" />
+        </div>
+        <div className="text-box">
+          <strong className="title">Riche Luxury Mansion</strong>
+          <span className="address">
+            <TbMapPin />
+            St.Constitution Drive, West
+          </span>
+        </div>
+      </div>,
+      '$1,300,000',
+      <Status className="rejected">Rejected</Status>,
+      actionBtns('Resubmit'),
     ],
   ];
 
-  const columnNames = [t('Property And Location'), t('Visit Date / Time'), t('Status'), ''];
+  const columnNames = [t('Property And Location'), t('Price'), t('Status'), ''];
 
   const FilterBtns = () => (
     <>
@@ -97,18 +140,11 @@ function MyOffers() {
 
   return (
     <>
-      <Modal open={modal} setOpen={setModal} top="90px">
-        <DateSlider
-          setOpen={setModal}
-          open={modal}
-          title={t('Reschedule')}
-          discreption={t('Reschedule a free tour of this home')}
-          button={t('Reschedule A Tour')}
-        />
+      <Modal open={modal} setOpen={setModal} width="274px">
+        <ModalBooking setOpen={setModal} data={cancelModal} />
       </Modal>
-
       <TableLayout
-        title={t('My Tours')}
+        title={t('My Offers')}
         filterBtns={FilterBtns}
         currentPage={searchQuery.page}
         totalCount={totalCount ?? 0}
@@ -120,4 +156,4 @@ function MyOffers() {
   );
 }
 
-export default MyOffers;
+export default MyOfferTab;

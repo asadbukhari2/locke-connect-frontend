@@ -9,6 +9,8 @@ import MyToursTab from '@/components/MyToursTab';
 import MySavedPeople from '@/components/MySavedPeople';
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
+import MyOfferTab from '@/components/MyOffers';
+import MyListings from '@/components/MyListings';
 
 function MyProfile() {
   const tabs = [
@@ -16,6 +18,8 @@ function MyProfile() {
     { label: 'Liked Homes', content: <LikedHomes /> },
     { label: 'My Saved People', content: <MySavedPeople /> },
     { label: 'My Tours', content: <MyToursTab /> },
+    { label: 'My Offers', content: <MyOfferTab /> },
+    { label: 'My Listings', content: <MyListings /> },
   ];
   const { user } = useContextHook(AuthContext, ['user']);
   useEffect(() => {
@@ -26,7 +30,6 @@ function MyProfile() {
     };
   }, []);
 
-  
   return (
     <>
       <TopHead />

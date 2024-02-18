@@ -1,8 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
-import bgImg01 from '../../../public/img01.png';
-import bgImg02 from '../../../public/img02.png';
-import bgImg03 from '../../../public/img03.png';
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import WelcomeUser from '../WelcomeUser';
 import Recommended from '../Recommended';
@@ -11,7 +7,10 @@ import { MyContext } from '@/context/card';
 import { useContextHook } from 'use-context-hook';
 import { useRouter } from 'next/router';
 import { useTranslation } from '@/helpers/useTranslation';
-
+import Lottie from 'lottie-react';
+import buyingLottie from '../../../public/lottie/Character1.json';
+import sellingLottie from '../../../public/lottie/Character2.json';
+import peopleLottie from '../../../public/lottie/Character3.json';
 function VisualSection() {
   const { cardVal, setCardVal } = useContextHook(MyContext, ['cardVal', 'setCardVal']);
   const router = useRouter();
@@ -30,7 +29,9 @@ function VisualSection() {
               </span>
             </div>
             <div className="img-box">
-              <Image src={bgImg01} alt="img description" />
+              <div className="lottieWrapper">
+                <Lottie animationData={buyingLottie} loop={true} />
+              </div>
             </div>
           </Column>
           <Column className="column" onClick={() => router.push('/selling')}>
@@ -41,7 +42,9 @@ function VisualSection() {
               </span>
             </div>
             <div className="img-box">
-              <Image src={bgImg02} alt="img description" />
+              <div className="lottieWrapper">
+                <Lottie animationData={sellingLottie} loop={true} />
+              </div>
             </div>
           </Column>
           <Column className="column" onClick={() => setCardVal(3)} $border={cardVal == 3 ? true : false}>
@@ -52,7 +55,9 @@ function VisualSection() {
               </span>
             </div>
             <div className="img-box">
-              <Image src={bgImg03} alt="img description" />
+              <div className="lottieWrapper">
+                <Lottie animationData={peopleLottie} loop={true} />
+              </div>
             </div>
           </Column>
         </InfoWrap>

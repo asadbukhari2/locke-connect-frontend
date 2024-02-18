@@ -15,6 +15,7 @@ import Modal from '@/components/Modal';
 import ModalBooking from '@/components/ModalAdvanceOption/ModalBooking';
 import EditProfileModal from '@/components/EditProfileModal';
 import { useTranslation } from '@/helpers/useTranslation';
+import SubmitOffer from '@/components/DateSlider/SubmitOffer';
 const PropertyDetails = () => {
   const [scroll, setScroll] = useState(false);
   const [modal, setModal] = useState(false);
@@ -60,6 +61,7 @@ const PropertyDetails = () => {
         <aside className={scroll ? `fixed-scroll fix` : 'fixed-scroll'}>
           <Recommended />
           <DateSlider setOpen={setModal} open={modal} />
+          <SubmitOffer setOpen={setModal} open={modal} />
         </aside>
       </div>
     </>

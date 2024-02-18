@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const VisualBlock = styled.div`
   color: var(--white);
@@ -58,8 +58,7 @@ export const Column = styled.div`
   padding: 16px 16px 120px;
   margin: 0 0 15px;
   border-radius: 16px;
-  border: 1px solid
-    ${({ $border }) => ($border ? "var(--primary-500)" : "var(--gray-50)")};
+  border: 1px solid ${({ $border }) => ($border ? 'var(--primary-500)' : 'var(--gray-50)')};
   background: var(--white);
 
   @media (min-width: 768px) {
@@ -115,10 +114,10 @@ export const Column = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 115px;
 
-    @media (min-width: 768px) {
-      width: 164px;
-    }
+    width: 164px;
+  }
+  .lottieWrapper {
+    max-width: 200px;
   }
 `;
