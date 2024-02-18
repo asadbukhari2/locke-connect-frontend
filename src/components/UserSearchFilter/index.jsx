@@ -180,10 +180,10 @@ const UserSearchFilter = ({ setPopUp, width }) => {
             </FilterOptionDetail>
           </FilterOptionWrapper>
         ))}
-        <div className="requirement">
+        {/* <div className="requirement">
           <span>{t('Must Have Garage')}</span>
           <ToggleSwitch />
-        </div>
+        </div> */}
         {status.map((elem, ind) => (
           <FilterOptionWrapper key={ind}>
             <div className="title" onClick={() => handelIndexValue(5)}>

@@ -14,31 +14,21 @@ import { useContextHook } from 'use-context-hook';
 import Toast from '../Toast';
 import userService from '@/services/auth';
 
-const Introduction = ({ activeTab }) => {
+const Introduction = ({ user }) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-
   const [inputData, setInputData] = useState('');
-
-  const { user, fetchUser } = useContextHook(AuthContext, ['user', 'fetchUser']);
+  const { fetchUser } = useContextHook(AuthContext, ['fetchUser']);
 
   const [formData, setFormData] = useState({
-    about: '',
-    displayName: '',
-    services: [],
-    commissionType: '',
-    commissionPercentage: '',
+    about: user?.about || '',
+    displayName: user?.displayName || '',
+    services: user?.services || [],
+    housesSold: user?.housesSold || 0,
+    housesBought: user?.housesBought || 0,
+    commissionType: user?.commissionType || '',
+    commissionPercentage: user?.commissionPercentage || '',
   });
-
-  useEffect(() => {
-    setFormData({
-      about: user?.about || '',
-      displayName: user?.displayName || '',
-      services: user?.services || [],
-      commissionType: user?.commissionType || '',
-      commissionPercentage: user?.commissionPercentage || '',
-    });
-  }, [activeTab]);
 
   function handelvalue(e) {
     setInputData(e.target.value.trim());
@@ -81,7 +71,12 @@ const Introduction = ({ activeTab }) => {
   return (
     <StyledAgentIntroduction>
       <div className="totalsold">
-        <BoughtSold bought={200} sold={1200} type="input" />
+        <BoughtSold
+          bought={formData.housesBought}
+          sold={formData.housesSold}
+          type="input"
+          onValueChange={handleChange}
+        />
       </div>
       <label htmlFor="about" className="label">
         {t('About')} {formData?.displayName ?? ''} (150 {t('words')})
