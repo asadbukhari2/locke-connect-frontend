@@ -27,6 +27,7 @@ const commonSlice = createSlice({
   initialState: initState,
   reducers: {
     setNotifications: (state, action) => {
+      console.log(action.payload);
       state.notifications = action.payload;
       state.unreadNotification = action.payload.some(notification => !notification.is_read);
     },

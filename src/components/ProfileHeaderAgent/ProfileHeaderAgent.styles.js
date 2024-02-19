@@ -136,6 +136,8 @@ export const ProfileHead = styled.div`
     line-height: 20px;
     color: var(--gray-400);
     margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
 
     @media (min-width: 768px) {
       display: flex;

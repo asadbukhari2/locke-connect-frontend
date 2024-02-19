@@ -11,7 +11,7 @@ import NotificationCard from './NotificationCard';
 import { useDispatch, useSelector } from 'react-redux';
 import Loaders from '../Loaders';
 import { NoRecordFound } from '../NoRecordFound/NoRecord.styles';
-import { getNotifications } from '@/features/commonSlice';
+import { getNotifications, setNotifications } from '@/features/commonSlice';
 import Toast from '../Toast';
 import peoplesService from '@/services/peoples';
 import { useTranslation } from '@/helpers/useTranslation';
@@ -109,19 +109,19 @@ const NotificationWidget = ({ $marginB }) => {
   function handelDropDown(e, ind) {
     e.stopPropagation();
 
-    const targetElement = e.currentTarget;
-    const dropdown = dropdownRef.current;
+    const targetElement = e?.currentTarget;
+    const dropdown = dropdownRef?.current;
 
-    const rect = targetElement.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+    const rect = targetElement?.getBoundingClientRect();
+    const windowHeight = window?.innerHeight;
 
-    const spaceBelow = windowHeight - rect.bottom;
-    const spaceAbove = rect.top;
+    const spaceBelow = windowHeight - rect?.bottom;
+    const spaceAbove = rect?.top;
 
-    if (spaceBelow >= dropdown.clientHeight || spaceBelow >= spaceAbove) {
+    if (spaceBelow >= dropdown?.clientHeight || spaceBelow >= spaceAbove) {
       dropdown.style.top = null;
     } else {
-      dropdown.style.top = `${-dropdown.clientHeight}px`;
+      dropdown.style.top = `${-dropdown?.clientHeight}px`;
     }
 
     setToggleDropDown(prev => (prev === ind ? null : ind));
@@ -142,10 +142,11 @@ const NotificationWidget = ({ $marginB }) => {
     setToggleDropDown(null);
     try {
       let res = await peoplesService.deleteNotification(itm.id);
-      dispatch(getNotifications({ page: 1, pageSize: 5, all: true }));
-      // if (res.success) {
-      //   setNotifications(prevNotifications => prevNotifications.filter(notification => notification.id !== itm.id));
-      // }
+      // dispatch(getNotifications({ page: 1, pageSize: 5, all: true }));
+      if (res.success) {
+        const remaning = notifications.filter(_ => _.id !== itm.id);
+        dispatch(setNotifications(remaning));
+      }
       Toast({ type: 'success', message: 'Deleted' });
     } catch (error) {
       console.error('Error deleting notification:', error);

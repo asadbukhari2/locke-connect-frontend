@@ -9,7 +9,6 @@ import { ProfileHead } from './ProfileHeaderAgent.styles';
 import Button from '../Button';
 import { IoSettingsOutline } from 'react-icons/io5';
 import Modal from '../Modal';
-import EditProfileModal from '../EditProfileModal';
 import userService from '@/services/auth';
 import Toast from '../Toast';
 import { useContextHook } from 'use-context-hook';
@@ -19,7 +18,7 @@ import { useTranslation } from '@/helpers/useTranslation';
 import { formatPhoneNumber } from '@/helpers/common';
 import EditAgentProfileModal from '../EditProfileModal/agentProfileModal';
 
-const ProfileHeaderAgent = ({ user }) => {
+const ProfileHeaderAgent = ({ user, handleProfileViewChange, profileView }) => {
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const { t } = useTranslation();
@@ -126,6 +125,10 @@ const ProfileHeaderAgent = ({ user }) => {
               <li>
                 <span className="text">{t('Night Mode')} (message between 8am to 8pm)</span>
                 <ToggleSwitch fieldName="nightMode" sm />
+              </li>
+              <li>
+                <span className="text"> {t('Switch Profile')}</span>
+                <ToggleSwitch fieldName="switchProfile" sm value={profileView} onChange={handleProfileViewChange} />
               </li>
             </ul>
           </div>
