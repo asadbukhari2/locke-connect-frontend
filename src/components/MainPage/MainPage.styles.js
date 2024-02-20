@@ -7,7 +7,6 @@ export const StyledMainPageStyles = styled.div`
   position: relative;
   background-image: url(${Landingbg.src});
   min-height: 100vh;
-  /* background-size: contain; */
   background-repeat: repeat;
   display: flex;
   flex-direction: column;
@@ -105,7 +104,7 @@ export const HomeFooter = styled.div`
     justify-content: center;
   }
   span {
-    padding-right: 20px;
+    padding-bottom: 20px;
   }
 
   .socialLinks {
@@ -178,34 +177,26 @@ export const RevolutionizeStyles = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  ${({ $selling }) =>
-    $selling
-      ? css`
-          margin: 0 -15px;
-          @media screen and (max-width: 1350px) {
-            background: var(--primary-100);
-            padding: 20px;
-          }
-        `
-      : css`
-          margin: 0 auto;
-
-          @media screen and (max-width: 1199px) {
-            background: var(--primary-100);
-            padding: 20px;
-          }
-        `}
+  margin: 0 auto;
+  @media screen and (max-width: 1199px) {
+    background: var(--primary-100);
+    padding: 20px;
+  }
 
   .conatiner {
+    margin-top: 70px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    max-width: ${({ $selling }) => ($selling ? '1220px' : '1500px')};
-    margin: 0 auto;
+    height: 800px;
+    max-width: 1500px;
+    overflow: hidden;
     @media screen and (max-width: 1199px) {
       justify-content: center;
+      margin: 0 auto;
+      height: auto;
     }
   }
   .info {
@@ -223,12 +214,12 @@ export const RevolutionizeStyles = styled.div`
     justify-content: flex-start;
     margin-bottom: 150px;
     @media screen and (max-width: 1199px) {
-      padding-top: 100px;
+      padding-top: 50px;
       display: block;
       margin-bottom: 20px;
     }
     .text {
-      margin-left: ${({ $selling }) => ($selling ? '20px' : '100px')};
+      margin-left: 100px;
       max-width: 400px;
       @media screen and (max-width: 1199px) {
         margin-left: 0;
@@ -237,7 +228,6 @@ export const RevolutionizeStyles = styled.div`
         margin-bottom: 40px;
       }
       .title {
-        z-index: 10;
         margin-bottom: 25px;
         @media screen and (max-width: 630px) {
           padding-top: 20px;
@@ -256,7 +246,7 @@ export const RevolutionizeStyles = styled.div`
             line-height: 39px;
           }
           @media screen and (min-width: 992px) {
-            font-size: ${({ $selling }) => ($selling ? '40px' : '50px')};
+            font-size: 50px;
             line-height: 55px;
           }
         }
@@ -275,39 +265,178 @@ export const RevolutionizeStyles = styled.div`
   }
   .lottiemainWrapper {
     position: absolute;
-    top: ${({ $selling }) => ($selling ? '-50px' : '-100px')};
-    right: ${({ $selling }) => ($selling ? '-30px' : '0px')};
+    top: 70px;
+    right: 0px;
     padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: ${({ $selling }) => ($selling ? '700px' : '1000px')};
+    max-width: 1000px;
     background-image: url(${lottieBg.src});
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;
-    @media screen and (max-width: 1439px) {
-      top: ${({ $selling }) => ($selling ? '-80px' : '-40px')};
-      max-width: 750px;
+    @media screen and (max-width: 1350px) {
+      max-width: 900px;
+      top: 120px;
+      right: -50px;
     }
-    ${({ $selling }) =>
-      $selling
-        ? css`
-            @media screen and (max-width: 1350px) {
-              max-width: 750px;
-              position: static;
-              margin: 0 auto;
-            }
-          `
-        : css`
-            @media screen and (max-width: 1199px) {
-              max-width: 750px;
-              position: static;
-              margin: 0 auto;
-            }
-          `}
+
     @media screen and (max-width: 1199px) {
       max-width: 750px;
+      position: static;
+      margin: 0 auto;
+    }
+  }
+  .lootieWrapper {
+    padding: 70px;
+    max-width: 900px;
+    @media screen and (max-width: 768px) {
+      padding: 20px;
+    }
+  }
+  .pivacyButtons {
+    max-width: 250px;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .privacyLinks {
+      text-decoration: underline;
+    }
+  }
+`;
+export const RevolutionizeSellingStyles = styled.div`
+  margin: -20px -15px 0 -15px;
+  padding: 20px 0;
+  position: relative;
+  background-image: url(${Revolutionizebg.src});
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  @media screen and (max-width: 1199px) {
+    background: var(--primary-100);
+    padding: 20px;
+  }
+
+  .conatiner {
+    margin-top: 70px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 800px;
+    max-width: 1500px;
+    overflow: hidden;
+
+    @media screen and (max-width: 1199px) {
+      justify-content: center;
+      margin: 0 auto;
+      height: 100%;
+    }
+  }
+  .info {
+    text-align: center;
+    margin-bottom: 30px;
+    @media screen and (max-width: 768px) {
+      br {
+        display: none;
+      }
+    }
+  }
+  .Revolutionize {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 150px;
+    @media screen and (max-width: 1199px) {
+      padding-top: 50px;
+      display: block;
+      margin-bottom: 20px;
+    }
+    .text {
+      margin-left: 25px;
+      max-width: 400px;
+      @media screen and (max-width: 1199px) {
+        margin-left: 0;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .title {
+        margin-bottom: 25px;
+        @media screen and (max-width: 630px) {
+          padding-top: 20px;
+        }
+
+        .connect,
+        .logo {
+          font-size: 25px;
+          line-height: 29px;
+          font-weight: 300;
+          text-align: center;
+          padding-left: 15px;
+          color: var(--primary-500);
+          @media screen and (min-width: 768px) {
+            font-size: 30px;
+            line-height: 34px;
+          }
+          @media screen and (min-width: 992px) {
+            font-size: 45px;
+            line-height: 40px;
+          }
+        }
+        .logo {
+          font-weight: 500;
+          padding: 0;
+        }
+      }
+      .disc {
+        max-width: 300px;
+        @media screen and (max-width: 1199px) {
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+  .lottiemainWrapper {
+    position: absolute;
+    top: 70px;
+    right: 0px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    background-image: url(${lottieBg.src});
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    @media screen and (max-width: 1600px) {
+      max-width: 800px;
+      top: 120px;
+      right: -50px;
+    }
+    @media screen and (max-width: 1450px) {
+      max-width: 750px;
+      top: 120px;
+      right: -50px;
+    }
+    @media screen and (max-width: 1360px) {
+      max-width: 650px;
+    }
+    @media screen and (max-width: 1200px) {
       position: static;
       margin: 0 auto;
     }
@@ -340,12 +469,12 @@ export const FloatingWidget = styled.div`
   top: ${({ $top }) => ($top ? $top : '')};
   left: ${({ $left }) => ($left ? $left : '')};
   right: ${({ $right }) => ($right ? $right : '')};
+  bottom: ${({ $bottom }) => ($bottom ? $bottom : '')};
+  z-index: 10;
+
   ${({ $hidden }) =>
     $hidden &&
     css`
       display: none;
     `}
-  @media screen and (max-width: 992px) {
-    display: none;
-  }
 `;
