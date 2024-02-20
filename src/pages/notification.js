@@ -77,7 +77,8 @@ const Notification = () => {
       let res = await peoplesService.deleteNotification(itm.id);
 
       if (res.success) {
-        setNotifications(prevNotifications => prevNotifications.filter(notification => notification.id !== itm.id));
+        const remaning = notifications.filter(_ => _.id !== itm.id);
+        dispatch(setNotifications(remaning));
       }
     } catch (error) {
       console.error('Error deleting notification:', error);
