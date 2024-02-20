@@ -615,9 +615,9 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     if (!isAuth && !pagesForAuth.includes(pathname)) {
-      router.replace('sign-in');
-    } else if (isAuth && pagesForAuth.includes(pathname)) {
       router.replace('/');
+    } else if (isAuth && pagesForAuth.includes(pathname)) {
+      router.replace('/dashboard');
     }
   }, [isAuth, pathname, router]);
 
