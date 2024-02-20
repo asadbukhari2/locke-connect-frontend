@@ -132,7 +132,7 @@ const Map = () => {
             <div className="back">
               <button
                 onClick={() => {
-                  router.push('/');
+                  router.push('/dashboard');
                 }}>
                 <BiArrowBack size={20} /> {t('Go Back')}
               </button>
