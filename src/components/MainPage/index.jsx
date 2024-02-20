@@ -1,5 +1,5 @@
 import React from 'react';
-import { FloatingImages, HomeFooter, StyledMainPageStyles } from './MainPage.styles';
+import { FloatingImages, FloatingWidget, HomeFooter, StyledMainPageStyles } from './MainPage.styles';
 import Link from 'next/link';
 import Button from '../Button';
 import tiktok from '../../../public/tiktok.svg';
@@ -17,6 +17,8 @@ import prop3 from '../../../public/prop3.png';
 import prop4 from '../../../public/prop4.png';
 import prop5 from '../../../public/prop5.png';
 import prop6 from '../../../public/prop6.png';
+import arraowDownHexa from '../../../public/arraowDownHexa.png';
+
 import Image from 'next/image';
 import Revolutionize from './Revolutionize';
 const MainPage = () => {
