@@ -12,7 +12,9 @@ function MortgageCalculator() {
   return (
     <>
       <Modal setOpen={setModal} open={modal}>
-        <ModalAdvanceOption setOpen={setModal} />
+        <ModalAdvanceOption
+        // setOpen={setModal}
+        />
       </Modal>
       <Column>
         <strong className="title">{t('Mortgage Calculator')}</strong>
@@ -58,7 +60,11 @@ function MortgageCalculator() {
             <span className="percentage-text">7.3510%</span>
           </div>
         </form>
-        <button className="btn-option" onClick={() => setModal(true)}>
+        <button
+          className="btn-option"
+          onClick={() => {
+            setModal(true);
+          }}>
           {t('Advanced Option')}
         </button>
       </Column>
