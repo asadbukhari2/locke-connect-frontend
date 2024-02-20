@@ -109,7 +109,7 @@ const Notification = () => {
         )}
       </ChatMessageMain>
 
-      {isLoading && <Loaders notificationLoader={true} />}
+      {isLoading && <Loaders notificationLoader />}
     </div>
   );
 };

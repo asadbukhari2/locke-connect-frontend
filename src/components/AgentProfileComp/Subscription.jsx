@@ -9,6 +9,7 @@ import stripeService from '@/services/stripe';
 
 import Loaders from '../Loaders';
 import MapWithPolygons from './MapWithPolygons';
+import { convertToCurrencyFormat } from '@/helpers/common';
 
 const polygons = [
   {
@@ -103,14 +104,14 @@ const Subscription = ({ activeTab }) => {
   };
 
   return (
-    <SubcriptionStyled>
+    <SubcriptionStyled $loading={products_loading}>
       <div className="Subscription-main-wrapper">
         <Loaders loading={products_loading}>
           {baseProducts?.length &&
-            baseProducts.map((prod, id) => (
+            baseProducts?.map((prod, id) => (
               <SubscriptionTypeWrapper $active={subscriptionType.month} key={id}>
                 <span className="priceWrapper">
-                  <strong className="price">{prod?.price?.amount}</strong>
+                  <strong className="price">{convertToCurrencyFormat(prod?.price?.amount)}</strong>
                   <strong className="duration">per {prod?.price?.interval}</strong>
                 </span>
                 <span className="checkBox">
@@ -124,34 +125,6 @@ const Subscription = ({ activeTab }) => {
               </SubscriptionTypeWrapper>
             ))}
         </Loaders>
-        {/* <SubscriptionTypeWrapper $active={subscriptionType.month}>
-            <span className="priceWrapper">
-              <strong className="price">$35.00</strong>
-              <strong className="duration">per month</strong>
-            </span>
-            <span className="checkBox">
-              <label htmlFor="month">{t('Locke Basic Agent Service')}</label>
-              <CheckBox
-                fieldName="month"
-                type="circle"
-                onChange={e => setSubscriptionType(prev => ({ ...prev, month: e.isChecked }))}
-              />
-            </span>
-          </SubscriptionTypeWrapper>
-        <SubscriptionTypeWrapper $active={subscriptionType.year}>
-          <span className="priceWrapper">
-            <strong className="price">$400.00</strong>
-            <strong className="duration">per year</strong>
-          </span>
-          <span className="checkBox">
-            <label htmlFor="year">{t('Locke Basic Agent Service')}</label>
-            <CheckBox
-              fieldName="year"
-              type="circle"
-              onChange={e => setSubscriptionType(prev => ({ ...prev, year: e.isChecked }))}
-            />
-          </span>
-        </SubscriptionTypeWrapper> */}
       </div>
       <div className="addArea">
         <div className="map">

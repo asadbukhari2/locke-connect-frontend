@@ -9,7 +9,9 @@ import ChatAside from '../chat/ChatAside';
 
 function Sidebar({ setRateModal }) {
   const router = usePathname();
-  const homeSideBar = ['/', '/my-profile', '/selling', '/chat', '/agent-profile', '/notification'].includes(router);
+  const homeSideBar = ['/dashboard', '/my-profile', '/selling', '/chat', '/agent-profile', '/notification'].includes(
+    router,
+  );
 
   return (
     <Aside>
