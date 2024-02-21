@@ -12,7 +12,7 @@ export const StyledMainPageStyles = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px 20px 0 20px;
+  padding: 100px 20px 0px 20px;
   overflow: hidden;
   @media screen and (max-width: 991px) {
     background-image: none;
@@ -103,9 +103,9 @@ export const HomeFooter = styled.div`
   @media screen and (max-width: 600px) {
     justify-content: center;
   }
-  span {
+  /* span {
     padding-bottom: 20px;
-  }
+  } */
 
   .socialLinks {
     display: flex;
@@ -178,6 +178,7 @@ export const RevolutionizeStyles = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  padding: 20px 0;
   @media screen and (max-width: 1199px) {
     background: var(--primary-100);
     padding: 20px;

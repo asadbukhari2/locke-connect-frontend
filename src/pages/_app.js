@@ -223,6 +223,7 @@ const Styling = css`
     background: var(--primary-50);
     padding: 20px;
     border-radius: 10px;
+    overflow-x: hidden;
     .history {
       width: 100%;
       margin-bottom: 10px;
@@ -236,7 +237,7 @@ const Styling = css`
     }
 
     .messagesArea {
-      height: calc(100vh - 300px);
+      height: calc(100vh - 190px);
       padding-right: 10px;
       overflow: auto;
     }
