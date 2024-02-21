@@ -16,9 +16,8 @@ import Modal from '@/components/Modal';
 import UserDetail from '@/components/UserDetailComp';
 import Loaders from '@/components/Loaders';
 import { useTranslation } from '@/helpers/useTranslation';
-import VideoChat from '@/components/chat/VideoCall/VideoChat';
 
-const chat = () => {
+const VideoChat = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
   const [userDetail, setUserDetail] = useState(false);
@@ -181,34 +180,30 @@ const chat = () => {
   //     console.log('heyhe');
   //   }
   // };
-  // const [videoChat, setVideoChat] = useState(false);
 
   return (
     <>
-      {/* <Modal open={true} setOpen={setModal}>
-        <VideoChat />
-      </Modal> */}
       <Modal open={modal} setOpen={setModal}>
         <UserDetail setModal={setModal} detail={userDetail} />
       </Modal>
-      <div className="chat-container">
-        <div className="history">
+      <div className="chat-container-video">
+        {/* <div className="history">
           <button className="btnBack" onClick={() => router.push('/dashboard')}>
             <IoIosArrowRoundBack size="24" /> {t('Go back')}
           </button>
-        </div>
+        </div> */}
         {!currentConversation ? (
           t('Select any chat to continue')
         ) : (
           <>
-            <ChatHeader
+            {/* <ChatHeader
               user={{
                 channelName: currentConversation.channelName,
                 photoURL: currentConversation.photoURL,
                 slectedUserId: otherId,
                 isOnline: online.findIndex(user => user.userId == otherId) !== -1,
               }}
-            />
+            /> */}
             <div className="messagesArea" ref={scrollContainerRef}>
               {loadingChat ? (
                 <Loaders loading={loadingChat} height={100} />
@@ -283,4 +278,4 @@ const chat = () => {
   );
 };
 
-export default chat;
+export default VideoChat;

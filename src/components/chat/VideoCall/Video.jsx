@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from 'react';
 
 const Video = ({ isLocalStream, stream }) => {
   const videoRef = useRef();
@@ -12,14 +12,7 @@ const Video = ({ isLocalStream, stream }) => {
     };
   }, [stream]);
 
-  return (
-    <video
-      ref={videoRef}
-      autoPlay
-      playsInline
-      muted={isLocalStream ? true : false}
-    />
-  );
+  return <video ref={videoRef} autoPlay playsInline muted={isLocalStream ? true : false} />;
 };
 
 export default Video;

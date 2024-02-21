@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActionButton, CallingFrom, StyledAudioCall } from './VideoCall.styles';
+import { ActionButton, CallingFrom, StyledAudioCall, VideocallMainWrapper } from './VideoCall.styles';
 import usericonaudio from '../../../../public/usericonaudio.jpg';
 
 import message from '../../../../public/callmessage.svg';
@@ -19,6 +19,7 @@ import MicButton from './MicButton';
 import CameraButton from './CameraButton';
 import CancelButton from './CancelButton';
 import { setCallAccepted, setStartTime } from '@/features/roomSlice';
+import ChatFooter from '../ChatFooter';
 
 const VideoCall = ({ user }) => {
   const [stopVideo, setStopVideo] = useState(true);
@@ -59,50 +60,57 @@ const VideoCall = ({ user }) => {
   }, [startTime]);
 
   return (
-    <StyledAudioCall>
-      <div className="main">
-        <Video stream={localStream} isLocalStream={true} />
-        <div className="CallInfo">
-          <div className="profile-wrapper">
-            <div className="profile">
-              <Image src={user.photoURL || usericonaudio} alt="usericonaudio" width={142} height={142} />
+    <VideocallMainWrapper>
+      <StyledAudioCall>
+        <div className="main">
+          <Video stream={localStream} isLocalStream={true} />
+          <div className="CallInfo">
+            <div className="profile-wrapper">
+              <div className="profile">
+                <Image src={user.photoURL || usericonaudio} alt="usericonaudio" width={142} height={142} />
+              </div>
+            </div>
+            <div className="text">
+              <strong className="userName">{user?.channelName}</strong>
+              <span className="calling">{formatTime(elapsedTime)}</span>
             </div>
           </div>
-          <div className="text">
-            <strong className="userName">{user?.channelName}</strong>
-            <span className="calling">{formatTime(elapsedTime)}</span>
-          </div>
-        </div>
-        <CallingFrom>
-          <div className="contentWrapper">
-            <div className="fullScreen">
-              <Image src={fullScreen} alt="fullScreen" />
+          <CallingFrom>
+            <div className="contentWrapper">
+              <div className="fullScreen">
+                <Image src={fullScreen} alt="fullScreen" />
+              </div>
+              {callAccepted ? (
+                <Video stream={remoteStream} isLocalStream={false} />
+              ) : (
+                <Image src={videoCallImage} alt="videoCallImage" width={362} height={160} />
+              )}
             </div>
-            {callAccepted ? (
-              <Video stream={remoteStream} isLocalStream={false} />
-            ) : (
-              <Image src={videoCallImage} alt="videoCallImage" width={362} height={160} />
-            )}
-          </div>
-        </CallingFrom>
-      </div>
-      <ActionButton $stopVideo={stopVideo}>
-        <MicButton localStream={localStream} />
-
-        <div className="circle message">
-          <Image src={message} alt="message" />
+          </CallingFrom>
         </div>
+        <ActionButton $stopVideo={stopVideo}>
+          <MicButton localStream={localStream} />
 
-        {receivingCall && !callAccepted ? (
-          <button className="circle" style={{ background: 'green' }} onClick={answerCall}>
-            <PiPhoneCallDuotone fontSize={24} color="#fff" />
-          </button>
-        ) : null}
+          <div className="circle message">
+            <Image src={message} alt="message" />
+          </div>
 
-        <CameraButton localStream={localStream} stopVideo={stopVideo} setStopVideo={setStopVideo} />
-        <CancelButton to={user.slectedUserId} from={currentUser.id} />
-      </ActionButton>
-    </StyledAudioCall>
+          {receivingCall && !callAccepted ? (
+            <button className="circle" style={{ background: 'green' }} onClick={answerCall}>
+              <PiPhoneCallDuotone fontSize={24} color="#fff" />
+            </button>
+          ) : null}
+
+          <CameraButton localStream={localStream} stopVideo={stopVideo} setStopVideo={setStopVideo} />
+          <CancelButton to={user.slectedUserId} from={currentUser.id} />
+        </ActionButton>
+      </StyledAudioCall>
+      {/* {videoChat && (
+        <div className="videoChat">
+          <ChatFooter />
+        </div>
+      )} */}
+    </VideocallMainWrapper>
   );
 };
 

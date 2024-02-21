@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledAudioCall = styled.div`
   border-radius: 16px;
@@ -16,17 +16,13 @@ export const StyledAudioCall = styled.div`
     margin-bottom: 32px;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       height: 180px;
-      background: linear-gradient(
-        180deg,
-        rgba(0, 0, 0, 0) 23.89%,
-        rgba(0, 0, 0, 0.8) 100%
-      );
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 23.89%, rgba(0, 0, 0, 0.8) 100%);
       z-index: 5;
     }
 
@@ -45,6 +41,10 @@ export const StyledAudioCall = styled.div`
       left: 16px;
       color: var(--white);
       z-index: 6;
+      @media screen and (max-width: 768px) {
+        position: static;
+        color: var(--black);
+      }
     }
     .Camera {
       position: absolute;
@@ -130,8 +130,7 @@ export const ActionButton = styled.div`
     background: var(--white);
   }
   .video {
-    background: ${({ $stopVideo }) =>
-      $stopVideo ? "var(--danger-500)" : "var(--secondary-500)"};
+    background: ${({ $stopVideo }) => ($stopVideo ? 'var(--danger-500)' : 'var(--secondary-500)')};
   }
   .cancelCall {
     background: var(--danger-500);
@@ -150,6 +149,10 @@ export const CallingFrom = styled.div`
   background: #7c8597;
   overflow: hidden;
   z-index: 6;
+  @media screen and (max-width: 768px) {
+    width: 200px;
+    height: 120px;
+  }
   .fullScreen {
     position: absolute;
     top: 8px;
@@ -170,5 +173,16 @@ export const CallingFrom = styled.div`
     max-width: 100%;
     height: auto;
     object-fit: cover;
+  }
+`;
+
+export const VideocallMainWrapper = styled.div`
+  display: flex;
+  gap: 7px;
+  .videoChat {
+    max-width: 350px;
+    width: 100%;
+    border-radius: 16px;
+    background: var(--white);
   }
 `;

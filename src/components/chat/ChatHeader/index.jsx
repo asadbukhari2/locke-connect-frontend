@@ -21,7 +21,7 @@ const userDetail = {
   isOnline: false,
 };
 
-function ChatHeader({ user = userDetail }) {
+function ChatHeader({ user = userDetail, setVideoChat }) {
   const { user: currentUser } = useContextHook(AuthContext, ['user']);
   const dispatch = useDispatch();
 
@@ -80,7 +80,7 @@ function ChatHeader({ user = userDetail }) {
         width="1156px"
         closer={false}
         isCloseAble={false}>
-        <VideoCall user={user} />
+        <VideoCall user={user} setVideoChat={setVideoChat} />
       </Modal>
       <StyledChatHeader>
         <div className="userBox">

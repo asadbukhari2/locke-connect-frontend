@@ -9,9 +9,10 @@ export const StyleBoughtSold = styled.div`
   overflow: hidden;
 
   .col {
+    padding: 0 0px 0 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     width: 145px;
     height: 145px;
@@ -49,7 +50,6 @@ export const StyleBoughtSold = styled.div`
     }
   }
   input {
-    padding: 0 20px;
     width: 100%;
     font-size: 30px;
     line-height: 34px;

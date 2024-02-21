@@ -221,7 +221,7 @@ export const ServiceWrapper = styled.div`
     border-radius: 8px;
     border: 1px solid var(--gray-50);
     background: var(--white);
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
     .icon {
       cursor: pointer;
@@ -235,6 +235,62 @@ export const ServiceWrapper = styled.div`
       outline: none;
       border: none;
       background: transparent;
+    }
+    .toolTip {
+      position: absolute;
+      width: 150px;
+      background: var(--primary-200);
+      border-radius: 5px;
+      bottom: 100%;
+      color: #fff;
+      display: block;
+      right: 0px;
+      margin-bottom: 15px;
+      opacity: 0;
+      padding: 5px 10px;
+      pointer-events: none;
+      position: absolute;
+      -webkit-transform: translateY(10px);
+      -moz-transform: translateY(10px);
+      -ms-transform: translateY(10px);
+      -o-transform: translateY(10px);
+      transform: translateY(10px);
+      -webkit-transition: all 0.25s ease-out;
+      -moz-transition: all 0.25s ease-out;
+      -ms-transition: all 0.25s ease-out;
+      -o-transition: all 0.25s ease-out;
+      transition: all 0.25s ease-out;
+      -webkit-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      -moz-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      -ms-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      -o-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.28);
+      &:before {
+        bottom: -20px;
+        content: ' ';
+        display: block;
+        height: 20px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+      }
+      &:after {
+        border-left: solid transparent 5px;
+        border-right: solid transparent 5px;
+        border-top: solid var(--primary-200) 5px;
+        bottom: -5px;
+        content: ' ';
+        height: 0;
+        right: 5px;
+        position: absolute;
+        width: 0;
+      }
+    }
+    &:hover {
+      .toolTip {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 `;

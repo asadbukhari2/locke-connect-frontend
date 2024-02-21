@@ -50,7 +50,6 @@ export const StyledTextField = styled.div`
       .toolTip {
         position: absolute;
         width: 150px;
-
         background: var(--primary-200);
         border-radius: 5px;
         bottom: 100%;
