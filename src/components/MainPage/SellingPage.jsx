@@ -1,13 +1,13 @@
 import React from 'react';
-import { FloatingWidget, RevolutionizeStyles } from './MainPage.styles';
+import { FloatingWidget, RevolutionizeSellingStyles } from './MainPage.styles';
 import Lottie from 'lottie-react';
 import mainAnimation from '../../../public/lottie/mainAnimation.json';
 import arraowDownHexa from '../../../public/arraowDownHexa.png';
 import Button from '../Button';
 import Image from 'next/image';
-const Revolutionize = ({ selling }) => {
+const SellingPage = ({ selling }) => {
   return (
-    <RevolutionizeStyles $selling={selling}>
+    <RevolutionizeSellingStyles $selling={selling}>
       <div className="conatiner">
         <div className="Revolutionize">
           <div className="text">
@@ -42,11 +42,8 @@ const Revolutionize = ({ selling }) => {
         <span className="privacyLinks">Our Disclaimer</span>
         <span className="privacyLinks">Our Licence</span>
       </div>
-      <FloatingWidget $top="-35px" $left="auto" $right="auto">
-        <Image src={arraowDownHexa} alt="arraowDownHexa" />
-      </FloatingWidget>
-    </RevolutionizeStyles>
+    </RevolutionizeSellingStyles>
   );
 };
 
-export default Revolutionize;
+export default SellingPage;

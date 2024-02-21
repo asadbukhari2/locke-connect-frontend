@@ -161,7 +161,7 @@ function Header() {
         </AsideOpener>
       )}
       <Logo>
-        <Link href={isAuthenticated ? '/' : 'sign-in'}>
+        <Link href={isAuthenticated ? '/dashboard' : '/'}>
           <Image src={LogoImg} alt="lockey" />
         </Link>
       </Logo>

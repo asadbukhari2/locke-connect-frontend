@@ -188,7 +188,7 @@ const chat = () => {
       </Modal>
       <div className="chat-container">
         <div className="history">
-          <button className="btnBack" onClick={() => router.push('/')}>
+          <button className="btnBack" onClick={() => router.push('/dashboard')}>
             <IoIosArrowRoundBack size="24" /> {t('Go back')}
           </button>
         </div>

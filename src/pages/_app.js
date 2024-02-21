@@ -603,8 +603,8 @@ export const GlobalStyles = createGlobalStyle`
   ${Styling}
 `;
 
-const pagesWithLayout = ['/sign-in', '/sign-up', '/map', '/forgot-password', '/reset-password', '/home-page'];
-const pagesForAuth = ['/sign-in', '/sign-up', '/reset-password', '/forgot-password', '/home-page'];
+const pagesWithLayout = ['/sign-in', '/sign-up', '/map', '/forgot-password', '/reset-password', '/'];
+const pagesForAuth = ['/sign-in', '/sign-up', '/reset-password', '/forgot-password', '/'];
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -615,9 +615,9 @@ export default function App({ Component, pageProps }) {
 
   useEffect(() => {
     if (!isAuth && !pagesForAuth.includes(pathname)) {
-      router.replace('sign-in');
-    } else if (isAuth && pagesForAuth.includes(pathname)) {
       router.replace('/');
+    } else if (isAuth && pagesForAuth.includes(pathname)) {
+      router.replace('/dashboard');
     }
   }, [isAuth, pathname, router]);
 

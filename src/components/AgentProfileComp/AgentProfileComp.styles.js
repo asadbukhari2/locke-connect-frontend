@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const DeleteModalWrapper = styled.div`
   width: 100%;
@@ -242,6 +242,7 @@ export const ServiceWrapper = styled.div`
 export const SubcriptionStyled = styled.div`
   max-width: 1100px;
   width: 100%;
+
   .Subscription-main-wrapper {
     margin-bottom: 25px;
     @media screen and (min-width: 991px) {

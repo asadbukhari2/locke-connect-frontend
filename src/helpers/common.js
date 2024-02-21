@@ -148,3 +148,14 @@ export const getPolygonCenter = polygon => {
   const lngCenter = lngSum / polygon.paths.length;
   return { lat: latCenter, lng: lngCenter };
 };
+
+/**
+ * Converts a given amount to currency format.
+ * @param {string|number} amount - The amount to be converted to currency format.
+ * @returns {string} The amount in currency format.
+ */
+export const convertToCurrencyFormat = (amount = '0') =>
+  `$ ${Number(amount)
+    .toFixed(2)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
