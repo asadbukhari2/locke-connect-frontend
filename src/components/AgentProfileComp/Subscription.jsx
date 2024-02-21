@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubcriptionStyled, SubscriptionTypeWrapper } from './AgentProfileComp.styles';
 import CheckBox from '../CheckBox';
 import { useJsApiLoader } from '@react-google-maps/api';
@@ -6,9 +6,11 @@ import Button from '../Button';
 import Payment from './Payment';
 import { useTranslation } from '@/helpers/useTranslation';
 import stripeService from '@/services/stripe';
+import { Elements } from '@stripe/react-stripe-js';
 
 import Loaders from '../Loaders';
 import MapWithPolygons from './MapWithPolygons';
+import { loadStripe } from '@stripe/stripe-js';
 
 const polygons = [
   {
@@ -61,6 +63,7 @@ const center = { lat: 40.739446, lng: -74.050296 };
 
 const Subscription = ({ activeTab }) => {
   const { t } = useTranslation();
+  const [stripePromise, setStripePromise] = useState('');
   const [mapChooseList, setMapChooseList] = useState([]);
   const [subscriptionType, setSubscriptionType] = useState({ month: false, year: false });
 
@@ -101,6 +104,16 @@ const Subscription = ({ activeTab }) => {
       setMapChooseList(prev => [...prev, item]);
     }
   };
+
+  useEffect(() => {
+    stripeService
+      .getStripeKey()
+      .then(async result => {
+        const { publishableKey } = result;
+        setStripePromise(publishableKey);
+      })
+      .catch(e => console.log(e));
+  }, []);
 
   return (
     <SubcriptionStyled>
@@ -188,7 +201,13 @@ const Subscription = ({ activeTab }) => {
           </div>
         </div>
       </div>
-      <Payment />
+      {stripePromise ? (
+        <Elements stripe={loadStripe(stripePromise)}>
+          <Payment />
+        </Elements>
+      ) : (
+        'loading'
+      )}
     </SubcriptionStyled>
   );
 };

@@ -409,7 +409,7 @@ export const PaymentWrapper = styled.div`
     }
     .combine-field {
       display: flex;
-      gap: 10px;
+      /* gap: 10px; */
     }
     .button-wrapper {
       display: flex;
