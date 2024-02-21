@@ -97,6 +97,7 @@ const Introduction = ({ user }) => {
           <div className="icon" onClick={handleService}>
             <MdAdd size="22px" color="var(--gray-400)" />
           </div>
+          <div className="toolTip">Add Your Service</div>
         </div>
       </ServiceWrapper>
       <div className="formWrapper">

@@ -175,3 +175,14 @@ export const CallingFrom = styled.div`
     object-fit: cover;
   }
 `;
+
+export const VideocallMainWrapper = styled.div`
+  display: flex;
+  gap: 7px;
+  .videoChat {
+    max-width: 350px;
+    width: 100%;
+    border-radius: 16px;
+    background: var(--white);
+  }
+`;

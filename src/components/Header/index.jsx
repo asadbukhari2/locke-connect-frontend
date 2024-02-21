@@ -170,7 +170,7 @@ function Header() {
           <MianNav>
             <ul className="main-menu">
               <li
-                className={activeLink == 1 && pathName == '/' ? 'active' : ''}
+                className={activeLink == 1 && pathName == '/dashboard' ? 'active' : ''}
                 onClick={() => {
                   document.body.classList.remove('nav-active');
                   setActiveLink(1);
@@ -181,7 +181,7 @@ function Header() {
                 </Link>
               </li>
               <li
-                className={activeLink === 2 && pathName == '/' ? 'active' : ''}
+                className={activeLink === 2 && pathName == '/dashboard' ? 'active' : ''}
                 onClick={() => {
                   document.body.classList.remove('nav-active');
                   setActiveLink(2);
@@ -205,12 +205,12 @@ function Header() {
                 </Link>
               </li>
               <li
-                className={activeLink === 4 && pathName == '/' ? 'active' : ''}
+                className={activeLink === 4 && pathName == '/dashboard' ? 'active' : ''}
                 onClick={() => {
                   document.body.classList.remove('nav-active');
                   setActiveLink(4);
                   setCardVal(3);
-                  router.push('/');
+                  router.push('/dashboard');
                 }}>
                 <a href="#peopleFilter">
                   <GoPeople size="20" />

@@ -217,10 +217,33 @@ const Styling = css`
     }
   }
 
+  .chat-container-video {
+    width: 100%;
+    position: relative;
+    background: var(--primary-50);
+    padding: 20px;
+    border-radius: 10px;
+    .history {
+      width: 100%;
+      margin-bottom: 10px;
+
+      .btnBack {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--primary-500);
+      }
+    }
+
+    .messagesArea {
+      height: calc(100vh - 300px);
+      padding-right: 10px;
+      overflow: auto;
+    }
+  }
   .chat-container {
     width: 100%;
     position: relative;
-
     .history {
       width: 100%;
       margin-bottom: 10px;
