@@ -11,54 +11,9 @@ import Loaders from '../Loaders';
 import MapWithPolygons from './MapWithPolygons';
 import { convertToCurrencyFormat } from '@/helpers/common';
 
-const polygons = [
-  {
-    paths: [
-      { lat: 40.698341, lng: -73.932704 }, // Northwest corner
-      { lat: 40.700745, lng: -73.921756 }, // Northeast corner
-      { lat: 40.693219, lng: -73.913814 }, // Southeast corner
-      { lat: 40.684611, lng: -73.922823 }, // Southwest corner
-      { lat: 40.685865, lng: -73.929306 },
-    ],
-    cityName: 'Bushwick',
-    fillColor: 'red',
-    strokeColor: 'yellow',
-    strokeWeight: 2,
-  },
-  {
-    paths: [
-      { lat: 40.882214, lng: -73.934221 }, // Northwest corner (Inwood)
-      { lat: 40.78871, lng: -73.911021 }, // Southwest corner (Battery Park City)
-      { lat: 40.699171, lng: -73.98794 }, // Southeast corner (Lower East Side)
-      { lat: 40.795387, lng: -73.935231 }, // Northeast corner (Harlem)
-      { lat: 40.882214, lng: -73.934221 }, // Close polygon (back to Inwood)
-    ],
-    cityName: 'New York',
-    fillColor: 'green',
-    strokeColor: 'blue',
-    strokeWeight: 2,
-  },
-  {
-    paths: [
-      { lat: 40.739446, lng: -74.050296 }, // Northwest corner (near Greenpoint)
-      { lat: 40.635648, lng: -73.93267 }, // Southwest corner (near Coney Island)
-      { lat: 40.702677, lng: -73.896623 }, // Southeast corner (near Canarsie)
-      { lat: 40.694446, lng: -73.884344 }, // East boundary (near East New York)
-      { lat: 40.698583, lng: -73.860246 }, // Southeast boundary (near East Flatbush)
-      { lat: 40.647922, lng: -73.915883 }, // Southwest boundary (near Gravesend)
-      { lat: 40.675499, lng: -74.032274 }, // South boundary (near Bay Ridge)
-      { lat: 40.69167, lng: -74.041442 }, // West boundary (near Sunset Park)
-      { lat: 40.731597, lng: -74.054884 },
-    ],
-    cityName: 'Brooklyn',
-    fillColor: 'blue',
-    strokeColor: 'red',
-    strokeWeight: 2,
-  },
-  // Add more polygons as needed
-];
+import polygons from '../../utils/mapData';
 
-const center = { lat: 40.739446, lng: -74.050296 };
+const center = { lat: 40.6782, lng: -73.9442 };
 
 const Subscription = ({ activeTab }) => {
   const { t } = useTranslation();

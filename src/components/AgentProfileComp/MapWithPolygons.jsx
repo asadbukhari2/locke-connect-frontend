@@ -69,7 +69,7 @@ const MapWithPolygons = ({ center, polygons, handlePolygonClicked, mapChooseList
         width: '100%',
         height: '100%',
       }}
-      zoom={15}
+      zoom={13}
       center={center}
       options={{
         mapTypeControl: false,
