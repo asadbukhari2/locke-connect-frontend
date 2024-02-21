@@ -38,6 +38,31 @@ const stripeService = {
       products_data: products,
     };
   },
+  GetCards(searchQuery) {
+    const [cards, setCards] = useState({
+      items: [],
+      totalItems: 0,
+    });
+    const { cancellablePromise } = useCancellablePromise();
+    const [status, setStatus] = useState(STATUS.LOADING);
+    useEffect(() => {
+      setStatus(STATUS.LOADING);
+      cancellablePromise(this.getCards(searchQuery))
+        .then(res => {
+          setCards(() => res);
+          setStatus(STATUS.SUCCESS);
+        })
+        .catch(err => {
+          console.log({ err });
+          setStatus(STATUS.ERROR);
+        });
+    }, []);
+    return {
+      cards_loading: status === STATUS.LOADING,
+      cards_error: status === STATUS.ERROR ? status : '',
+      cards_data: cards,
+    };
+  },
 
   async getProducts({ page = 1, pageSize = 100, filterText = '' }) {
     let res = await Fetch.get(`${_url}/products?page=${page}&pageSize=${pageSize}&filterText=${filterText}`);
@@ -85,6 +110,25 @@ const stripeService = {
     if (res.status >= 200 && res.status < 300) {
       res = await res.json();
       return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async subscribe(priceIds, customerId) {
+    console.log(priceIds, customerId);
+    let res = await Fetch.post(`${_url}/subscribe`, { priceIds, customerId });
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+  async getCards() {
+    let res = await Fetch.get(`${_url}/get-all-cards`);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res.data;
     }
     const { message } = await res.json();
     throw new Error(message ?? 'Something went wrong');

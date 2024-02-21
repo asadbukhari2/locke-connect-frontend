@@ -311,7 +311,7 @@ export const SubcriptionStyled = styled.div`
 
 export const SubscriptionTypeWrapper = styled.div`
   width: 100%;
-
+  cursor: pointer;
   border: 1px solid ${({ $active }) => ($active ? 'var(--primary-500)' : 'var(--gray-300)')};
   color: var(--primary-500);
   padding: 15px 20px;
