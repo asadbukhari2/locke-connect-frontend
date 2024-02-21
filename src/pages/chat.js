@@ -16,11 +16,11 @@ import Modal from '@/components/Modal';
 import UserDetail from '@/components/UserDetailComp';
 import Loaders from '@/components/Loaders';
 import { useTranslation } from '@/helpers/useTranslation';
-import VideoChat from '@/components/chat/VideoCall/VideoChat';
 
 const chat = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
+
   const [userDetail, setUserDetail] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [localMessages, setLocalMessages] = useState([]);
@@ -181,13 +181,8 @@ const chat = () => {
   //     console.log('heyhe');
   //   }
   // };
-  // const [videoChat, setVideoChat] = useState(false);
-
   return (
     <>
-      {/* <Modal open={true} setOpen={setModal}>
-        <VideoChat />
-      </Modal> */}
       <Modal open={modal} setOpen={setModal}>
         <UserDetail setModal={setModal} detail={userDetail} />
       </Modal>
@@ -208,6 +203,7 @@ const chat = () => {
                 slectedUserId: otherId,
                 isOnline: online.findIndex(user => user.userId == otherId) !== -1,
               }}
+              showChat={setVideoChatWidget}
             />
             <div className="messagesArea" ref={scrollContainerRef}>
               {loadingChat ? (

@@ -5,9 +5,10 @@ import mainAnimation from '../../../public/lottie/mainAnimation.json';
 import arraowDownHexa from '../../../public/arraowDownHexa.png';
 import Button from '../Button';
 import Image from 'next/image';
+import Link from 'next/link';
 const Revolutionize = ({ selling }) => {
   return (
-    <RevolutionizeStyles $selling={selling}>
+    <RevolutionizeStyles $selling={selling} id="mainSection">
       <div className="conatiner">
         <div className="Revolutionize">
           <div className="text">
@@ -42,9 +43,11 @@ const Revolutionize = ({ selling }) => {
         <span className="privacyLinks">Our Disclaimer</span>
         <span className="privacyLinks">Our Licence</span>
       </div>
-      <FloatingWidget $top="-35px" $left="auto" $right="auto">
-        <Image src={arraowDownHexa} alt="arraowDownHexa" />
-      </FloatingWidget>
+      <Link href="#mainSection">
+        <FloatingWidget $top="-35px" $left="auto" $right="auto">
+          <Image src={arraowDownHexa} alt="arraowDownHexa" />
+        </FloatingWidget>
+      </Link>
     </RevolutionizeStyles>
   );
 };

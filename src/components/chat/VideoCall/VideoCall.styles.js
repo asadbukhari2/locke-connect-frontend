@@ -177,12 +177,11 @@ export const CallingFrom = styled.div`
 `;
 
 export const VideocallMainWrapper = styled.div`
-  display: flex;
-  gap: 7px;
-  .videoChat {
-    max-width: 350px;
-    width: 100%;
-    border-radius: 16px;
-    background: var(--white);
-  }
+  z-index: 999;
+  position: fixed;
+  max-width: 400px;
+  top: 50px;
+  right: ${({ $show }) => ($show ? '10px' : '-150%')};
+  bottom: 10px;
+  transition: 0.3s all ease-in-out;
 `;

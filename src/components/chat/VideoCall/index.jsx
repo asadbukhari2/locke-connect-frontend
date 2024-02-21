@@ -19,7 +19,6 @@ import MicButton from './MicButton';
 import CameraButton from './CameraButton';
 import CancelButton from './CancelButton';
 import { setCallAccepted, setStartTime } from '@/features/roomSlice';
-import ChatFooter from '../ChatFooter';
 
 const VideoCall = ({ user }) => {
   const [stopVideo, setStopVideo] = useState(true);
@@ -105,11 +104,6 @@ const VideoCall = ({ user }) => {
           <CancelButton to={user.slectedUserId} from={currentUser.id} />
         </ActionButton>
       </StyledAudioCall>
-      {/* {videoChat && (
-        <div className="videoChat">
-          <ChatFooter />
-        </div>
-      )} */}
     </VideocallMainWrapper>
   );
 };
