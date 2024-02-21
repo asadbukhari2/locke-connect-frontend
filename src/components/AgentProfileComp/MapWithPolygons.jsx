@@ -40,7 +40,7 @@ const MapWithPolygons = ({ center, polygons, handlePolygonClicked, mapChooseList
               cursor: 'pointer',
             }}>
             <div style={{ marginRight: 10, fontSize: 12, background: '#fff' }}>
-              {mapChooseList.find(_ => _.id == polygon.id) ? '-' : '+'}
+              {mapChooseList.find(_ => _.prod_id == polygon.prod_id) ? '-' : '+'}
             </div>
             <p>{polygon.price.amount}</p>
           </button>

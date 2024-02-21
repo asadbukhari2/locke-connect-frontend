@@ -21,7 +21,7 @@ const Introduction = ({ user }) => {
   const { fetchUser } = useContextHook(AuthContext, ['fetchUser']);
 
   const [formData, setFormData] = useState({
-    about: user?.about || '',
+    about: user?.about?.trim() || '',
     displayName: user?.displayName || '',
     services: user?.services || [],
     housesSold: user?.housesSold || 0,

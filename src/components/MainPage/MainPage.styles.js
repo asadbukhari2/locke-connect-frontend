@@ -14,7 +14,7 @@ export const StyledMainPageStyles = styled.div`
   justify-content: center;
   padding: 100px 20px 0 20px;
   overflow: hidden;
-  @media screen and (max-width: 1199px) {
+  @media screen and (max-width: 991px) {
     background-image: none;
     background: var(--secondary-25);
   }

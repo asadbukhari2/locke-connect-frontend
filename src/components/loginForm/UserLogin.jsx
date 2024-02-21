@@ -23,7 +23,7 @@ const UserLogin = () => {
 
   const signInHandler = async event => {
     event.preventDefault();
-    await onLogin({ email, password, redirect: () => router.push('/') });
+    await onLogin({ email, password, redirect: () => router.push('/dashboard') });
   };
 
   return (

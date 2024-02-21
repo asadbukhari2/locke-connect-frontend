@@ -80,13 +80,7 @@ const AcountDetail = ({ user }) => {
           </label>
         </div>
       </div> */}
-        <div className="inputWrap">
-          <label htmlFor="name" className="field_title">
-            {t('Switch Profile')}
-          </label>
-          {/* <Input Field_Name="name" type="text" value={formData.displayName} /> */}
-          <ToggleSwitch fieldName="switchProfile" sm />
-        </div>
+
         {/* {!user?.displayName ? (
           'loadingasgdfsdfgh...'
         ) : (

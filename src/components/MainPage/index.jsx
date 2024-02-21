@@ -54,7 +54,7 @@ const MainPage = () => {
           </div>
           <p>
             Connect instantly with local real estate experts, ensuring efficiency and transparency for confident buying
-            and selling experiences.{' '}
+            and selling experiences.
           </p>
           <p>More than a transaction, it is a connection!</p>
           <Link href="/" className="home-page">
