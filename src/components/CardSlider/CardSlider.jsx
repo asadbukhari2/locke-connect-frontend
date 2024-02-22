@@ -55,8 +55,8 @@ export default function CardSlider({ agents }) {
   return (
     <>
       <Modal open={shareContacts} setOpen={setShareContacts} width="900px">
-        {/* <ShareContact /> */}
-        <ShareContactLink agent={selectedAgent} />
+        <ShareContact />
+        {/* <ShareContactLink agent={selectedAgent} /> */}
       </Modal>
       {/* <Modal open={true} width="600px">
         <ShareContactLink onClick={e => console.log(e)} />
