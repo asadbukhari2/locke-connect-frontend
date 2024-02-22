@@ -24,9 +24,10 @@ const userDetail = {
 function ChatHeader({ user = userDetail }) {
   const { user: currentUser } = useContextHook(AuthContext, ['user']);
   const dispatch = useDispatch();
-
+  const state = useSelector(state => state.room);
+  console.log({ state });
   const { videoCallModal, audioCallModal } = useSelector(state => state.room);
-
+  console.log({ videoCallModal });
   const handleAudioCall = () => {
     if (user.isOnline) {
       const callSound = new Audio(
@@ -75,6 +76,7 @@ function ChatHeader({ user = userDetail }) {
       <Modal
         open={videoCallModal}
         setOpen={e => {
+          console.log('i am here');
           dispatch(setVideoCallModal(e));
         }}
         width="1156px"
@@ -95,10 +97,18 @@ function ChatHeader({ user = userDetail }) {
           </div>
         </div>
         <div className="btnsBox">
-          <button className="btn btnCall" onClick={handleAudioCall}>
+          <button
+            className="btn btnCall"
+            onClick={() => {
+              handleAudioCall();
+            }}>
             <PiPhoneCall size="20" />
           </button>
-          <button className="btn btnvideo" onClick={handleVideoCall}>
+          <button
+            className="btn btnvideo"
+            onClick={() => {
+              handleVideoCall();
+            }}>
             <PiVideoCameraBold size="18" />
           </button>
         </div>
