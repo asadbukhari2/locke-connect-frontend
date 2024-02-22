@@ -109,7 +109,7 @@ export const NotificationDropDown = styled.div`
   z-index: 3;
   box-sizing: border-box;
   position: absolute;
-  top: 70px;
+  top: 60px;
   right: 5px;
   box-shadow: 0px 48px 64px -16px rgba(29, 41, 57, 0.1);
   width: 113px;

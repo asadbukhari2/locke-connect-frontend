@@ -1,10 +1,10 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledProperty = styled.div`
   width: 100%;
   position: relative;
   scroll-margin-top: 100px;
-
+  min-height: 800px;
   .pagination {
     padding: 0;
     margin: 30px 0;
@@ -153,8 +153,8 @@ export const FilterWrap = styled.div`
     position: absolute;
     z-index: 5;
     top: 60px;
-    opacity: ${({ open }) => (open ? "1" : "0")};
-    visibility: ${({ open }) => (open ? "visible" : "hidden")};
+    opacity: ${({ open }) => (open ? '1' : '0')};
+    visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
     ${({ open }) =>
       open == true
         ? css`

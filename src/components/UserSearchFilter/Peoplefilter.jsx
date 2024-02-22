@@ -140,10 +140,12 @@ const PeopleFilter = ({ setPopUp }) => {
                 ))}
               </FilterOptionDetail>
             </FilterOptionWrapper>
-            <Button variant="danger">Reset</Button>
           </>
         ))}
       </FilterOption>
+      <Button variant="danger" className="submitButton">
+        Reset
+      </Button>
     </UserFilterStyle>
   );
 };

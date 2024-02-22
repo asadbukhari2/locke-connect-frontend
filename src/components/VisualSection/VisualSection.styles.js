@@ -115,7 +115,10 @@ export const Column = styled.div`
     right: 0;
     bottom: 0;
 
-    width: 164px;
+    width: 200px;
+    @media screen and (max-width: 768px) {
+      width: 150px;
+    }
   }
   .lottieWrapper {
     max-width: 200px;

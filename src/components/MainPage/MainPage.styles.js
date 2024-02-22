@@ -106,13 +106,16 @@ export const HomeFooter = styled.div`
   /* span {
     padding-bottom: 20px;
   } */
-
+  .link {
+    cursor: pointer;
+  }
   .socialLinks {
     display: flex;
     align-items: center;
     gap: 10px;
     max-width: 250px;
     width: 100%;
+
     span {
       padding-right: 20px;
     }
@@ -312,6 +315,7 @@ export const RevolutionizeStyles = styled.div`
     justify-content: space-between;
     .privacyLinks {
       text-decoration: underline;
+      cursor: pointer;
     }
   }
 `;
