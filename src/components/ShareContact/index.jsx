@@ -5,6 +5,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 const ShareContactLink = ({
   link = 'dbjhb hkgjhb kjbg mbjhg m,nb jhfv kb vhggf jhjtfd,mBF lujhjGFuyg Jfbfbfbfbbbbbbbbb',
   onClick,
+  agent,
 }) => {
   const handleCopyText = () => {
     navigator.clipboard
@@ -16,12 +17,13 @@ const ShareContactLink = ({
         console.error('Failed to copy text: ', err);
       });
   };
-
+  console.log({ agent });
+  const profileLink = `${location?.origin}/profileId=${agent?.id}&photoUrl=${agent?.photoURL}`;
   return (
     <StyledShareContact>
-      <strong className="title">Share Contact</strong> <p>Your form is live at this URL:</p>
+      <strong className="title">Share Contact ({agent?.displayName}) </strong> <p>You can share this profile in chat</p>
       <div className="linkWrapper">
-        <span className="text">{link}</span>
+        <span className="text">{profileLink}</span>
         <div className="copyText" onClick={handleCopyText}>
           <IoCopyOutline size="20" />
           Copy Link

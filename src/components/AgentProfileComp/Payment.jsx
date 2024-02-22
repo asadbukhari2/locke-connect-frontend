@@ -65,7 +65,7 @@ const Payment = ({ amount, items, selectedProduct }) => {
       <strong className="title">{t('Payment Options')}</strong>
 
       <div className="saved-card">
-        {cards_data.data.map(itm => {
+        {cards_data?.data?.map(itm => {
           return (
             <div>
               <div>{t('Saved Card')}</div>

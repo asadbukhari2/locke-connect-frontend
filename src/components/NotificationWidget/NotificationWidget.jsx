@@ -119,9 +119,13 @@ const NotificationWidget = ({ $marginB }) => {
     const spaceAbove = rect?.top;
 
     if (spaceBelow >= dropdown?.clientHeight || spaceBelow >= spaceAbove) {
-      dropdown.style.top = null;
+      if (dropdown) {
+        dropdown.style.top = null;
+      }
     } else {
-      dropdown.style.top = `${-dropdown?.clientHeight}px`;
+      if (dropdown) {
+        dropdown.style.top = `${-dropdown?.clientHeight}px`;
+      }
     }
 
     setToggleDropDown(prev => (prev === ind ? null : ind));

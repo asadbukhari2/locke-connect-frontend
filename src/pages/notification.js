@@ -6,6 +6,7 @@ import Toast from '@/components/Toast';
 import Loaders from '@/components/Loaders';
 import { getNotifications, setNotifications } from '@/features/commonSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import NoRecordFound from '@/components/NoRecordFound';
 
 const Notification = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -88,7 +89,7 @@ const Notification = () => {
   return (
     <div>
       <ChatMessageMain ref={NotificationRef} $height>
-        {notifications && (
+        {notifications?.length ? (
           <>
             <h2>Recent Notification</h2>
             {notifications.map((elem, ind) => (
@@ -106,6 +107,8 @@ const Notification = () => {
               </>
             ))}
           </>
+        ) : (
+          <NoRecordFound />
         )}
       </ChatMessageMain>
 

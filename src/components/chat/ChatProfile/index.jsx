@@ -1,25 +1,25 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { ChatMessageMain, NotificationDropDown } from "./ChatProfile.styles";
-import dots from "../../../../public/dots.png";
-import Image from "next/image";
-import trash from "../../../../public/trash.png";
-import archive from "../../../../public/archive.png";
-import mute from "../../../../public/mute.png";
-import Badge from "@/components/Badge";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { ChatMessageMain, NotificationDropDown } from './ChatProfile.styles';
+import dots from '../../../../public/dots.png';
+import Image from 'next/image';
+import trash from '../../../../public/trash.png';
+import archive from '../../../../public/archive.png';
+import mute from '../../../../public/mute.png';
+import Badge from '@/components/Badge';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchAllConversations,
   getMessages,
   setCountToZero,
   setCurrentConversation,
   setMessages,
-} from "@/features/messageSlice";
-import { useRouter } from "next/router";
-import Toast from "@/components/Toast";
-import peoplesService from "@/services/peoples";
-import { socketServer } from "@/utils/socketServerConnection";
-import { useContextHook } from "use-context-hook";
-import { AuthContext } from "@/context/authContext";
+} from '@/features/messageSlice';
+import { useRouter } from 'next/router';
+import Toast from '@/components/Toast';
+import peoplesService from '@/services/peoples';
+import { socketServer } from '@/utils/socketServerConnection';
+import { useContextHook } from 'use-context-hook';
+import { AuthContext } from '@/context/authContext';
 
 const ChatProfile = ({ data, key }) => {
   const NotificationRef = useRef(null);
@@ -28,26 +28,23 @@ const ChatProfile = ({ data, key }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const socket = socketServer();
-  const { user } = useContextHook(AuthContext, ["user"]);
+  const { user } = useContextHook(AuthContext, ['user']);
 
   function handelDropDown(e) {
     e.stopPropagation();
     setToggleDropDown(!toggleDropDown);
   }
 
-  const handleClickOutsideNotification = (event) => {
-    if (
-      NotificationRef.current &&
-      !NotificationRef.current.contains(event.target)
-    ) {
+  const handleClickOutsideNotification = event => {
+    if (NotificationRef.current && !NotificationRef.current.contains(event.target)) {
       setToggleDropDown(null);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutsideNotification);
+    document.addEventListener('mousedown', handleClickOutsideNotification);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutsideNotification);
+      document.removeEventListener('mousedown', handleClickOutsideNotification);
     };
   }, []);
 
@@ -58,26 +55,26 @@ const ChatProfile = ({ data, key }) => {
       dispatch(setCurrentConversation(null));
       dispatch(setMessages([]));
       if (res.success) {
-        Toast({ type: "success", message: res.message });
+        Toast({ type: 'success', message: res.message });
       }
     } catch (error) {
       Toast({
-        type: "error",
-        message: error.message || "Something went wrong",
+        type: 'error',
+        message: error.message || 'Something went wrong',
       });
     }
   };
 
   const handleMessageRead = () => {
     if (data.unreadcount > 0) {
-      socket.emit("messages-read", {
+      socket.emit('messages-read', {
         conversationId: data._id,
         receiver: user.id,
       });
       dispatch(
         setCountToZero({
           conversationId: data._id,
-        })
+        }),
       );
     }
   };
@@ -90,14 +87,13 @@ const ChatProfile = ({ data, key }) => {
           dispatch(setCurrentConversation(data));
           const author = data?.initBy;
           const receiver = data?.receiver;
-          const conversationId = data?._id ?? "";
+          const conversationId = data?._id ?? '';
           dispatch(getMessages({ author, receiver, conversationId }));
           setToggleDropDown(null);
           handleMessageRead();
-          router.push("/chat");
-          document?.body.classList.remove("aside-active");
-        }}
-      >
+          router.push('/chat');
+          document?.body.classList.remove('aside-active');
+        }}>
         <div className="chatImageText">
           <div className="profileBadgeWrapper">
             <span className="profile">
@@ -105,29 +101,24 @@ const ChatProfile = ({ data, key }) => {
             </span>
             {data.unreadcount > 0 && (
               <div className="badge">
-                <Badge
-                  $variant="secondary"
-                  alignLeft
-                  child={data.unreadcount <= 9 ? data.unreadcount : `9+`}
-                />
+                <Badge $variant="secondary" alignLeft child={data.unreadcount <= 9 ? data.unreadcount : `9+`} />
               </div>
             )}
           </div>
           <div className="text">
             <strong>{data.channelName}</strong>
-            <p>{data?.lastMessage ? data?.lastMessage.text : "No Messages"}</p>
+            <p>{data?.lastMessage ? data?.lastMessage.text : 'No Messages'}</p>
           </div>
         </div>
         <div className="time">
           <p>{data.lastMessage?.time}</p>
-          <Image
-            src={dots}
-            alt="dots"
-            className="dots"
-            onClick={(e) => handelDropDown(e)}
-          />
+          <Image src={dots} alt="dots" className="dots" onClick={e => handelDropDown(e)} />
           <NotificationDropDown $show={toggleDropDown}>
-            <div className="wrap" onClick={handleDeleteConversation}>
+            <div
+              className="wrap"
+              onClick={() => {
+                handleDeleteConversation();
+              }}>
               <span className="icon">
                 <Image src={trash} alt="trash" />
               </span>

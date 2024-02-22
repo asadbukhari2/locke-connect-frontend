@@ -8,7 +8,7 @@ import { IoMdAdd } from 'react-icons/io';
 import Button from '../Button';
 import Graph from './Graph';
 import Modal from '../Modal';
-import MortgageCalculator from '../MortgageCalculator';
+import MortgageCalc from '../MortgageCalc';
 const data = [
   {
     discretion: '30-yr fixed',
@@ -28,12 +28,12 @@ const data = [
 ];
 function LoanProduct() {
   const [open, setOpen] = useState(false);
+  const handleSubmit = e => {
+    e.preventDefault();
+  };
   return (
     <>
-      <Modal open={open} setOpen={setOpen} width="1020px">
-        <MortgageCalculator />
-      </Modal>
-      <StyledLoanProduct>
+      <StyledLoanProduct onSubmit={handleSubmit}>
         <strong className="date">Nov 16, 2023</strong>
         <div className="input-wrap">
           <Input className="input-group" placeholder="Enter Number" label="Loan amount" type="number" />
@@ -80,6 +80,9 @@ function LoanProduct() {
           </div>
         </div>
       </StyledLoanProduct>
+      <Modal open={open} setOpen={setOpen}>
+        <MortgageCalc />
+      </Modal>
     </>
   );
 }

@@ -331,7 +331,7 @@ export const RevolutionizeSellingStyles = styled.div`
   }
 
   .conatiner {
-    margin-top: 70px;
+    margin-top: ${({ $selling }) => ($selling ? '0px' : '70px')};
     position: relative;
     display: flex;
     align-items: center;

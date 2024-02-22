@@ -23,6 +23,8 @@ import ShareContactLink from '../ShareContact';
 export default function CardSlider({ agents }) {
   const [people, setPeople] = useState(agents);
   const [shareContacts, setShareContacts] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState(null);
+
   const { t } = useTranslation();
   const { user } = useContextHook(AuthContext, ['user']);
 
@@ -53,7 +55,8 @@ export default function CardSlider({ agents }) {
   return (
     <>
       <Modal open={shareContacts} setOpen={setShareContacts} width="900px">
-        <ShareContact />
+        {/* <ShareContact /> */}
+        <ShareContactLink agent={selectedAgent} />
       </Modal>
       {/* <Modal open={true} width="600px">
         <ShareContactLink onClick={e => console.log(e)} />
@@ -96,7 +99,12 @@ export default function CardSlider({ agents }) {
                         <span className="icon" onClick={() => handelFavourite(elem.id)}>
                           {elem.isFav ? <FaHeart size="16" /> : <FaRegHeart size="16" />}
                         </span>
-                        <span className="icon" onClick={() => setShareContacts(true)}>
+                        <span
+                          className="icon"
+                          onClick={() => {
+                            setShareContacts(true);
+                            setSelectedAgent(elem);
+                          }}>
                           <Image src={share} alt="share" />
                         </span>
                         <span className="icon" onClick={() => router.push('/chat')}>

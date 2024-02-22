@@ -154,3 +154,9 @@ export const LanguageData = [
   },
 ];
 
+export const OfferTypes = [
+  { label: 'Accepted', value: 'accepted' },
+  { label: 'Countered', value: 'countered' },
+  { label: 'Rejected', value: 'rejected' },
+  { label: 'Submitted', value: 'submitted' },
+];

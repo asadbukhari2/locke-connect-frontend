@@ -1,7 +1,7 @@
 import React from 'react';
 import { NoRecordFound } from './NoRecord.styles';
-const NoRecordFound = ({ message }) => {
+const NoRecord = ({ message }) => {
   return <NoRecordFound>{message ? message : 'No Record Found'}</NoRecordFound>;
 };
 
-export default index;
+export default NoRecord;

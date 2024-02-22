@@ -84,8 +84,10 @@ const Subscription = ({ activeTab }) => {
                 $active={selectedProduct && selectedProduct.price.id === prod.price.id}
                 onClick={() => handleSubsribtionClick(prod)}>
                 <span className="priceWrapper">
-                  <strong className="price">{convertToCurrencyFormat(prod?.price?.amount)}</strong>
-                  <strong className="duration">per {prod?.price?.interval}</strong>
+                  <strong className="price">
+                    {convertToCurrencyFormat(prod?.price?.amount)}/
+                    <span className="duration">{prod?.price?.interval}</span>
+                  </strong>
                 </span>
                 <span className="checkBox">
                   <label htmlFor={`checkbox-${id}`}>{t(prod?.prod_name)}</label>

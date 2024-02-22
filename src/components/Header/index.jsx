@@ -175,7 +175,7 @@ function Header() {
                   document.body.classList.remove('nav-active');
                   setActiveLink(1);
                 }}>
-                <Link href="/">
+                <Link href="/dashboard">
                   <BiHomeAlt size="20" />
                   <span className="text">{t('Home')}</span>
                 </Link>
@@ -185,7 +185,7 @@ function Header() {
                 onClick={() => {
                   document.body.classList.remove('nav-active');
                   setActiveLink(2);
-                  router.push('/');
+                  router.push('/dashboard');
                   setCardVal(1);
                 }}>
                 <a href="#buyFilter">

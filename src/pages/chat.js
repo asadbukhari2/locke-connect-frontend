@@ -203,7 +203,7 @@ const chat = () => {
                 slectedUserId: otherId,
                 isOnline: online.findIndex(user => user.userId == otherId) !== -1,
               }}
-              showChat={setVideoChatWidget}
+              // showChat={setVideoChatWidget}
             />
             <div className="messagesArea" ref={scrollContainerRef}>
               {loadingChat ? (

@@ -1,10 +1,9 @@
 import React from 'react';
 import { FloatingWidget, RevolutionizeSellingStyles } from './MainPage.styles';
 import Lottie from 'lottie-react';
-import mainAnimation from '../../../public/lottie/mainAnimation.json';
-import arraowDownHexa from '../../../public/arraowDownHexa.png';
+// import mainAnimation from '../../../public/lottie/mainAnimation.json';
+import mainAnimation from '../../../public/lottie/mainAnimation3.json';
 import Button from '../Button';
-import Image from 'next/image';
 const SellingPage = ({ selling }) => {
   return (
     <RevolutionizeSellingStyles $selling={selling}>
