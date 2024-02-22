@@ -181,7 +181,6 @@ export const VideocallMainWrapper = styled.div`
   position: fixed;
   max-width: 400px;
   top: 50px;
-  right: ${({ $show }) => ($show ? '10px' : '-150%')};
   bottom: 10px;
   transition: 0.3s all ease-in-out;
 `;

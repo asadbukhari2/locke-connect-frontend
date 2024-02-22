@@ -1,7 +1,8 @@
 import React from 'react';
 import { FloatingWidget, RevolutionizeStyles } from './MainPage.styles';
 import Lottie from 'lottie-react';
-import mainAnimation from '../../../public/lottie/mainAnimation.json';
+import mainAnimation from '../../../public/lottie/mainAnimation3.json';
+
 import arraowDownHexa from '../../../public/arraowDownHexa.png';
 import Button from '../Button';
 import Image from 'next/image';

@@ -6,6 +6,7 @@ export const ChatMessageMain = styled.li`
   display: flex;
   flex-direction: column;
   width: 100%;
+  position: relative;
 
   &:hover {
     &::-webkit-scrollbar {
@@ -105,10 +106,11 @@ export const ChatMessageMain = styled.li`
   }
 `;
 export const NotificationDropDown = styled.div`
-  z-index: 2;
+  z-index: 3;
   box-sizing: border-box;
   position: absolute;
   top: 70px;
+  right: 5px;
   box-shadow: 0px 48px 64px -16px rgba(29, 41, 57, 0.1);
   width: 113px;
   display: flex;

@@ -113,32 +113,32 @@ const ChatProfile = ({ data, key }) => {
         <div className="time">
           <p>{data.lastMessage?.time}</p>
           <Image src={dots} alt="dots" className="dots" onClick={e => handelDropDown(e)} />
-          <NotificationDropDown $show={toggleDropDown}>
-            <div
-              className="wrap"
-              onClick={() => {
-                handleDeleteConversation();
-              }}>
-              <span className="icon">
-                <Image src={trash} alt="trash" />
-              </span>
-              <p>Delete</p>
-            </div>
-            <div className="wrap">
-              <span className="icon">
-                <Image src={archive} alt="archive" />
-              </span>
-              <p>Archive</p>
-            </div>
-            <div className="wrap">
-              <span className="icon">
-                <Image src={mute} alt="mute" />
-              </span>
-              <p>Mute</p>
-            </div>
-          </NotificationDropDown>
         </div>
       </div>
+      <NotificationDropDown $show={toggleDropDown}>
+        <div
+          className="wrap"
+          onClick={() => {
+            handleDeleteConversation();
+          }}>
+          <span className="icon">
+            <Image src={trash} alt="trash" />
+          </span>
+          <p>Delete</p>
+        </div>
+        <div className="wrap">
+          <span className="icon">
+            <Image src={archive} alt="archive" />
+          </span>
+          <p>Archive</p>
+        </div>
+        <div className="wrap">
+          <span className="icon">
+            <Image src={mute} alt="mute" />
+          </span>
+          <p>Mute</p>
+        </div>
+      </NotificationDropDown>
     </ChatMessageMain>
   );
 };
