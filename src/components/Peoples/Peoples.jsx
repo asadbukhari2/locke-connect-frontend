@@ -202,7 +202,7 @@ const Peoples = () => {
         <StyledPropertyCards>
           {peoples_loading ? (
             <LoaderHolder>
-              <Loaders viewLoader={peoples_loading} />
+              <Loaders loading={peoples_loading} />
             </LoaderHolder>
           ) : peoples?.peoples?.length ? (
             peoples?.peoples.map(elem => (
