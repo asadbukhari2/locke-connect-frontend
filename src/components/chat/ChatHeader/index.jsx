@@ -73,7 +73,7 @@ function ChatHeader({ user = userDetail }) {
         isCloseAble={false}>
         <AudioCall user={user} />
       </Modal>
-      <Modal
+      {/* <Modal
         open={videoCallModal}
         setOpen={e => {
           console.log('i am here');
@@ -83,7 +83,7 @@ function ChatHeader({ user = userDetail }) {
         closer={false}
         isCloseAble={false}>
         <VideoCall user={user} />
-      </Modal>
+      </Modal> */}
       <StyledChatHeader>
         <div className="userBox">
           <div className="img-box">
