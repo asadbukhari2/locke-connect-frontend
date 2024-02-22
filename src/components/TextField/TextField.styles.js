@@ -109,12 +109,15 @@ export const StyledTextField = styled.div`
 export const InputStyled = styled.div`
   position: relative;
   width: 100%;
+  padding: ${({ $padding }) => $padding && '15px 10px'};
   border-radius: 8px;
   border: 1px solid ${({ $error }) => ($error ? 'var(--danger-500)' : 'var(--gray-50) ')};
   background: var(--white);
   box-sizing: border-box;
   margin-bottom: 8px;
   overflow: hidden;
+  font-family: 'Jost';
+
   ${({ $disable }) =>
     $disable &&
     css`

@@ -12,7 +12,8 @@ import { useRouter } from 'next/router';
 import Loaders from '@/components/Loaders';
 import { NoRecordFound } from '@/components/NoRecordFound/NoRecord.styles';
 import { useTranslation } from '@/helpers/useTranslation';
-
+import Button from '@/components/Button';
+import shine from '../../../../public/shine.png';
 const ChatAside = ({ sidebar }) => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -20,12 +21,15 @@ const ChatAside = ({ sidebar }) => {
   const { conversations, loading } = useSelector(state => state.chat);
   return (
     <StyledChatAside>
+      <Button lg>
+        <Image src={shine} alt="shine" />
+        Talk to Locke AIbert
+      </Button>
       {!sidebar && <Input hasIcon={<Image src={magnifier} alt="search" />} />}
       <div className="title">
         {t('Chat')}
         {!loading && <Badge $variant="dark" child={conversations?.length} />}
       </div>
-
       <ChatProfileWrapper $height={sidebar}>
         {loading ? (
           <Loaders loading={loading} height={100} />

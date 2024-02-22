@@ -196,14 +196,14 @@ const chat = () => {
           t('Select any chat to continue')
         ) : (
           <>
-            {/* <ChatHeader
+            <ChatHeader
               user={{
                 channelName: currentConversation.channelName,
                 photoURL: currentConversation.photoURL,
                 slectedUserId: otherId,
                 isOnline: online.findIndex(user => user.userId == otherId) !== -1,
               }}
-            /> */}
+            />
             <div className="messagesArea" ref={scrollContainerRef}>
               {loadingChat ? (
                 <Loaders loading={loadingChat} height={100} />
