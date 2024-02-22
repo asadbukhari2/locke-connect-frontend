@@ -61,7 +61,7 @@ const ShareContact = ({ handleSelectContact, onClose }) => {
                         onClose();
                       }}>
                       <MdAdd size="22" />
-                      Add
+                      Share
                     </Button>
                   </div>
                 </li>
