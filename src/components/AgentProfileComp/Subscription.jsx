@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SubcriptionStyled, SubscriptionTypeWrapper } from './AgentProfileComp.styles';
 import CheckBox from '../CheckBox';
 import { useJsApiLoader } from '@react-google-maps/api';
@@ -6,9 +6,11 @@ import Button from '../Button';
 import Payment from './Payment';
 import { useTranslation } from '@/helpers/useTranslation';
 import stripeService from '@/services/stripe';
+import { Elements } from '@stripe/react-stripe-js';
 
 import Loaders from '../Loaders';
 import MapWithPolygons from './MapWithPolygons';
+import { loadStripe } from '@stripe/stripe-js';
 import { convertToCurrencyFormat } from '@/helpers/common';
 
 import polygons from '../../utils/mapData';
@@ -17,9 +19,10 @@ const center = { lat: 40.6782, lng: -73.9442 };
 
 const Subscription = ({ activeTab }) => {
   const { t } = useTranslation();
+  const [stripePromise, setStripePromise] = useState('');
   const [mapChooseList, setMapChooseList] = useState([]);
-  const [subscriptionType, setSubscriptionType] = useState({ month: false, year: false });
 
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
@@ -58,23 +61,38 @@ const Subscription = ({ activeTab }) => {
     }
   };
 
+  useEffect(() => {
+    stripeService
+      .getStripeKey()
+      .then(async result => {
+        const { publishableKey } = result;
+        setStripePromise(publishableKey);
+      })
+      .catch(e => console.log(e));
+  }, []);
+
+  const handleSubsribtionClick = prod => setSelectedProduct(prod);
+
   return (
     <SubcriptionStyled $loading={products_loading}>
       <div className="Subscription-main-wrapper">
         <Loaders loading={products_loading}>
           {baseProducts?.length &&
-            baseProducts?.map((prod, id) => (
-              <SubscriptionTypeWrapper $active={subscriptionType.month} key={id}>
+            baseProducts.map((prod, id) => (
+              <SubscriptionTypeWrapper
+                key={id}
+                $active={selectedProduct && selectedProduct.price.id === prod.price.id}
+                onClick={() => handleSubsribtionClick(prod)}>
                 <span className="priceWrapper">
                   <strong className="price">{convertToCurrencyFormat(prod?.price?.amount)}</strong>
                   <strong className="duration">per {prod?.price?.interval}</strong>
                 </span>
                 <span className="checkBox">
-                  <label htmlFor="month">{t(prod?.prod_name)}</label>
+                  <label htmlFor={`checkbox-${id}`}>{t(prod?.prod_name)}</label>
                   <CheckBox
-                    fieldName={prod?.price?.interval}
                     type="circle"
-                    onChange={e => setSubscriptionType(prev => ({ ...prev, month: e.isChecked }))}
+                    checked={selectedProduct && selectedProduct.price.id === prod.price.id}
+                    id={`checkbox-${id}`}
                   />
                 </span>
               </SubscriptionTypeWrapper>
@@ -99,16 +117,30 @@ const Subscription = ({ activeTab }) => {
           <span className="title">{t('My list')}</span>
           <div className="list">
             <ul>
-              {mapChooseList.map((listItem, id) => (
-                <li key={id}>
-                  <div className="area">
-                    <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={() => {}} />
-                    <label htmlFor="brooklyn">{listItem.cityName}</label>
-                  </div>
-                  ${listItem.price.amount}
-                </li>
-              ))}
+              {mapChooseList
+                .filter(_ => _.cityName)
+                .map((listItem, id) => (
+                  <li key={id}>
+                    <div className="area">
+                      <CheckBox type="circle" fieldName="brooklyn" checked={true} onChange={() => {}} />
+                      <label htmlFor="brooklyn">{listItem.cityName}</label>
+                    </div>
+                    ${listItem.price.amount}
+                  </li>
+                ))}
             </ul>
+            <br />
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className="area">Total:</div>$
+              {selectedProduct
+                ? selectedProduct.price.amount +
+                  mapChooseList.reduce((total, item) => {
+                    return total + (item.price ? item.price.amount : 0);
+                  }, 0)
+                : mapChooseList.reduce((total, item) => {
+                    return total + (item.price ? item.price.amount : 0);
+                  }, 0)}
+            </div>
           </div>
           <div className="button-wrap">
             <Button outline>{t('Cancel')}</Button>
@@ -116,7 +148,26 @@ const Subscription = ({ activeTab }) => {
           </div>
         </div>
       </div>
-      <Payment />
+      {stripePromise ? (
+        <Elements stripe={loadStripe(stripePromise)}>
+          <Payment
+            items={mapChooseList}
+            selectedProduct={selectedProduct}
+            amount={
+              selectedProduct
+                ? selectedProduct.price.amount +
+                  mapChooseList.reduce((total, item) => {
+                    return total + (item.price ? item.price.amount : 0);
+                  }, 0)
+                : mapChooseList.reduce((total, item) => {
+                    return total + (item.price ? item.price.amount : 0);
+                  }, 0)
+            }
+          />
+        </Elements>
+      ) : (
+        'loading'
+      )}
     </SubcriptionStyled>
   );
 };
