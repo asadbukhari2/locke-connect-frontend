@@ -24,10 +24,8 @@ const userDetail = {
 function ChatHeader({ user = userDetail }) {
   const { user: currentUser } = useContextHook(AuthContext, ['user']);
   const dispatch = useDispatch();
-  const state = useSelector(state => state.room);
-  console.log({ state });
+
   const { videoCallModal, audioCallModal } = useSelector(state => state.room);
-  console.log({ videoCallModal });
   const handleAudioCall = () => {
     if (user.isOnline) {
       const callSound = new Audio(

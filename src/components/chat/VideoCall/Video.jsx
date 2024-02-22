@@ -5,13 +5,11 @@ const Video = ({ isLocalStream, stream }) => {
   console.log({ stream });
   useEffect(() => {
     const video = videoRef.current;
-    if (video && Object.keys(stream)?.length) {
-      video.srcObject = stream;
+    video.srcObject = stream;
 
-      video.onloadedmetadata = () => {
-        video.play();
-      };
-    }
+    video.onloadedmetadata = () => {
+      video.play();
+    };
   }, [stream]);
 
   return <video ref={videoRef} autoPlay playsInline muted={isLocalStream ? true : false} />;
