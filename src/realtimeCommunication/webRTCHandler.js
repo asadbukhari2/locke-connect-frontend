@@ -104,7 +104,9 @@ export const getLocalStreamPreview = async (onlyAudio = false, callbackFunc) => 
     }
   }
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
+  console.log('first');
   store.dispatch(setLocalStream(stream));
+  console.log('i am here2');
   onlyAudio ? store.dispatch(setAudioCallModal(true)) : store.dispatch(setVideoCallModal(true));
   callbackFunc();
   console.log('constraints', constraints);

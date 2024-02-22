@@ -20,6 +20,7 @@ const roomSlice = createSlice({
       state.localStream = action.payload;
     },
     setVideoCallModal: (state, action) => {
+      console.log({ action });
       state.videoCallModal = action.payload;
     },
     setAudioCallModal: (state, action) => {

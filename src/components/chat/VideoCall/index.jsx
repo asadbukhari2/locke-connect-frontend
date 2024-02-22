@@ -59,52 +59,50 @@ const VideoCall = ({ user }) => {
   }, [startTime]);
 
   return (
-    <VideocallMainWrapper>
-      <StyledAudioCall>
-        <div className="main">
-          <Video stream={localStream} isLocalStream={true} />
-          <div className="CallInfo">
-            <div className="profile-wrapper">
-              <div className="profile">
-                <Image src={user.photoURL || usericonaudio} alt="usericonaudio" width={142} height={142} />
-              </div>
-            </div>
-            <div className="text">
-              <strong className="userName">{user?.channelName}</strong>
-              <span className="calling">{formatTime(elapsedTime)}</span>
+    <StyledAudioCall>
+      <div className="main">
+        <Video stream={localStream} isLocalStream={true} />
+        <div className="CallInfo">
+          <div className="profile-wrapper">
+            <div className="profile">
+              <Image src={user.photoURL || usericonaudio} alt="usericonaudio" width={142} height={142} />
             </div>
           </div>
-          <CallingFrom>
-            <div className="contentWrapper">
-              <div className="fullScreen">
-                <Image src={fullScreen} alt="fullScreen" />
-              </div>
-              {callAccepted ? (
-                <Video stream={remoteStream} isLocalStream={false} />
-              ) : (
-                <Image src={videoCallImage} alt="videoCallImage" width={362} height={160} />
-              )}
-            </div>
-          </CallingFrom>
+          <div className="text">
+            <strong className="userName">{user?.channelName}</strong>
+            <span className="calling">{formatTime(elapsedTime)}</span>
+          </div>
         </div>
-        <ActionButton $stopVideo={stopVideo}>
-          <MicButton localStream={localStream} />
-
-          <div className="circle message">
-            <Image src={message} alt="message" />
+        <CallingFrom>
+          <div className="contentWrapper">
+            <div className="fullScreen">
+              <Image src={fullScreen} alt="fullScreen" />
+            </div>
+            {callAccepted ? (
+              <Video stream={remoteStream} isLocalStream={false} />
+            ) : (
+              <Image src={videoCallImage} alt="videoCallImage" width={362} height={160} />
+            )}
           </div>
+        </CallingFrom>
+      </div>
+      <ActionButton $stopVideo={stopVideo}>
+        <MicButton localStream={localStream} />
 
-          {receivingCall && !callAccepted ? (
-            <button className="circle" style={{ background: 'green' }} onClick={answerCall}>
-              <PiPhoneCallDuotone fontSize={24} color="#fff" />
-            </button>
-          ) : null}
+        <div className="circle message">
+          <Image src={message} alt="message" />
+        </div>
 
-          <CameraButton localStream={localStream} stopVideo={stopVideo} setStopVideo={setStopVideo} />
-          <CancelButton to={user.slectedUserId} from={currentUser.id} />
-        </ActionButton>
-      </StyledAudioCall>
-    </VideocallMainWrapper>
+        {receivingCall && !callAccepted ? (
+          <button className="circle" style={{ background: 'green' }} onClick={answerCall}>
+            <PiPhoneCallDuotone fontSize={24} color="#fff" />
+          </button>
+        ) : null}
+
+        <CameraButton localStream={localStream} stopVideo={stopVideo} setStopVideo={setStopVideo} />
+        <CancelButton to={user.slectedUserId} from={currentUser.id} />
+      </ActionButton>
+    </StyledAudioCall>
   );
 };
 
