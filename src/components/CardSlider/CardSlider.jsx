@@ -19,6 +19,9 @@ import { useContextHook } from 'use-context-hook';
 import peoplesService from '@/services/peoples';
 import { useTranslation } from '@/helpers/useTranslation';
 import ShareContactLink from '../ShareContact';
+import { useDispatch, useSelector } from 'react-redux';
+import { getMessages, setCurrentConversation, setMessages } from '@/features/messageSlice';
+
 
 export default function CardSlider({ agents }) {
   const [people, setPeople] = useState(agents);
@@ -27,6 +30,8 @@ export default function CardSlider({ agents }) {
 
   const { t } = useTranslation();
   const { user ,setUser} = useContextHook(AuthContext, ['user','setUser']);
+  const { conversations } = useSelector(state => state.chat);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const updatedPeoples = agents.map(person => ({
@@ -41,24 +46,18 @@ export default function CardSlider({ agents }) {
       const userToFav = { id };
       setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: !elem.isFav } : elem)));
       const response = await peoplesService.toggleFavouritePeople(userToFav);
-      console.log({response})
       if (response?.success) {
-        console.log("in response success")
         setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: false } : elem)));
         if(response?.message=='Added'){
-          console.log("in added")
           const arr=[...user?.likedPeoples,id]
-          console.log({arr})
           setUser((prev)=>({...prev,likedPeoples:arr}))
 
         }else{
-          console.log("in remove")
          const userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==id);
           setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
 
         }
       }
-      console.log(response);
     } catch (error) {
       console.log(error);
       setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: false } : elem)));
@@ -66,6 +65,44 @@ export default function CardSlider({ agents }) {
   };
 
   const router = useRouter();
+  const conversationHandler = async detail => {
+    try {
+      const detailId = detail.id;
+      const userId = user.id;
+      const existingConversationIndex = conversations.findIndex(
+        conv => conv.participants.includes(detailId) && conv.participants.includes(userId),
+      );
+      const conversation = conversations?.find(
+        itm => itm?.participants?.includes(detailId) && itm?.participants.includes(userId),
+      );
+      if (existingConversationIndex !== -1) {
+        router.push('/chat');
+        //in case of conversation already exists
+        dispatch(setCurrentConversation(conversation));
+        const { author, reviever, _id } = conversation;
+        dispatch(getMessages({ author, reviever, conversationId: _id }));
+      } else {
+        const newConversation = {
+          saved: false,
+          messages: [],
+          initBy: userId,
+          isActive: true,
+          receiver: detailId,
+          photoURL: detail.photoURL,
+          participants: [detailId, userId],
+          channelName: detail.displayName,
+          lastMessage: { text: 'No Message' },
+        };
+
+        dispatch(setCurrentConversation(newConversation));
+        dispatch(setMessages([]));
+        router.replace('/chat');
+      }
+    } catch (error) {
+      console.log(error);
+      Toast({ type: 'error', message: error.message });
+    }
+  };
   return (
     <>
       <Modal open={shareContacts} setOpen={setShareContacts} width="900px">
@@ -121,7 +158,7 @@ export default function CardSlider({ agents }) {
                           }}>
                           <Image src={share} alt="share" />
                         </span>
-                        <span className="icon" onClick={() => router.push('/chat')}>
+                        <span className="icon" onClick={() =>{conversationHandler(elem)}}>
                           <Image src={comment} alt="comment" />
                         </span>
                       </div>

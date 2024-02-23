@@ -128,23 +128,17 @@ const Peoples = () => {
           ...prev,
           peoples: prev.peoples.map(elem => (elem.id === id ? { ...elem, isFav: !elem.isFav } : elem)),
         }));
-        let userLikedPeoples=[]
+     
         if(response?.message=='Added'){
-          console.log("in added")
           const arr=[...user?.likedPeoples,id]
-          console.log({arr})
           setUser((prev)=>({...prev,likedPeoples:arr}))
 
         }else{
-          console.log("in remove")
-
-          userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==id);
+         const userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==id);
           setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
 
         }
-        console.log({userLikedPeoples})
       }
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -220,7 +214,7 @@ const Peoples = () => {
               <Loaders loading={peoples_loading} />
             </LoaderHolder>
           ) : peoples?.peoples?.length ? (
-            peoples?.peoples.map(elem => (
+            peoples?.peoples?.filter((v)=>v.id!==user.id)?.map(elem => (
               <PeopleCardWrapper $img={elem.photoURL ? elem.photoURL : img6.src} key={elem.id}>
                 <button
                   className="btn"

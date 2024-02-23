@@ -1,5 +1,8 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "terminal.integrated.defaultProfile.windows": "Git Bash",
-  "editor.snippetSuggestions": "top"
+  "editor.snippetSuggestions": "top",
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  }
 }

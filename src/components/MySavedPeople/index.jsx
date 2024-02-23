@@ -43,10 +43,8 @@ function MySavedPeople() {
   const handleRemoveFromFav = async _ => {
     try {
       const response = await peoplesService.toggleFavouritePeople({ id: _.id });
-      console.log(response);
       if (response.success) {
         const userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==_.id);
-        console.log({userLikedPeoples})
         setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
         Toast({ type: 'success', message: response.message });
       }
