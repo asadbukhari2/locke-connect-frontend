@@ -106,13 +106,16 @@ export const HomeFooter = styled.div`
   /* span {
     padding-bottom: 20px;
   } */
-
+  .link {
+    cursor: pointer;
+  }
   .socialLinks {
     display: flex;
     align-items: center;
     gap: 10px;
     max-width: 250px;
     width: 100%;
+
     span {
       padding-right: 20px;
     }
@@ -284,16 +287,19 @@ export const RevolutionizeStyles = styled.div`
     }
 
     @media screen and (max-width: 1199px) {
-      max-width: 750px;
+      max-width: 850px;
       position: static;
       margin: 0 auto;
     }
   }
   .lootieWrapper {
-    padding: 70px;
-    max-width: 900px;
+    padding: 100px;
+    max-width: 850px;
     @media screen and (max-width: 768px) {
-      padding: 20px;
+      padding: 65px;
+    }
+    @media screen and (max-width: 520px) {
+      padding: 50px;
     }
   }
   .pivacyButtons {
@@ -309,6 +315,7 @@ export const RevolutionizeStyles = styled.div`
     justify-content: space-between;
     .privacyLinks {
       text-decoration: underline;
+      cursor: pointer;
     }
   }
 `;
@@ -443,10 +450,14 @@ export const RevolutionizeSellingStyles = styled.div`
     }
   }
   .lootieWrapper {
-    padding: 70px;
+    padding: 100px;
     max-width: 900px;
+
     @media screen and (max-width: 768px) {
-      padding: 20px;
+      padding: 65px;
+    }
+    @media screen and (max-width: 520px) {
+      padding: 50px;
     }
   }
   .pivacyButtons {

@@ -234,8 +234,10 @@ const UserSearchFilter = ({ setPopUp, width }) => {
             </li>
           </FilterOptionPropertyDetail>
         </FilterOptionWrapper>
-        <Button variant="danger">{t('Reset')}</Button>
       </FilterOption>
+      <Button variant="danger" className="submitButton">
+        {t('Reset')}
+      </Button>
     </UserFilterStyle>
   );
 };

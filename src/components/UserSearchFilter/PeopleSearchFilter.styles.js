@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 //import checkIcon from "../../../public/checked-icon.svg";
 
 export const UserFilterStyle = styled.div`
@@ -9,7 +9,7 @@ export const UserFilterStyle = styled.div`
   width: 360px;
   padding: 24px;
   ::-webkit-scrollbar {
-    width: 2px;
+    width: 8px;
     height: 20px;
   }
   p,
@@ -26,6 +26,9 @@ export const UserFilterStyle = styled.div`
     width: 200px;
     height: 50px;
     background: blue;
+  }
+  .submitButton {
+    margin-top: 15px;
   }
 `;
 
@@ -95,8 +98,7 @@ export const FilterOptionWrapper = styled.div`
         background: var(--primary-500);
         opacity: 1;
         border: solid 4px var(--white);
-        filter: drop-shadow(0px 3px 5px rgba(29, 41, 57, 0.05))
-          drop-shadow(0px 4px 8px rgba(29, 41, 57, 0.1));
+        filter: drop-shadow(0px 3px 5px rgba(29, 41, 57, 0.05)) drop-shadow(0px 4px 8px rgba(29, 41, 57, 0.1));
       }
 
       .rc-slider-handle {
@@ -144,9 +146,9 @@ export const FilterOption = styled.div`
 export const FilterOptionDetail = styled.ul`
   /* overflow: hidden;
   overflow-y: scroll;
-  height: ${({ $height }) => ($height ? "140px" : "0px")};
-  opacity: ${({ $height }) => ($height ? "1" : "0")};
-  visibility: ${({ $height }) => ($height ? "visible" : "hidden")};
+  height: ${({ $height }) => ($height ? '140px' : '0px')};
+  opacity: ${({ $height }) => ($height ? '1' : '0')};
+  visibility: ${({ $height }) => ($height ? 'visible' : 'hidden')};
   transition: 0.5s all ease-in-out; */
   li {
     display: flex;
@@ -168,7 +170,7 @@ export const FilterOptionDetail = styled.ul`
         flex-shrink: 0;
       }
 
-      input[type="checkbox"]:checked ~ label {
+      input[type='checkbox']:checked ~ label {
         &::before {
           border-color: transparent;
           opacity: 1;
@@ -187,7 +189,7 @@ export const FilterOptionDetail = styled.ul`
 
         &::before,
         &::after {
-          content: "";
+          content: '';
           position: absolute;
           top: 1px;
           left: 0;
@@ -230,7 +232,7 @@ export const ToggleSwitchStyle = styled.div`
     cursor: pointer;
   }
   .switch::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 2px;
     left: 2px;

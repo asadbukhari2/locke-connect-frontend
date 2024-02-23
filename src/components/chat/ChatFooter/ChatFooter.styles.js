@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledChatFooter = styled.div`
   position: relative;
@@ -11,7 +11,7 @@ export const StyledChatFooter = styled.div`
   align-items: center;
   justify-content: center;
   input {
-    font-family: "Jost";
+    font-family: 'Jost';
     padding: 0px 15px;
     width: 100%;
     height: 60px;
@@ -46,7 +46,7 @@ export const ChatFooterWidget = styled.div`
   }
 `;
 export const ChatShortCut = styled.div`
-  width: ${({ $opner }) => ($opner ? "245px" : "44px")};
+  width: ${({ $opner }) => ($opner ? '245px' : '44px')};
   padding-right: 40px;
   height: 44px;
   display: flex;
@@ -62,7 +62,7 @@ export const ChatShortCut = styled.div`
     padding-right: 0px;
     padding-bottom: 20px;
     width: 44px;
-    height: ${({ $opner }) => ($opner ? "245px" : "44px")};
+    height: ${({ $opner }) => ($opner ? '245px' : '44px')};
     position: absolute;
     right: 58px;
     bottom: 0;
@@ -100,9 +100,9 @@ export const ChatShortCut = styled.div`
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: ${({ $opner }) => ($opner ? "100%" : "0")};
-    opacity: ${({ $opner }) => ($opner ? "1" : "0")};
-    visibility: ${({ $opner }) => ($opner ? "visible" : "hidden")};
+    width: ${({ $opner }) => ($opner ? '100%' : '0')};
+    opacity: ${({ $opner }) => ($opner ? '1' : '0')};
+    visibility: ${({ $opner }) => ($opner ? 'visible' : 'hidden')};
     overflow: hidden;
     @media screen and (max-width: 768px) {
       position: absolute;
@@ -126,9 +126,14 @@ export const ChatShortCut = styled.div`
       color: var(--white);
 
       img {
-        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(260deg)
-          brightness(104%) contrast(103%);
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(260deg) brightness(104%) contrast(103%);
       }
+    }
+    label {
+      cursor: pointer;
+    }
+    input {
+      display: none;
     }
   }
 `;

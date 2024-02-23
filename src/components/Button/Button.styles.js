@@ -1,14 +1,14 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const StyledButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ $gap }) => ($gap ? $gap : "10px")};
+  gap: ${({ $gap }) => ($gap ? $gap : '10px')};
   padding: 12px 18px;
   border-radius: 8px;
-  font: 400 14px/17px "Jost";
-  width: ${({ $width }) => ($width ? $width : "100%")};
+  font: 400 14px/17px 'Jost';
+  width: ${({ $width }) => ($width ? $width : '100%')};
   min-width: 50px;
   background: var(--body-text);
   color: var(--white);
@@ -19,6 +19,20 @@ export const StyledButton = styled.button`
     box-shadow: 0px 9px 9px 3px rgba(29, 41, 57, 0.04);
   }
 
+  ${({ $lg }) =>
+    $lg &&
+    css`
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 18px;
+      background: linear-gradient(101.18deg, #0034dd -33.77%, #6833ff 50.51%, #99a1f2 131.89%);
+      border-radius: 16px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 22px;
+    `}
   ${({ $sm }) =>
     $sm &&
     css`
@@ -30,22 +44,22 @@ export const StyledButton = styled.button`
 
   /***** Background-Variants-Start *****/
   ${({ $variant }) =>
-    $variant == "primary" &&
+    $variant == 'primary' &&
     css`
       background: var(--primary-500);
     `}
   ${({ $variant }) =>
-    $variant == "secondary" &&
+    $variant == 'secondary' &&
     css`
       background: var(--secondary-500);
     `}
   ${({ $variant }) =>
-    $variant == "success" &&
+    $variant == 'success' &&
     css`
       background: var(--success-500);
     `}
   ${({ $variant }) =>
-    $variant == "danger" &&
+    $variant == 'danger' &&
     css`
       background: var(--danger-500);
     `}
@@ -66,7 +80,7 @@ export const StyledButton = styled.button`
       }
     `}
   ${({ $outline }) =>
-    $outline == "primary" &&
+    $outline == 'primary' &&
     css`
       border: 1px solid var(--primary-500);
       background: transparent;
@@ -78,7 +92,7 @@ export const StyledButton = styled.button`
       }
     `}
   ${({ $outline }) =>
-    $outline == "secondary" &&
+    $outline == 'secondary' &&
     css`
       border: 1px solid var(--secondary-500);
       background: transparent;
@@ -90,7 +104,7 @@ export const StyledButton = styled.button`
       }
     `}
   ${({ $outline }) =>
-    $outline == "success" &&
+    $outline == 'success' &&
     css`
       border: 1px solid var(--success-500);
       background: transparent;
@@ -102,7 +116,7 @@ export const StyledButton = styled.button`
       }
     `}
   ${({ $outline }) =>
-    $outline == "danger" &&
+    $outline == 'danger' &&
     css`
       border: 1px solid var(--danger-500);
       background: transparent;

@@ -425,6 +425,17 @@ export const PaymentWrapper = styled.div`
     display: block;
     margin-bottom: 20px;
   }
+  .paymentCard {
+    display: flex;
+    gap: 7px;
+    .flag {
+      max-width: 45px;
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  }
   .title {
     color: #000;
     font-size: 16px;
@@ -466,7 +477,7 @@ export const PaymentWrapper = styled.div`
     }
     .combine-field {
       display: flex;
-      /* gap: 10px; */
+      gap: 13px;
     }
     .button-wrapper {
       display: flex;

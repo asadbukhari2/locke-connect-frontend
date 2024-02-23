@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { ActionButton, CallingFrom, StyledAudioCall, VideocallMainWrapper } from './VideoCall.styles';
 import usericonaudio from '../../../../public/usericonaudio.jpg';
-
 import message from '../../../../public/callmessage.svg';
 import fullScreen from '../../../../public/fullScreen.svg';
 import videoCallImage from '../../../../public/videoCall.png';
-
 import Image from 'next/image';
 import { callAttended } from '@/utils/socketServerConnection';
-
 import { useContextHook } from 'use-context-hook';
 import { AuthContext } from '@/context/authContext';
 import { formatTime } from '@/helpers/common';
@@ -94,8 +91,8 @@ const VideoCall = ({ user }) => {
         </div>
 
         {receivingCall && !callAccepted ? (
-          <button className="circle" style={{ background: 'green' }} onClick={answerCall}>
-            <PiPhoneCallDuotone fontSize={24} color="#fff" />
+          <button className="circle" style={{ background: '#1cbb34' }} onClick={answerCall}>
+            <PiPhoneCallDuotone size={30} color="#fff" />
           </button>
         ) : null}
 

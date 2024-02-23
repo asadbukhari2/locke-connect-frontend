@@ -3,6 +3,8 @@ import { CardNumberElement, CardExpiryElement, CardCvcElement, useStripe, useEle
 
 import { PaymentWrapper } from './AgentProfileComp.styles';
 import dlt from '../../../public/dlt.svg';
+import visaCard from '../../../public/visaCard.png';
+import masterCard from '../../../public/masterCard.png';
 import call from '../../../public/call.svg';
 import Image from 'next/image';
 import Input from '../TextField';
@@ -10,6 +12,7 @@ import Button from '../Button';
 import { useTranslation } from '@/helpers/useTranslation';
 import stripeService from '@/services/stripe';
 import convertTocents from '@/utils/convertTocents';
+import { InputStyled } from '../TextField/TextField.styles';
 
 const Payment = ({ amount, items, selectedProduct }) => {
   const { t } = useTranslation();
@@ -78,64 +81,45 @@ const Payment = ({ amount, items, selectedProduct }) => {
         })}
       </div>
 
-      {/* <div className="addcard">
-        <span>{t('Add Card')}</span> <span className="title">ADD icon for cards</span>
-      </div>  */}
+      <div className="addcard">
+        <span>{t('Add Card')}</span>{' '}
+        <div className="paymentCard">
+          <span className="flag">
+            <Image src={visaCard} alt="visaCard" />
+          </span>
+          <span className="flag">
+            <Image src={masterCard} alt="masterCard" />
+          </span>
+        </div>
+      </div>
 
       <form className="paymentForm">
-        <div style={{ border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}>
+        <InputStyled $padding>
           <CardNumberElement
             options={{
               hidePostalCode: true,
-              style: {
-                base: {
-                  fontSize: '16px',
-                  color: '#495057',
-                  '::placeholder': {
-                    color: '#6c757d',
-                  },
-                },
-              },
             }}
           />
-        </div>
+        </InputStyled>
         {/* <Input placeholder={t('Card Number')} value={cardNumber} onChange={e => setCardNumber(e.target.value)} /> */}
-        {/* <div className="combine-field"> */}
         <div>
           {/* <Input placeholder={t('Expiry Date')} value={expDate} onChange={e => setExpDate(e.target.value)} /> */}
           {/* <Input placeholder="CVC" value={cvc} onChange={e => setCvc(e.target.value)} /> */}
-
-          <div style={{ border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}>
-            <CardExpiryElement
-              options={{
-                hidePostalCode: true,
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#495057',
-                    '::placeholder': {
-                      color: '#6c757d',
-                    },
-                  },
-                },
-              }}
-            />
-          </div>
-          <div style={{ border: '1px solid #ced4da', borderRadius: '4px', padding: '10px' }}>
-            <CardCvcElement
-              options={{
-                hidePostalCode: true,
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#495057',
-                    '::placeholder': {
-                      color: '#6c757d',
-                    },
-                  },
-                },
-              }}
-            />
+          <div className="combine-field">
+            <InputStyled $padding>
+              <CardExpiryElement
+                options={{
+                  hidePostalCode: true,
+                }}
+              />
+            </InputStyled>
+            <InputStyled $padding>
+              <CardCvcElement
+                options={{
+                  hidePostalCode: true,
+                }}
+              />
+            </InputStyled>
           </div>
         </div>
         <Input

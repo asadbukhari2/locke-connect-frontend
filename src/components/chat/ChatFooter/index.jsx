@@ -72,7 +72,10 @@ const ChatFooter = ({
                 <IoDocumentTextOutline size={22} />
               </li>
               <li>
-                <Image src={imagepreview} alt="imagepreview" />
+                <label htmlFor="file">
+                  <Image src={imagepreview} alt="imagepreview" />
+                  <input type="file" id="file" />
+                </label>
               </li>
               <li onClick={() => setAddPeople(true)}>
                 <Image src={userAdd} alt="userAdd" />

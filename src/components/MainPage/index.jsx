@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FloatingImages, FloatingWidget, HomeFooter, StyledMainPageStyles } from './MainPage.styles';
 import Link from 'next/link';
 import Button from '../Button';
@@ -21,9 +21,15 @@ import arraowDownHexa from '../../../public/arraowDownHexa.png';
 
 import Image from 'next/image';
 import Revolutionize from './Revolutionize';
+import Modal from '../Modal';
+import Disclaimer from '../Legal/Disclaimer';
 const MainPage = () => {
+  const [termModal, setTermModal] = useState(false);
   return (
     <>
+      <Modal width="1100px" open={termModal} setOpen={setTermModal}>
+        <Disclaimer title="Terms of Use" />
+      </Modal>
       <StyledMainPageStyles>
         <div className="imagesWrapperfloat">
           <FloatingImages $top="271px" $toplg="201px" $topmd="53px" $topsm="55px" $left="271px" $leftlg="149px">
@@ -101,7 +107,9 @@ const MainPage = () => {
       </StyledMainPageStyles>
       <Revolutionize />
       <HomeFooter>
-        <span>Terms of use</span>
+        <span onClick={() => setTermModal(true)} className="link">
+          Terms of use
+        </span>
         <span>Copyright © LockeConnect</span>
         <div className="socialLinks">
           <span>Connect us</span>
