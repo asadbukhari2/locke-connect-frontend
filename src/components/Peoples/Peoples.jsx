@@ -54,7 +54,7 @@ const Peoples = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { user } = useContextHook(AuthContext, ['user']);
+  const { user,setUser } = useContextHook(AuthContext, ['user','setUser']);
 
   const { conversations } = useSelector(state => state.chat);
 
@@ -64,8 +64,8 @@ const Peoples = () => {
       isFav: user?.likedPeoples?.includes(person.id),
     }));
     setPeoples({ totalItems: peoples_data.totalItems, peoples: updatedPeoples });
-  }, [peoples_loading]);
-
+  }, [peoples_loading,user?.likedPeoples]);
+  console.log({userLiked:user?.likedPeoples,user})
   const conversationHandler = async detail => {
     try {
       const detailId = detail.id;
@@ -128,6 +128,18 @@ const Peoples = () => {
           ...prev,
           peoples: prev.peoples.map(elem => (elem.id === id ? { ...elem, isFav: !elem.isFav } : elem)),
         }));
+        let userLikedPeoples=[]
+        if(response?.message=='Added'){
+          const arr=[...user?.likedPeoples,...id]
+          setUser((prev)=>({...prev,likedPeoples:arr}))
+
+        }else{
+
+          userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==id);
+          setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
+
+        }
+        console.log({userLikedPeoples})
       }
       console.log(response);
     } catch (error) {

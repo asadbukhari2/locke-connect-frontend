@@ -24,8 +24,8 @@ import Modal from '../Modal';
 function MySavedPeople() {
   const dispatch = useDispatch();
   const router = useRouter();
+  
   const { user } = useContextHook(AuthContext, ['user']);
-
   const { conversations } = useSelector(state => state.chat);
   const [modalData, setModalData] = useState(null);
 
@@ -37,7 +37,7 @@ function MySavedPeople() {
 
   const { t } = useTranslation();
 
-  const { refetch, setRefetch } = useContextHook(AuthContext, ['refetch', 'setRefetch']);
+  const { refetch, setRefetch ,setUser} = useContextHook(AuthContext, ['refetch', 'setRefetch','setUser']);
 
   const { fav_peoples_data, fav_peoples_loading } = peoplesService.GetMyFavouritePeoples(searchQuery, refetch);
   const handleRemoveFromFav = async _ => {
@@ -45,6 +45,9 @@ function MySavedPeople() {
       const response = await peoplesService.toggleFavouritePeople({ id: _.id });
       console.log(response);
       if (response.success) {
+        const userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==_.id);
+        console.log({userLikedPeoples})
+        setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
         Toast({ type: 'success', message: response.message });
       }
       setRefetch();
