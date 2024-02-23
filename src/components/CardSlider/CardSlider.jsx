@@ -26,7 +26,7 @@ export default function CardSlider({ agents }) {
   const [selectedAgent, setSelectedAgent] = useState(null);
 
   const { t } = useTranslation();
-  const { user } = useContextHook(AuthContext, ['user']);
+  const { user ,setUser} = useContextHook(AuthContext, ['user','setUser']);
 
   useEffect(() => {
     const updatedPeoples = agents.map(person => ({
@@ -41,8 +41,22 @@ export default function CardSlider({ agents }) {
       const userToFav = { id };
       setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: !elem.isFav } : elem)));
       const response = await peoplesService.toggleFavouritePeople(userToFav);
-      if (!response?.success) {
+      console.log({response})
+      if (response?.success) {
+        console.log("in response success")
         setPeople(prev => prev.map(elem => (elem.id == id ? { ...elem, isFav: false } : elem)));
+        if(response?.message=='Added'){
+          console.log("in added")
+          const arr=[...user?.likedPeoples,id]
+          console.log({arr})
+          setUser((prev)=>({...prev,likedPeoples:arr}))
+
+        }else{
+          console.log("in remove")
+         const userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==id);
+          setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
+
+        }
       }
       console.log(response);
     } catch (error) {

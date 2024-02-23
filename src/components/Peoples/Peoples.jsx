@@ -130,10 +130,13 @@ const Peoples = () => {
         }));
         let userLikedPeoples=[]
         if(response?.message=='Added'){
-          const arr=[...user?.likedPeoples,...id]
+          console.log("in added")
+          const arr=[...user?.likedPeoples,id]
+          console.log({arr})
           setUser((prev)=>({...prev,likedPeoples:arr}))
 
         }else{
+          console.log("in remove")
 
           userLikedPeoples=user?.likedPeoples?.filter((v)=>v !==id);
           setUser((prev)=>({...prev,likedPeoples:userLikedPeoples}))
