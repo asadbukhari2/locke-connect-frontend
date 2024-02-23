@@ -135,13 +135,13 @@ const Subscription = ({ activeTab }) => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <div className="area">Total:</div>$
               {selectedProduct
-                ? selectedProduct.price.amount +
-                  mapChooseList.reduce((total, item) => {
+                ? +selectedProduct.price.amount?.toFixed(2) +
+                  +mapChooseList.reduce((total, item) => {
                     return total + (item.price ? item.price.amount : 0);
-                  }, 0)
+                  }, 0)?.toFixed(2)
                 : mapChooseList.reduce((total, item) => {
                     return total + (item.price ? item.price.amount : 0);
-                  }, 0)}
+                  }, 0)?.toFixed(2)}
             </div>
           </div>
           <div className="button-wrap">
