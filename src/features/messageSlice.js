@@ -52,7 +52,18 @@ const messagesSlice = createSlice({
       state.unreadMessages = hasUnreadMessages;
       state.conversations = updatedConversations;
     },
-
+    //set Loading of uploaded images to false
+    setImgLoading:(state,action)=>{
+      const {msg,currentChat}=action.payload;
+      const updatedChat=currentChat?.map((item)=>{
+        if(item?.uuid===msg?.uuid){
+          const newMsg={...item,loading:false,file:{...item?.file,loading:false,url:msg?.url}}
+          delete newMsg.file.originalFile
+          return newMsg
+        }else return item
+      });
+      state.messages=updatedChat
+    },
     setConversations: (state, action) => {
       state.conversations = action.payload;
       state.unreadMessages = action.payload.some(conversation => conversation.unreadcount > 0);
@@ -98,7 +109,7 @@ const messagesSlice = createSlice({
   },
 });
 
-export const { setMessages, setConversations, setCurrentConversation, onLogout, setCountToZero } =
+export const { setMessages, setConversations, setCurrentConversation, onLogout, setCountToZero,setImgLoading } =
   messagesSlice.actions;
 export const messagesReducer = messagesSlice.reducer;
 export { getMessages, fetchAllConversations };

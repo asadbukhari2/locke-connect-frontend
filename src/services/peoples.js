@@ -303,6 +303,7 @@ const peoplesService = {
     const { message } = await res.json();
     throw new Error(message ?? 'Something went wrong');
   },
+
 };
 
 export default peoplesService;

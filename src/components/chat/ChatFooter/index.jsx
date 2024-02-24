@@ -24,6 +24,7 @@ const ChatFooter = ({
   handleBlur,
   handleSelectContact,
   handleSelectProperty,
+  handleUploadImage,
   inputRef,
 }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,7 +75,7 @@ const ChatFooter = ({
               <li>
                 <label htmlFor="file">
                   <Image src={imagepreview} alt="imagepreview" />
-                  <input type="file" id="file" />
+                  <input type="file" id="file" accept="image/*" onChange={handleUploadImage}/>
                 </label>
               </li>
               <li onClick={() => setAddPeople(true)}>

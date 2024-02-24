@@ -5,7 +5,7 @@ import ChatMessage from '@/components/chat/ChatMessage';
 import ChatFooter from '@/components/chat/ChatFooter';
 import { useDispatch, useSelector } from 'react-redux';
 import { socketServer } from '@/utils/socketServerConnection';
-import { getMessages, setMessages } from '@/features/messageSlice';
+import { getMessages, setMessages,setImgLoading } from '@/features/messageSlice';
 import { AuthContext } from '@/context/authContext';
 import { useContextHook } from 'use-context-hook';
 import { v4 as uuid } from 'uuid';
@@ -16,6 +16,10 @@ import Modal from '@/components/Modal';
 import UserDetail from '@/components/UserDetailComp';
 import Loaders from '@/components/Loaders';
 import { useTranslation } from '@/helpers/useTranslation';
+import { compressImage } from '@/helpers/common';
+import Toast from '@/components/Toast';
+import peoplesService from '@/services/peoples';
+import userService from '@/services/auth';
 
 const chat = () => {
   const router = useRouter();
@@ -25,6 +29,7 @@ const chat = () => {
   const [inputMessage, setInputMessage] = useState('');
   const [localMessages, setLocalMessages] = useState([]);
   const [selectedDocuments, setSelectedDocuments] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState({});
   const [selectedContact, setSelectedContact] = useState({});
   const inputRef = useRef();
@@ -67,6 +72,7 @@ const chat = () => {
     if (
       inputMessage.trim() !== '' ||
       selectedDocuments.length > 0 ||
+      selectedImages?.length >0||
       Object.keys(selectedProperty).length > 0 ||
       Object.keys(selectedContact).length > 0
     ) {
@@ -111,6 +117,44 @@ const chat = () => {
           socket.emit('direct-message', message);
           dispatch(setMessages([...localMessages, message]));
         }
+      }else if (selectedImages?.length > 0) {
+        const imgMessages = selectedImages.map(img => ({
+          author: user.id,
+          receiver: otherId,
+          text: inputMessage,
+          time: 'now',
+          uuid: uuid(),
+          msgType: 'image',
+          photoURL: user.photoURL,
+          file: img,
+          property: selectedProperty,
+          contact: selectedContact,
+          loading:true
+          
+        }));
+
+        dispatch(setMessages([...localMessages, ...imgMessages]));
+        setSelectedImages([])
+        //upload each img to bucket and make its loading false
+        imgMessages?.forEach(async(msg)=>{
+          const formData = new FormData();
+          formData.append('file', msg?.file?.originalFile);
+          try{
+
+            const res = await userService.uploadFile(formData);
+            const updatedMessage={...msg,url:res?.uploadedUrl}
+            dispatch(setImgLoading({msg:updatedMessage,currentChat:[...localMessages, ...imgMessages]}));
+            const newMsg={...updatedMessage,loading:false,file:{...msg?.file,url:res?.uploadedUrl}}
+            delete newMsg.file.originalFile
+            delete newMsg.file.loading
+            delete newMsg.url
+            socket.emit('direct-message', newMsg);
+          }catch(err){
+            //dispatch show error on image or remove msg from chat
+            console.log({err})
+          }
+        })
+      
       } else {
         const message = {
           author: user.id,
@@ -144,10 +188,14 @@ const chat = () => {
   };
 
   const typingStart = () => {
-    socket.emit('typing', { to: otherId, from: user.id });
+    if(socket){
+      socket.emit('typing', { to: otherId, from: user.id });
+    }
   };
   const typingEnd = () => {
-    socket.emit('typing-end', { to: otherId, from: user.id });
+    if(socket){
+      socket.emit('typing-end', { to: otherId, from: user.id });
+    }
   };
 
   const handleSelectProperty = data => {
@@ -165,9 +213,32 @@ const chat = () => {
     inputRef.current.focus();
     setInputMessage(' ');
   };
+  const handleUploadImage = async data => {
+    const file=data?.target?.files[0]
+    const fileType=file?.type?.split('/')[1]
+    if(!data || file && !file?.type?.includes('image')){
+      Toast({type:'error',message:'Only Images are allowed'});
+      return ;
+    }
+    const filesArr=[{
+      name:file?.name,
+      type:fileType,
+      id:uuid(),
+      loading:true,
+      url:await compressImage(file,fileType),
+      originalFile:file
+    },...selectedImages]
+
+    setSelectedImages(filesArr);
+    inputRef.current.focus();
+    setInputMessage(' ');
+  };
 
   const handleRemoveFile = file => {
     setSelectedDocuments(prev => [...prev.filter(_ => _.id !== file.id)]);
+  };
+  const handleRemoveImages = file => {
+    setSelectedImages(prev => [...prev.filter(_ => _.id !== file.id)]);
   };
   // const handleScroll = () => {
   //   const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
@@ -225,6 +296,7 @@ const chat = () => {
                       key={msg.uuid}
                       message={msg.text}
                       document={msg.file}
+                      image={msg?.image}
                       property={msg.property}
                       contact={msg.contact}
                       time={msg.time}
@@ -244,6 +316,13 @@ const chat = () => {
                 type="document"
                 selectedDocuments={selectedDocuments}
                 removeFile={handleRemoveFile}
+              />
+            )}
+            {selectedImages?.length > 0 && (
+              <SelectedDocumentsList
+                type="images"
+                selectedDocuments={selectedImages}
+                removeFile={handleRemoveImages}
               />
             )}
             {Object.keys(selectedContact).length > 0 && (
@@ -270,6 +349,7 @@ const chat = () => {
               handleSelectFiles={handleSelectFiles}
               handleSelectProperty={handleSelectProperty}
               handleSelectContact={handleSelectContact}
+              handleUploadImage={handleUploadImage}
             />
           </>
         )}
