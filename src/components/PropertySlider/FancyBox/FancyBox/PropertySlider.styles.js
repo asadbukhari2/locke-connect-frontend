@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SliderHolder = styled.div`
   position: relative;
@@ -34,7 +34,7 @@ export const SliderHolder = styled.div`
       }
 
       &:before {
-        content: "";
+        content: '';
         display: inline-block;
         margin: 0 0 0 2px;
         border-width: 0 0 2px 2px;
@@ -61,26 +61,28 @@ export const SliderHolder = styled.div`
 
     .slide {
       width: 100%;
-      height: 300px;
+      min-height: 300px;
       overflow: hidden;
       border-radius: 20px;
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
-      background: #ddd;
+      background: var(--body-text);
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
 
       @media (min-width: 768px) {
         width: 350px;
       }
       @media (min-width: 1420px) {
-        height: 413px;
+        min-height: 413px;
       }
 
       img.slide-img {
         display: block;
-        width: 100%;
-        height: 425px;
-        object-fit: cover;
+        max-width: 100%;
+        height: auto;
       }
     }
 
