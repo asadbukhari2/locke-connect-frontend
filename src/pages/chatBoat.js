@@ -22,6 +22,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { MdAdd } from 'react-icons/md';
 import Image from 'next/image';
 import robot from '../../public/Group.png';
+import { Tabs } from '@/components/chat/ChatBoatMessage/ChatBoatMessage.styles';
 const chat = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
@@ -320,7 +321,6 @@ const chat = () => {
     ]);
   }
   function removeTab(params) {
-    console.log(params);
     setTabs(prev => prev.filter(elem => elem.id !== params));
   }
   const [activeTab, setActiveTab] = useState(0);
@@ -337,16 +337,26 @@ const chat = () => {
         </div>
         <div className="tabsWrapper">
           {Array.from({ length: tabs?.length }, (v, i) => (
-            <div className={`tabs ${activeTab == i && 'activeTab'}`} onClick={() => setActiveTab(i)}>
+            <Tabs
+              className={`tabs ${activeTab == i && 'activeTab'}`}
+              $active={activeTab == i}
+              onClick={() => setActiveTab(i)}>
               <Image src={robot} alt="Group" />
               <span className="title">Lorem Ipsum Lorem IpsumLorem Ipsum</span>
               <span className="cross">
                 <RxCross2 onClick={() => removeTab(tabs[activeTab]?.id)} />
               </span>
-            </div>
+            </Tabs>
           ))}
           <span onClick={() => addNewTab(chatInfo)} className="addIcon">
-            <MdAdd />
+            {tabs?.length ? (
+              <MdAdd />
+            ) : (
+              <>
+                Click to Open New Tab
+                <MdAdd />
+              </>
+            )}
           </span>
         </div>
         {tabs[activeTab]?.content}

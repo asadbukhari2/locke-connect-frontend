@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components';
 // import backgroundImg from '../../../../public/chat-arrow.png';
-
+import curveA from '../../../../public/curveA.png';
+import curveB from '../../../../public/curveB.png';
+import curveAW from '../../../../public/curveAW.png';
+import curveBW from '../../../../public/curveBW.png';
 export const StyledChatMessage = styled.div`
   display: flex;
   align-items: flex-start;
@@ -138,4 +141,57 @@ export const StyledChatMessage = styled.div`
       }
     }
   }
+`;
+
+export const Tabs = styled.div`
+  ${({ $active }) =>
+    $active
+      ? css`
+          &::before {
+            position: absolute;
+            content: '';
+            background: url(${curveB.src});
+            background-repeat: no-repeat;
+            background-size: cover;
+            bottom: 0;
+            left: -6px;
+            width: 6px;
+            height: 8px;
+          }
+          &::after {
+            position: absolute;
+            content: '';
+            background: url(${curveA.src});
+            background-repeat: no-repeat;
+            background-size: cover;
+            bottom: 0;
+            right: -6px;
+            width: 6px;
+            height: 7px;
+          }
+        `
+      : css`
+          &::before {
+            position: absolute;
+            content: '';
+            background: url(${curveBW.src});
+            background-repeat: no-repeat;
+            background-size: cover;
+            bottom: 0;
+            left: -6px;
+            width: 6px;
+            height: 8px;
+          }
+          &::after {
+            position: absolute;
+            content: '';
+            background: url(${curveAW.src});
+            background-repeat: no-repeat;
+            background-size: cover;
+            bottom: 0;
+            right: -6px;
+            width: 6px;
+            height: 7px;
+          }
+        `};
 `;

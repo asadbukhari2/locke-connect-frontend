@@ -20,7 +20,8 @@ import { fetchAllConversations } from '@/features/messageSlice';
 import { getNotifications } from '@/features/commonSlice';
 import { PersistGate } from 'redux-persist/integration/react';
 import ErrorBoundary from '@/components/ErrorBoundry';
-
+import curveA from '../../public/curveA.png';
+import curveB from '../../public/curveB.png';
 const Styling = css`
   /* theme css variables */
   ${Variables}
@@ -265,6 +266,7 @@ const Styling = css`
     }
   }
   .chat-boat-container {
+    /* min-height: 400px; */
     padding: 20px;
     background: red;
     border-radius: 20px;
@@ -310,7 +312,7 @@ const Styling = css`
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-        background: var(--primary-50);
+        background: var(--white);
         color: var(--body-text);
         border-radius: 8px 8px 0px 0px;
         font-size: 12px;
@@ -324,21 +326,6 @@ const Styling = css`
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-        }
-        &::before {
-          position: absolute;
-          content: '';
-          bottom: 0;
-          left: -6px;
-          width: 6px;
-          height: 8px;
-          transform: rotate(-180deg);
-          background: linear-gradient(
-            101.18deg,
-            rgba(0, 52, 221, 0.6) -33.77%,
-            rgba(104, 51, 255, 0.6) 50.51%,
-            rgba(153, 161, 242, 0.6) 131.89%
-          );
         }
       }
       .activeTab {
