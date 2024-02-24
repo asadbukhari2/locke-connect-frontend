@@ -40,7 +40,12 @@ const chatBot = () => {
 
   const online = useSelector(state => state.onlineUsers);
   const { user } = useContextHook(AuthContext, ['user']);
-
+  const { tabs, setTabs, activeTab, setActiveTab } = useContextHook(MyContext, [
+    'tabs',
+    'setTabs',
+    'activeTab',
+    'setActiveTab',
+  ]);
   const socket = socketServer();
   const dispatch = useDispatch();
 
@@ -184,12 +189,7 @@ const chatBot = () => {
     messages: `I’m Robot this is my ID ${Date.now()}`,
     type: 'ai',
   };
-  const { tabs, setTabs, activeTab, setActiveTab } = useContextHook(MyContext, [
-    'tabs',
-    'setTabs',
-    'activeTab',
-    'setActiveTab',
-  ]);
+  
   function addNewTab() {
     setTabs(prev => [
       ...prev,
@@ -268,19 +268,24 @@ const chatBot = () => {
           </button>
         </div>
         <div className="tabsWrapper">
-          {Array.from({ length: tabs?.length }, (v, i) => (
+          {tabs?.map((v, i) => (
             <Tabs
-              className={`tabs ${activeTab == i && 'activeTab'}`}
-              $active={activeTab == i}
-              onClick={() => setActiveTab(i)}>
+            key={i}
+              className={`tabs ${activeTab[i] && 'activeTab'}`}
+              $active={activeTab[i] ? true:false}
+              onClick={() => {
+                console.log({i})
+                let arr=[]
+                arr[i]=true
+                setActiveTab(arr)}}>
               <Image src={robot} alt="Group" />
               <span className="title">Lorem Ipsum Lorem IpsumLorem Ipsum</span>
               <span className="cross">
-                <RxCross2 onClick={() => removeTab(tabs[activeTab]?.id)} />
+                <RxCross2 onClick={() => {removeTab(tabs[activeTab?.findIndex(element => element === true)]?.id)}} />
               </span>
             </Tabs>
           ))}
-          <span onClick={() => addNewTab(chatInfo)} className="addIcon">
+          <span onClick={() => {addNewTab(chatInfo)}} className="addIcon">
             {tabs?.length ? (
               <MdAdd />
             ) : (
@@ -291,7 +296,7 @@ const chatBot = () => {
             )}
           </span>
         </div>
-        {tabs[activeTab]?.content}
+        {tabs[activeTab?.findIndex(element => element === true)]?.content}
       </div>
     </>
   );
