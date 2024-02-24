@@ -24,7 +24,7 @@ import Image from 'next/image';
 import robot from '../../public/Group.png';
 import { Tabs } from '@/components/chat/ChatBoatMessage/ChatBoatMessage.styles';
 import { MyContext } from '@/context/card';
-const chat = () => {
+const chatBot = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
 
@@ -184,8 +184,12 @@ const chat = () => {
     messages: `I’m Robot this is my ID ${Date.now()}`,
     type: 'ai',
   };
-  const { tabs, setTabs } = useContextHook(MyContext, ['tabs', 'setTabs']);
-  const [activeTab, setActiveTab] = useState(0);
+  const { tabs, setTabs, activeTab, setActiveTab } = useContextHook(MyContext, [
+    'tabs',
+    'setTabs',
+    'activeTab',
+    'setActiveTab',
+  ]);
   function addNewTab() {
     setTabs(prev => [
       ...prev,
@@ -293,4 +297,4 @@ const chat = () => {
   );
 };
 
-export default chat;
+export default chatBot;

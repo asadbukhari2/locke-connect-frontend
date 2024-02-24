@@ -7,6 +7,7 @@ import { HiOutlineDocumentArrowDown } from 'react-icons/hi2';
 import location from '../../../../public/locationIcon.svg';
 import Button from '@/components/Button';
 import { shortenFileName } from '@/helpers/common';
+import Loaders from '@/components/Loaders';
 
 function ChatMessage({
   message = "Hey there, how's are you",
@@ -33,17 +34,14 @@ function ChatMessage({
                   <HiOutlineDocumentArrowDown size="25" />
                 </span>
                 <div className="docTitle">
-                  {/* <a href={'/document.pdf'} download={document?.name}> */}
                   <span
                     onClick={() => {
                       window.open(document?.url, '_blank');
                     }}>
                     <>
                       {shortenFileName(document?.name, 12)}
-                      {/* {formatFileSize(document?.size)} */}
                     </>
                   </span>
-                  {/* </a> */}
                 </div>
               </div>
             )}
@@ -56,6 +54,18 @@ function ChatMessage({
                 <Button outline="primary" onClick={onClick}>
                   See Details
                 </Button>
+              </div>
+            )}
+            {type === 'image' && (
+              <div className={`document ${document?.loading ? 'document-loading':''}`}>
+                <Loaders loading={document?.loading}>
+                <span className="userImageWrapper"  onClick={() => {
+                  window.open(document?.url, '_blank');
+                }}>
+                  <Image src={document?.url} alt="usericonaudio" width={200} height={200} />
+                </span>
+                      </Loaders>
+          
               </div>
             )}
             {type === 'property' && (

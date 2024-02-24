@@ -160,3 +160,9 @@ export const OfferTypes = [
   { label: 'Rejected', value: 'rejected' },
   { label: 'Submitted', value: 'submitted' },
 ];
+
+export const ComissionTypes = [
+  { label: 'Buyer', value: 'buyer' },
+  { label: 'Seller', value: 'seller' },
+  { label: 'Negotiable', value: 'negotiable' },
+];

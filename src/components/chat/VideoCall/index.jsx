@@ -3,7 +3,7 @@ import { ActionButton, CallingFrom, StyledAudioCall, VideocallMainWrapper } from
 import usericonaudio from '../../../../public/usericonaudio.jpg';
 import message from '../../../../public/callmessage.svg';
 import fullScreen from '../../../../public/fullScreen.svg';
-import videoCallImage from '../../../../public/videoCall.png';
+import videoCallImage from '../../../../public/user-skeleton.png';
 import Image from 'next/image';
 import { callAttended } from '@/utils/socketServerConnection';
 import { useContextHook } from 'use-context-hook';

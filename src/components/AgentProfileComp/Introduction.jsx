@@ -5,7 +5,7 @@ import CheckBox from '../../../public/checkbox.svg';
 import Image from 'next/image';
 import { MdAdd } from 'react-icons/md';
 import Select from '../DropDown/PropertyDropDown';
-import { LicenseTypes } from '../Constants';
+import { ComissionTypes, LicenseTypes } from '../Constants';
 import Input from '../TextField';
 import Button from '../Button';
 import { useTranslation } from '@/helpers/useTranslation';
@@ -26,19 +26,39 @@ const Introduction = ({ user }) => {
     services: user?.services || [],
     housesSold: user?.housesSold || 0,
     housesBought: user?.housesBought || 0,
-    commissionType: user?.commissionType || '',
+    commissionType: user?.commissionType || [],
     commissionPercentage: user?.commissionPercentage || '',
   });
+
+  console.log({ formData })
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        about: user?.about?.trim() || '',
+        displayName: user?.displayName || '',
+        services: user?.services || [],
+        housesSold: user?.housesSold || 0,
+        housesBought: user?.housesBought || 0,
+        commissionType: user?.commissionType || [],
+        commissionPercentage: user?.commissionPercentage || '',
+      })
+    }
+  }, [user])
 
   function handelvalue(e) {
     setInputData(e.target.value.trim());
   }
-  const handleService = () => {
+  const handleService = async() => {
     if (!inputData) return;
+    const newServices=[inputData, ...formData.services]
     setFormData(prevFormData => ({
       ...prevFormData,
-      services: [inputData, ...prevFormData.services],
+      services: newServices,
     }));
+    delete formData.displayName;
+    const data={...formData,services:newServices}
+    const res = await userService.updateIntroduction(data);
     setInputData('');
   };
 
@@ -51,12 +71,13 @@ const Introduction = ({ user }) => {
     setLoading(true);
     try {
       delete formData.displayName;
+      
       const res = await userService.updateIntroduction(formData);
       if (res) {
         setLoading(false);
         fetchUser();
 
-        Toast({ type: 'success', message: 'Introduction Updated Successfully' });
+        Toast({ type: 'success', message: 'Information Updated Successfully' });
       }
     } catch (error) {
       setLoading(false);
@@ -93,7 +114,10 @@ const Introduction = ({ user }) => {
           ))}
         </ul>
         <div className="add-more-service">
-          <input type="text" placeholder="Add more" value={inputData} onChange={handelvalue} />
+          <input type="text" placeholder="Add more" value={inputData} onChange={handelvalue} onKeyDown={(e)=>{
+ if (e.key === 'Enter') {
+  handleService();
+}          }}/>
           <div className="icon" onClick={handleService}>
             <MdAdd size="22px" color="var(--gray-400)" />
           </div>
@@ -112,7 +136,7 @@ const Introduction = ({ user }) => {
             {t('Commission Type')}
           </label>
           <Select
-            option={LicenseTypes}
+            option={ComissionTypes}
             title="Select..."
             onChange={e => {
               handleChange({ target: { name: 'commissionType', value: e.value } });

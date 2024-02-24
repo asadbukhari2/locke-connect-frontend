@@ -9,6 +9,7 @@ export const MyContextProvider = ({ children }) => {
   const [cardVal, setCardVal] = useState(1);
   const [tabs, setTabs] = useState([]);
   const [activeTab, setActiveTab] = useState(0);
+  console.log({ tabs, activeTab });
   const contextValue = {
     cardVal,
     setCardVal,

@@ -136,6 +136,7 @@ export function AuthContextProvider(props) {
         setLang(x);
       },
       lang: lang,
+      setUser
     }),
     [isLoggedIn, onLogin, user],
   );

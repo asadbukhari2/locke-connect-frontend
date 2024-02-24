@@ -12,6 +12,15 @@ const SelectedDocumentsList = ({ type, selectedDocuments, removeFile }) => {
   console.log(selectedDocuments, type);
   return (
     <DocumentContainer>
+      {type === "images" &&
+        selectedDocuments?.map((data) => (
+          <DocumentItem key={data.id}>
+            <DocumentInfo>
+              <Value>{shortenFileName(data.name, 10)}</Value>
+              <StyledButton onClick={() => removeFile(data)}>x</StyledButton>
+            </DocumentInfo>
+          </DocumentItem>
+        ))}
       {type === "document" &&
         selectedDocuments.map((data) => (
           <DocumentItem key={data.id}>

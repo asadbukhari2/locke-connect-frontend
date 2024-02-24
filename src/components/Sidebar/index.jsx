@@ -20,8 +20,8 @@ function Sidebar({ setRateModal }) {
     chatBoat = router?.includes('/chatBoat');
   }, []);
   return (
-    <Aside $chatBoatAside={router?.includes('/chatBoat')}>
-      {router?.includes('/chatBoat') ? (
+    <Aside $chatBoatAside={router?.includes('/chatbot')}>
+      {router?.includes('/chatbot') ? (
         <ChatBoatAside />
       ) : (
         <>

@@ -112,6 +112,16 @@ const userService = {
     throw message;
   },
 
+  async uploadFile(payload) {
+    let res = await Fetch.upload(`${_url}/upload-file`,payload);
+    if (res.status >= 200 && res.status < 300) {
+      res = await res.json();
+      return res;
+    }
+    const { message } = await res.json();
+    throw new Error(message ?? 'Something went wrong');
+  },
+
   async signout() {
     await signOut(auth);
   },

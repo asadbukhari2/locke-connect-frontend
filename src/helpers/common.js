@@ -1,5 +1,6 @@
 import spanishVocab from '../utils/translation/spanish.js';
 import chineseVocab from '../utils/translation/chinese.js';
+import Compress from 'react-image-file-resizer';
 
 export const setCookie = (name, value, days) => {
   let expires = '';
@@ -159,3 +160,25 @@ export const convertToCurrencyFormat = (amount = '0') =>
     .toFixed(2)
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+
+    export const compressImage = (file, type = 'PNG ') =>
+  new Promise(resolve => {
+    Compress.imageFileResizer(
+      file,
+      255,
+      90,
+      type,
+      100,
+      0,
+      uri => {
+        resolve(uri);
+      },
+      'base64',
+    );
+  });
+
+  export const getFileTypeFromBase64=(base64String)=> {
+    // Extract the MIME type from the base64 data URI
+    const mimeType = base64String.split(',')[0].split(':')[1].split(';')[0];
+    return mimeType;
+}

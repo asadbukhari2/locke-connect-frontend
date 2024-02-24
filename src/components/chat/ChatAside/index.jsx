@@ -23,7 +23,7 @@ const ChatAside = ({ sidebar }) => {
     <StyledChatAside>
       <>
         {!sidebar && (
-          <Button lg onClick={() => router.push('/chatBoat')}>
+          <Button lg onClick={() => router.push('/chatbot')}>
             <Image src={shine} alt="shine" />
             Talk to Locke AIbert
           </Button>
@@ -49,7 +49,7 @@ const ChatAside = ({ sidebar }) => {
           </div>
         )}
       </>
-      hamza
+      
     </StyledChatAside>
   );
 };

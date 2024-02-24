@@ -68,6 +68,7 @@ export const StyledChatMessage = styled.div`
     color: var(--gray-400);
   }
   .document {
+    cursor: pointer;
     .iconWrapper {
       text-align: center;
       display: block;
@@ -82,6 +83,7 @@ export const StyledChatMessage = styled.div`
       color: var(--primary-400);
     }
   }
+
   .userImageWrapper {
     width: 50px;
     height: 50px;
