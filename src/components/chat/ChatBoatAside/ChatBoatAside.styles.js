@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const StyledChatBoatAside = styled.div`
   .title {
@@ -10,6 +10,7 @@ export const StyledChatBoatAside = styled.div`
     line-height: 16px;
     text-align: left;
     margin-bottom: 15px;
+    cursor: pointer;
   }
 `;
 
@@ -24,6 +25,12 @@ export const SidbarTabWrapper = styled.div`
     line-height: 28px;
     text-align: left;
     text-transform: uppercase;
+    display: none;
+    ${({ $active }) =>
+      $active &&
+      css`
+        display: block;
+      `}
   }
 
   .discreption {

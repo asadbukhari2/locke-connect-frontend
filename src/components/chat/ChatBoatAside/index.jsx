@@ -4,11 +4,17 @@ import { useContextHook } from 'use-context-hook';
 import { MyContext } from '@/context/card';
 
 const ChatBoatAside = () => {
-  const { tabs, setTabs } = useContextHook(MyContext, ['tabs', 'setTabs']);
+  const { tabs, setTabs, activeTab, setActiveTab, currentTab, setCurrentTab } = useContextHook(MyContext, [
+    'tabs',
+    'setTabs',
+    'activeTab',
+    'setActiveTab',
+   
+  ]);
   return (
     <StyledChatBoatAside>
       {Array.from({ length: tabs?.length }, (v, i) => (
-        <SidbarTabWrapper>
+        <SidbarTabWrapper $active={activeTab == i} onClick={()=> setActiveTab(i)}>
           <span className="title">Dolor sit amet consecteur</span>
           <span className="heading">lorem ipsum dolor</span>
           <div className="discreption">
