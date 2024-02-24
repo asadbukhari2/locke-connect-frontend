@@ -7,8 +7,9 @@ import Toast from '@/components/Toast';
 import { useRouter } from 'next/router';
 import { useCancellablePromise } from '@/helpers/promiseHandler';
 import { socketServer } from '@/utils/socketServerConnection';
-import { useDispatch } from 'react-redux';
-import { onLogout as CLEAR, fetchAllConversations } from '../features/messageSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { onLogout as CLEAR, fetchAllConversations, getMessages, setCurrentConversation, setMessages } from '../features/messageSlice';
+import { v4 as uuid } from 'uuid';
 
 import { LanguageData } from '@/components/Constants';
 import { RESET_STATE, getNotifications } from '@/features/commonSlice';
@@ -28,7 +29,7 @@ export function AuthContextProvider(props) {
 
   const { cancellablePromise } = useCancellablePromise();
   const dispatch = useDispatch();
-
+  const { conversations,messages } = useSelector(state => state.chat);
   const router = useRouter();
   const socket = socketServer();
   const onLogout = async () => {
@@ -118,6 +119,67 @@ export function AuthContextProvider(props) {
     }
   };
 
+  const handleShareContact=(detail)=>{
+    console.log({detail})
+    try {
+      const detailId = detail.id;
+      const userId = user.id;
+      const existingConversationIndex = conversations.findIndex(
+        conv => conv.participants.includes(detailId) && conv.participants.includes(userId),
+      );
+      const conversation = conversations?.find(
+        itm => itm?.participants?.includes(detailId) && itm?.participants.includes(userId),
+      );
+
+      const myProfile={
+        photoURL:user?.photoURL,
+        id:user.id,
+        name:user?.name,
+        displayName:user?.displayName,
+      }
+      if (existingConversationIndex !== -1) {
+        // router.push('/chat');
+        //in case of conversation already exists
+        dispatch(setCurrentConversation(conversation));
+        const { author, reviever, _id } = conversation;
+        dispatch(getMessages({ author, reviever, conversationId: _id }));
+      } else {
+        const message = {
+          author: user.id,
+          receiver: detailId,
+          text: '',
+          time: 'now',
+          uuid: uuid(),
+          msgType:'contact',
+          photoURL: user.photoURL,
+          file: {},
+          property: {},
+          contact: {...user,contactimg:user?.photoURL},
+        };
+      console.log({message})
+        const newConversation = {
+          saved: false,
+          messages: [message],
+          initBy: userId,
+          isActive: true,
+          receiver: detailId,
+          photoURL: detail.photoURL,
+          participants: [detailId, userId],
+          channelName: detail.displayName,
+          lastMessage: { text: 'No Message' },
+        };
+
+        dispatch(setCurrentConversation(newConversation));
+        socket.emit('direct-message', message);
+
+        dispatch(setMessages([message]));
+      }
+   
+    } catch (error) {
+      console.log(error);
+      Toast({ type: 'error', message: error.message });
+    }
+  }
   const allContext = useMemo(
     () => ({
       setIsLoggedIn,
@@ -136,7 +198,8 @@ export function AuthContextProvider(props) {
         setLang(x);
       },
       lang: lang,
-      setUser
+      setUser,
+      handleShareContact
     }),
     [isLoggedIn, onLogin, user],
   );

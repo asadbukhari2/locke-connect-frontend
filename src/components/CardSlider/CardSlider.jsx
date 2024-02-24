@@ -29,7 +29,7 @@ export default function CardSlider({ agents }) {
   const [selectedAgent, setSelectedAgent] = useState(null);
 
   const { t } = useTranslation();
-  const { user ,setUser} = useContextHook(AuthContext, ['user','setUser']);
+  const { user ,setUser,handleShareContact} = useContextHook(AuthContext, ['user','setUser','handleShareContact']);
   const { conversations } = useSelector(state => state.chat);
   const dispatch = useDispatch();
 
@@ -106,7 +106,7 @@ export default function CardSlider({ agents }) {
   return (
     <>
       <Modal open={shareContacts} setOpen={setShareContacts} width="900px">
-        <ShareContact />
+        <ShareContact handleSelectContact={handleShareContact} outsideChat />
         {/* <ShareContactLink agent={selectedAgent} /> */}
       </Modal>
       {/* <Modal open={true} width="600px">

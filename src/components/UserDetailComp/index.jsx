@@ -37,6 +37,7 @@ const HomeClosed = [
 ];
 
 const UserDetail = ({ setModal, detail }) => {
+  console.log({detail})
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -93,7 +94,7 @@ const UserDetail = ({ setModal, detail }) => {
         <div className="imageWrapper">
           <Image src={detail.photoURL} alt="user" width={359} height={448} />
         </div>
-        <BoughtSold className="BoughtSold" />
+        <BoughtSold className="BoughtSold" bought={detail?.housesBought?? 0} sold={detail?.housesSold?? 0} />
       </div>
       <div className="TextWrapper">
         <UserDetailText>
@@ -110,7 +111,7 @@ const UserDetail = ({ setModal, detail }) => {
           <div className="userService">
             <span>{t('Services included')}</span>
             <ul>
-              {services.map((elem, ind) => (
+              {detail?.services?.map((elem, ind) => (
                 <li key={ind}>{elem}</li>
               ))}
             </ul>

@@ -8,7 +8,7 @@ import Loaders from '@/components/Loaders';
 import { NoRecordFound } from '@/components/NoRecordFound/NoRecord.styles';
 import { useTranslation } from '@/helpers/useTranslation';
 
-const ShareContact = ({ handleSelectContact, onClose }) => {
+const ShareContact = ({ handleSelectContact, onClose=()=>{},outsideChat=false}) => {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState({
     page: 1,
@@ -58,7 +58,9 @@ const ShareContact = ({ handleSelectContact, onClose }) => {
                       width="102px"
                       onClick={() => {
                         handleSelectContact(elem);
-                        onClose();
+                        if(!outsideChat){
+                          onClose();
+                        }
                       }}>
                       <MdAdd size="22" />
                       Share
