@@ -21,10 +21,12 @@ const ChatAside = ({ sidebar }) => {
   const { conversations, loading } = useSelector(state => state.chat);
   return (
     <StyledChatAside>
-      <Button lg>
-        <Image src={shine} alt="shine" />
-        Talk to Locke AIbert
-      </Button>
+      {!sidebar && (
+        <Button lg>
+          <Image src={shine} alt="shine" />
+          Talk to Locke AIbert
+        </Button>
+      )}
       {!sidebar && <Input hasIcon={<Image src={magnifier} alt="search" />} />}
       <div className="title">
         {t('Chat')}

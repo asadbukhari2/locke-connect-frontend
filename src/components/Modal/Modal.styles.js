@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 export const StyledModal = styled.div`
   position: fixed;
   inset: 0;
@@ -6,21 +6,27 @@ export const StyledModal = styled.div`
   backdrop-filter: blur(4px);
   z-index: 99999;
   padding: 20px;
-  visibility: ${({ open }) => (open ? "visible" : "hidden")};
-  opacity: ${({ open }) => (open ? "1" : "0")};
+  visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
+  opacity: ${({ open }) => (open ? '1' : '0')};
   transition: 0.3s all ease-in-out;
   overflow-x: hidden;
   display: flex;
   justify-content: center;
+  ${({ $alignMiddle }) =>
+    $alignMiddle &&
+    css`
+      align-items: center;
+      background: rgba(50, 59, 75, 0.9);
+    `}
 `;
 
 export const ContentHolder = styled.div`
   position: relative;
   padding: 50px 0 20px 0;
-  max-width: ${({ width }) => (width ? width : "100%")};
-  width: ${({ width }) => (width ? "100%" : "")};
-  padding: ${({ padding }) => (padding ? padding : "")}; //must prop
-  background: ${({ bg }) => (bg ? bg : "")}; //must props
+  max-width: ${({ width }) => (width ? width : '100%')};
+  width: ${({ width }) => (width ? '100%' : '')};
+  padding: ${({ padding }) => (padding ? padding : '')}; //must prop
+  background: ${({ bg }) => (bg ? bg : '')}; //must props
   animation: myAnim 0.3s ease;
   @keyframes myAnim {
     0% {
@@ -37,7 +43,7 @@ export const ContentHolder = styled.div`
     z-index: 5;
     cursor: pointer;
     position: absolute;
-    top: ${({ $top }) => ($top ? $top : "70px")};
+    top: ${({ $top }) => ($top ? $top : '70px')};
     right: 16px;
     width: 32px;
     height: 32px;

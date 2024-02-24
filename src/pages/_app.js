@@ -242,7 +242,8 @@ const Styling = css`
       overflow: auto;
     }
   }
-  .chat-container {
+  .chat-container,
+  .chat-boat-container {
     width: 100%;
     position: relative;
     .history {
@@ -263,7 +264,106 @@ const Styling = css`
       overflow: auto;
     }
   }
-
+  .chat-boat-container {
+    padding: 20px;
+    background: red;
+    border-radius: 20px;
+    background: linear-gradient(
+      101.18deg,
+      rgba(0, 52, 221, 0.35) -33.77%,
+      rgba(104, 51, 255, 0.35) 50.51%,
+      rgba(153, 161, 242, 0.35) 131.89%
+    );
+    .buttonWrapper {
+      display: flex;
+      gap: 10px;
+      max-width: 600px;
+      margin: 20px auto;
+      button {
+        border-radius: 100px;
+        font-size: 14px;
+        @media screen and (max-width: 992px) {
+          padding: 10px;
+          margin-bottom: 5px;
+        }
+      }
+      @media screen and (max-width: 768px) {
+        display: block;
+      }
+    }
+    ::-webkit-scrollbar {
+      height: 4px;
+    }
+    .tabsWrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-y: auto;
+      padding: 0 20px 10px;
+      .tabs {
+        position: relative;
+        max-width: 150px;
+        height: 34px;
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: var(--primary-50);
+        color: var(--body-text);
+        border-radius: 8px 8px 0px 0px;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 14px;
+        img {
+          filter: invert(0%) sepia(48%) saturate(6918%) hue-rotate(337deg) brightness(-16%) contrast(23%);
+        }
+        .title {
+          max-width: 73px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        &::before {
+          position: absolute;
+          content: '';
+          bottom: 0;
+          left: -6px;
+          width: 6px;
+          height: 8px;
+          transform: rotate(-180deg);
+          background: linear-gradient(
+            101.18deg,
+            rgba(0, 52, 221, 0.6) -33.77%,
+            rgba(104, 51, 255, 0.6) 50.51%,
+            rgba(153, 161, 242, 0.6) 131.89%
+          );
+        }
+      }
+      .activeTab {
+        background: linear-gradient(
+          101.18deg,
+          rgba(0, 52, 221, 0.6) -33.77%,
+          rgba(104, 51, 255, 0.6) 50.51%,
+          rgba(153, 161, 242, 0.6) 131.89%
+        );
+        color: white;
+        img {
+          filter: none;
+        }
+      }
+      .cross {
+        cursor: pointer;
+      }
+    }
+    .addIcon {
+      color: var(--white);
+      line-height: 1;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  }
   .actionBtnList {
     list-style: none;
     margin: 0;
