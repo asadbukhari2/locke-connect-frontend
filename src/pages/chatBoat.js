@@ -23,6 +23,7 @@ import { MdAdd } from 'react-icons/md';
 import Image from 'next/image';
 import robot from '../../public/Group.png';
 import { Tabs } from '@/components/chat/ChatBoatMessage/ChatBoatMessage.styles';
+import { MyContext } from '@/context/card';
 const chat = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
@@ -183,80 +184,8 @@ const chat = () => {
     messages: `I’m Robot this is my ID ${Date.now()}`,
     type: 'ai',
   };
-  const [tabs, setTabs] = useState([
-    {
-      id: Date.now(),
-      content: (
-        <>
-          <div className="messagesArea" ref={scrollContainerRef}>
-            <>
-              <ChatBoatMessage message="Hello, I’m User! 👋 " />
-              <ChatBoatMessage
-                variant="ai"
-                // type={msg.msgType ?? 'text'}
-                // key={msg.uuid}
-                // message={msg.text}
-                // document={msg.file}
-                // property={msg.property}
-                // contact={msg.contact}
-                // time={msg.time}
-                // user={msg.photoURL}
-                // onClick={() => {
-                //   onClick();
-                // }}
-              />
-              <ChatBoatMessage message="Hello, I’m User! 👋 " />
-              <ChatBoatMessage variant="ai" />
-              <ChatBoatMessage message="Hello, I’m User! 👋 " />
-              <ChatBoatMessage variant="ai" />
-              <ChatBoatMessage message="Hello, I’m User! 👋 " />
-              <ChatBoatMessage variant="ai" />
-              <ChatBoatMessage message="Hello, I’m User! 👋 " />
-            </>
-          </div>
-          <TypingNotify />
-          {selectedDocuments.length > 0 && (
-            <SelectedDocumentsList
-              type="document"
-              selectedDocuments={selectedDocuments}
-              removeFile={handleRemoveFile}
-            />
-          )}
-          {Object.keys(selectedContact).length > 0 && (
-            <SelectedDocumentsList
-              type="contact"
-              selectedDocuments={selectedContact}
-              removeFile={() => setSelectedContact({})}
-            />
-          )}
-          {Object.keys(selectedProperty).length > 0 && (
-            <SelectedDocumentsList
-              type="property"
-              selectedDocuments={selectedProperty}
-              removeFile={() => setSelectedProperty({})}
-            />
-          )}
-          <ChatFooter
-            inputMessage={inputMessage}
-            inputRef={inputRef}
-            handleBlur={typingEnd}
-            handleFocus={typingStart}
-            handleSendMessage={handleSendMessage}
-            handleMessageChange={handleMessageChange}
-            handleSelectFiles={handleSelectFiles}
-            handleSelectProperty={handleSelectProperty}
-            handleSelectContact={handleSelectContact}
-          />
-          <div className="buttonWrapper">
-            <Button lg>Report A Problem</Button>
-            <Button lg>Live Agent</Button>
-            <Button lg>End Chat Now</Button>
-          </div>
-        </>
-      ),
-    },
-  ]);
-
+  const { tabs, setTabs } = useContextHook(MyContext, ['tabs', 'setTabs']);
+  const [activeTab, setActiveTab] = useState(0);
   function addNewTab() {
     setTabs(prev => [
       ...prev,
@@ -323,7 +252,6 @@ const chat = () => {
   function removeTab(params) {
     setTabs(prev => prev.filter(elem => elem.id !== params));
   }
-  const [activeTab, setActiveTab] = useState(0);
   return (
     <>
       <Modal open={modal} setOpen={setModal}>

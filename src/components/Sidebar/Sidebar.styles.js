@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from 'styled-components';
 
 export const Aside = styled.div`
   display: flex;
@@ -17,6 +17,13 @@ export const Aside = styled.div`
   transform: translateX(-100%);
   z-index: 99;
 
+  ${({ $chatBoatAside }) =>
+    $chatBoatAside &&
+    css`
+      background: var(--gray-50);
+      border-radius: 32px;
+      top: 100px;
+    `}
   &::-webkit-scrollbar {
     width: 0;
     height: 20px;
@@ -47,5 +54,10 @@ export const Aside = styled.div`
   @media (min-width: 1420px) {
     top: 94px;
     width: 345px;
+    ${({ $chatBoatAside }) =>
+      $chatBoatAside &&
+      css`
+        top: 110px;
+      `}
   }
 `;

@@ -21,32 +21,35 @@ const ChatAside = ({ sidebar }) => {
   const { conversations, loading } = useSelector(state => state.chat);
   return (
     <StyledChatAside>
-      {!sidebar && (
-        <Button lg>
-          <Image src={shine} alt="shine" />
-          Talk to Locke AIbert
-        </Button>
-      )}
-      {!sidebar && <Input hasIcon={<Image src={magnifier} alt="search" />} />}
-      <div className="title">
-        {t('Chat')}
-        {!loading && <Badge $variant="dark" child={conversations?.length} />}
-      </div>
-      <ChatProfileWrapper $height={sidebar}>
-        {loading ? (
-          <Loaders loading={loading} height={100} />
-        ) : !conversations?.length ? (
-          <NoRecordFound>{t('No Chats Found')}</NoRecordFound>
-        ) : (
-          conversations?.map(conversation => <ChatProfile key={conversation.id} data={conversation} />)
+      <>
+        {!sidebar && (
+          <Button lg onClick={() => router.push('/chatBoat')}>
+            <Image src={shine} alt="shine" />
+            Talk to Locke AIbert
+          </Button>
         )}
-      </ChatProfileWrapper>
-      {sidebar && (
-        <div className="viewAll" onClick={() => router.push('/chat')}>
-          <p>{t('View All')}</p>
-          <IoIosArrowRoundForward size="25" className="ico" />
+        {!sidebar && <Input hasIcon={<Image src={magnifier} alt="search" />} />}
+        <div className="title">
+          {t('Chat')}
+          {!loading && <Badge $variant="dark" child={conversations?.length} />}
         </div>
-      )}
+        <ChatProfileWrapper $height={sidebar}>
+          {loading ? (
+            <Loaders loading={loading} height={100} />
+          ) : !conversations?.length ? (
+            <NoRecordFound>{t('No Chats Found')}</NoRecordFound>
+          ) : (
+            conversations?.map(conversation => <ChatProfile key={conversation.id} data={conversation} />)
+          )}
+        </ChatProfileWrapper>
+        {sidebar && (
+          <div className="viewAll" onClick={() => router.push('/chat')}>
+            <p>{t('View All')}</p>
+            <IoIosArrowRoundForward size="25" className="ico" />
+          </div>
+        )}
+      </>
+      hamza
     </StyledChatAside>
   );
 };
