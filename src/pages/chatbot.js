@@ -22,7 +22,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { MdAdd } from 'react-icons/md';
 import Image from 'next/image';
 import robot from '../../public/Group.png';
-const chat = () => {
+const chatBot = () => {
   const router = useRouter();
   const [modal, setModal] = useState(false);
 
@@ -355,4 +355,4 @@ const chat = () => {
   );
 };
 
-export default chat;
+export default chatBot;

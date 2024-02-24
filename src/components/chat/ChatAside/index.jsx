@@ -22,7 +22,9 @@ const ChatAside = ({ sidebar }) => {
   return (
     <StyledChatAside>
       {!sidebar && (
-        <Button lg>
+        <Button lg onClick={()=>{
+          router.push('/chatbot')
+        }}>
           <Image src={shine} alt="shine" />
           Talk to Locke AIbert
         </Button>
