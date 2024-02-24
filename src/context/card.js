@@ -9,7 +9,8 @@ export const MyContextProvider = ({ children }) => {
   const [cardVal, setCardVal] = useState(1);
   const [tabs, setTabs] = useState([]);
   const [activeTab, setActiveTab] = useState([]);
-  console.log({ tabs, activeTab });
+  const [currentTab, setCurrentTab] = useState(null);
+  console.log({ tabs, activeTab ,currentTab});
 
   const contextValue = useMemo(
     () => ({
@@ -19,9 +20,11 @@ export const MyContextProvider = ({ children }) => {
       setTabs,
       activeTab,
       setActiveTab,
+      currentTab, 
+      setCurrentTab,
     
     }),
-    [tabs,activeTab],
+    [tabs,activeTab,currentTab],
   );
   return <MyContext.Provider value={contextValue}>{children}</MyContext.Provider>;
 };

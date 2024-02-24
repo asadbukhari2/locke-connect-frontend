@@ -37,14 +37,17 @@ const chatBot = () => {
   const inputRef = useRef();
   const { t } = useTranslation();
   const scrollContainerRef = useRef();
+  
 
   const online = useSelector(state => state.onlineUsers);
   const { user } = useContextHook(AuthContext, ['user']);
-  const { tabs, setTabs, activeTab, setActiveTab } = useContextHook(MyContext, [
+  const { tabs, setTabs, activeTab, setActiveTab ,currentTab, setCurrentTab} = useContextHook(MyContext, [
     'tabs',
     'setTabs',
     'activeTab',
     'setActiveTab',
+    'currentTab',
+    'setCurrentTab'
   ]);
   const socket = socketServer();
   const dispatch = useDispatch();
@@ -197,7 +200,9 @@ const chatBot = () => {
         id: Date.now(),
         content: (
           <>
-            <div className="messagesArea" ref={scrollContainerRef}>
+            <div className="messagesArea"
+            //  ref={scrollContainerRef}
+            >
               <>
                 <ChatBoatMessage message={chatInfo.messages} />
                 <ChatBoatMessage variant="ai" />
@@ -232,7 +237,7 @@ const chatBot = () => {
                 removeFile={() => setSelectedProperty({})}
               />
             )}
-            <ChatFooter
+            {/* <ChatFooter
               inputMessage={inputMessage}
               inputRef={inputRef}
               handleBlur={typingEnd}
@@ -242,7 +247,7 @@ const chatBot = () => {
               handleSelectFiles={handleSelectFiles}
               handleSelectProperty={handleSelectProperty}
               handleSelectContact={handleSelectContact}
-            />
+            /> */}
             <div className="buttonWrapper">
               <Button lg>Report A Problem</Button>
               <Button lg>Live Agent</Button>
@@ -276,12 +281,13 @@ const chatBot = () => {
               onClick={() => {
                 console.log({i})
                 let arr=[]
-                arr[i]=true
+                arr[i]=true;
+                setCurrentTab(i);
                 setActiveTab(arr)}}>
               <Image src={robot} alt="Group" />
               <span className="title">Lorem Ipsum Lorem IpsumLorem Ipsum</span>
               <span className="cross">
-                <RxCross2 onClick={() => {removeTab(tabs[activeTab?.findIndex(element => element === true)]?.id)}} />
+                <RxCross2 onClick={() => {removeTab(tabs[i]?.id)}} />
               </span>
             </Tabs>
           ))}
@@ -296,7 +302,7 @@ const chatBot = () => {
             )}
           </span>
         </div>
-        {tabs[activeTab?.findIndex(element => element === true)]?.content}
+        {tabs[currentTab]?.content}
       </div>
     </>
   );
