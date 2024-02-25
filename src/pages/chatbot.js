@@ -237,9 +237,9 @@ const chatBot = () => {
                 removeFile={() => setSelectedProperty({})}
               />
             )}
-            {/* <ChatFooter
+            <ChatFooter
               inputMessage={inputMessage}
-              inputRef={inputRef}
+              // inputRef={inputRef}
               handleBlur={typingEnd}
               handleFocus={typingStart}
               handleSendMessage={handleSendMessage}
@@ -247,7 +247,7 @@ const chatBot = () => {
               handleSelectFiles={handleSelectFiles}
               handleSelectProperty={handleSelectProperty}
               handleSelectContact={handleSelectContact}
-            /> */}
+            />
             <div className="buttonWrapper">
               <Button lg>Report A Problem</Button>
               <Button lg>Live Agent</Button>

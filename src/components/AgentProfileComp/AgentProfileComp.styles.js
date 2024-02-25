@@ -187,6 +187,13 @@ export const StyledAgentIntroduction = styled.div`
       gap: 10px;
     }
   }
+
+  .language-holder{
+    margin-bottom: 15px;
+    .language-select{
+      max-width: 260px;
+    }
+  }
 `;
 
 export const ServiceWrapper = styled.div`
@@ -210,6 +217,25 @@ export const ServiceWrapper = styled.div`
       align-items: center;
       gap: 10px;
       font-weight: 500;
+      position: relative;
+      &:hover{
+        .cross-icon{
+          visibility:visible;
+        }
+        }
+      .cross-icon{
+        visibility:hidden;
+        position: absolute;
+        top:0;
+        right: 15px;
+        width:15px;
+        height: 15px;
+        border-radius: 50%;
+        text-align:center;
+        line-height: 15px;
+        cursor: pointer;
+        
+      }
     }
   }
   .add-more-service {
@@ -293,6 +319,7 @@ export const ServiceWrapper = styled.div`
       }
     }
   }
+ 
 `;
 
 export const SubcriptionStyled = styled.div`
@@ -325,7 +352,6 @@ export const SubcriptionStyled = styled.div`
     }
     .map-container {
       width: 100%;
-      background: red;
       border-radius: 8px;
       overflow: hidden;
       height: 500px;

@@ -43,6 +43,7 @@ import ChatAside from '../chat/ChatAside';
 import { MyContext } from '@/context/card';
 import { useTranslation } from '@/helpers/useTranslation';
 import { useSelector } from 'react-redux';
+import PlacesAutoComplete from '../PlacesAutoComplete';
 
 const location = [
   'New York ,US',
@@ -260,6 +261,7 @@ function Header() {
           <button type="button" className="search-opener">
             <IoSearch size="16" />
           </button>
+          {/* <PlacesAutoComplete/> */}
           <SearchLocation>
             <form ref={InputRef} onClick={() => sethandelInputDrop(!handelinputDrop)}>
               <div className="input-search">

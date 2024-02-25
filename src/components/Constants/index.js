@@ -12,9 +12,9 @@ export const DownPayment = [
   { label: '70%', value: '70%' },
 ];
 export const CreditScore = [
-  { label: '20%', value: '20%' },
-  { label: '50%', value: '50%' },
-  { label: '70%', value: '70%' },
+  { label: '700-800', value: '700-800' },
+  { label: '600-700', value: '600-700' },
+  { label: '500-600', value: '500-600' },
 ];
 export const DocumentType = [
   { label: 'Pre Approval Letter', value: 'Pre Approval Letter' },
@@ -154,6 +154,24 @@ export const LanguageData = [
   },
 ];
 
+export const Languages = [
+  {
+    img: img1,
+    label: 'English',
+    value: 'english',
+  },
+  {
+    img: img2,
+    label: 'Chinese',
+    value: 'chinese',
+  },
+  {
+    img: img3,
+    label: 'Spanish',
+    value: 'spanish',
+  },
+];
+
 export const OfferTypes = [
   { label: 'Accepted', value: 'accepted' },
   { label: 'Countered', value: 'countered' },
@@ -165,4 +183,9 @@ export const ComissionTypes = [
   { label: 'Buyer', value: 'buyer' },
   { label: 'Seller', value: 'seller' },
   { label: 'Negotiable', value: 'negotiable' },
+];
+export const Comission = [
+  { label: 'buyer', value: '' },
+  { label: 'seller', value: '' },
+  { label: 'negotiable', value: '' },
 ];

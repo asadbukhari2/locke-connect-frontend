@@ -257,9 +257,7 @@ const Peoples = () => {
                           <Image src={comment} alt="comment" />
                         </span>
                       </div>
-                      <div className="brand">
-                        <Image src={addidas} alt="addidas" />
-                      </div>
+
                     </div>
                   )}
                 </CardTextPeople>

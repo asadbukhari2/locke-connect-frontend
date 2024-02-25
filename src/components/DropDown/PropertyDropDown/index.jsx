@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ItemWrapper, StyledPropertySelectWrapper } from './PropertySelect.styles';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
-const Select = ({ className, title = 'Select...', option, placeholder, onChange }) => {
+const Select = ({ className, title = 'Select...', option, placeholder, onChange,isMulti }) => {
   const [value, setValue] = useState(title);
   const [dropDown, setDropDown] = useState(false);
   const closeRef = useRef();

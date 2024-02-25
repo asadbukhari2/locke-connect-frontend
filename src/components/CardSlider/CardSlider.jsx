@@ -7,7 +7,6 @@ import { EffectCards, Navigation, Autoplay } from 'swiper/modules';
 import img6 from '../../../public/SliderImages/user6.png';
 import share from '../../../public/SliderImages/share.png';
 import comment from '../../../public/SliderImages/comment.png';
-import addidas from '../../../public/SliderImages/brand.png';
 import { CardText, SliderMain, SliderWrapper } from './Card.styles';
 import Image from 'next/image';
 import { FaHeart, FaRegHeart } from 'react-icons/fa6';
@@ -162,9 +161,7 @@ export default function CardSlider({ agents }) {
                           <Image src={comment} alt="comment" />
                         </span>
                       </div>
-                      <div className="brand">
-                        <Image src={addidas} alt="addidas" />
-                      </div>
+                     
                     </div>
                   </CardText>
                 </SliderWrapper>

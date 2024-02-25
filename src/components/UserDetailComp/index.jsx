@@ -18,23 +18,13 @@ import Toast from '../Toast';
 import BoughtSold from '../BoughtSold';
 import { FaHeart } from 'react-icons/fa6';
 import { useTranslation } from '@/helpers/useTranslation';
-const services = ['Staging', 'Photography', 'Marketing', 'Open House', 'Negotiating'];
 const Commission = ['Seller 2.5 ; Seller Pays', 'Buyer 25% ; Seller Pays Or Buyer Pays', 'Negotiable'];
 const language = [
-  { img: us, lang: 'English' },
-  { img: china, lang: 'Chinese' },
-  { img: spain, lang: 'Spanish' },
+  { img: us, lang: 'English',value:'english' },
+  { img: china, lang: 'Chinese',value:'chinese' },
+  { img: spain, lang: 'Spanish',value:'spanish' },
 ];
-const HomeClosed = [
-  { img: location, loc: 'San Francisco' },
-  { img: location, loc: 'Castro' },
-  { img: location, loc: 'Noe Valley' },
-  { img: location, loc: 'Barkelley' },
-  { img: location, loc: 'Sacremento' },
-  { img: location, loc: 'Oakland' },
-  { img: location, loc: 'El Ceritto' },
-  { img: location, loc: 'Albany' },
-];
+
 
 const UserDetail = ({ setModal, detail }) => {
   console.log({detail})
@@ -114,12 +104,15 @@ const UserDetail = ({ setModal, detail }) => {
               {detail?.services?.map((elem, ind) => (
                 <li key={ind}>{elem}</li>
               ))}
+                {!detail?.services?.length && (
+                'N/A'
+              )}
             </ul>
           </div>
           <div className="userService">
             <span>{t('Language skills')}</span>
             <ul>
-              {language.map((elem, ind) => (
+              {language?.filter((itm)=>detail?.languages?.includes(itm?.value))?.map((elem, ind) => (
                 <li key={ind}>
                   <figure className="img">
                     <Image src={elem.img} alt="state" />
@@ -127,25 +120,34 @@ const UserDetail = ({ setModal, detail }) => {
                   {elem.lang}
                 </li>
               ))}
+              {!detail?.languages?.length && (
+                'N/A'
+              )}
             </ul>
           </div>
           <div className="userService">
             <span>{t('Home closed in')}</span>
             <ul>
-              {HomeClosed.map((elem, ind) => (
+              {detail?.homeClosedIn?.map((elem, ind) => (
                 <li key={ind}>
-                  <Image src={elem.img} alt="state" />
-                  {elem.loc}
+                  <Image src={location} alt="state" />
+                  {elem}
                 </li>
               ))}
+                {!detail?.homeClosedIn?.length && (
+                'N/A'
+              )}
             </ul>
           </div>
           <div className="userService">
             <span>{t('Commission')}</span>
             <ul>
-              {Commission.map((elem, ind) => (
-                <li key={ind}>{elem}</li>
+              {detail?.comission?.filter(v=>v?.value)?.map((elem, ind) => (
+                <li key={ind}>{elem?.type}: {elem?.value?? 0}%</li>
               ))}
+               {!detail?.comission?.length && (
+                'N/A'
+              )}
             </ul>
           </div>
         </UserDetailText>

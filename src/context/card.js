@@ -24,7 +24,7 @@ export const MyContextProvider = ({ children }) => {
       setCurrentTab,
     
     }),
-    [tabs,activeTab,currentTab],
+    [tabs,activeTab,currentTab,cardVal],
   );
   return <MyContext.Provider value={contextValue}>{children}</MyContext.Provider>;
 };

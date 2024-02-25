@@ -3,6 +3,6 @@
   "terminal.integrated.defaultProfile.windows": "Git Bash",
   "editor.snippetSuggestions": "top",
   "[javascriptreact]": {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
