@@ -5,7 +5,7 @@ import CheckBox from '../../../public/checkbox.svg';
 import Image from 'next/image';
 import { MdAdd } from 'react-icons/md';
 import Select from '../DropDown/PropertyDropDown';
-import { Comission, ComissionTypes, Languages, LicenseTypes } from '../Constants';
+import { AgentTypes, Comission, ComissionTypes, Languages, LicenseTypes } from '../Constants';
 import Input from '../TextField';
 import Button from '../Button';
 import { useTranslation } from '@/helpers/useTranslation';
@@ -33,9 +33,8 @@ const Introduction = ({ user }) => {
     housesBought: user?.housesBought || 0,
     commissionType: user?.commissionType || [],
     commissionPercentage: user?.commissionPercentage || '',
+    agentType: user?.agentType || 'agent',
   });
-
-  console.log({ formData });
 
   useEffect(() => {
     if (user) {
@@ -49,10 +48,19 @@ const Introduction = ({ user }) => {
         commissionType: user?.commissionType || [],
         commissionPercentage: user?.commissionPercentage || '',
         languages: user?.languages ?? [],
+        agentType: user?.agentType || 'agent',
+
       });
       if (user?.languages) {
         const userLanguages = Languages.filter(itm => user?.languages?.includes(itm?.value));
         setState(prev => ({ ...prev, languages: userLanguages }));
+      }
+      const agentType=AgentTypes.find((itm)=>itm.value==user?.agentType)
+      if(agentType){
+        setState(prev => ({ ...prev, agentType }));
+      }else{
+        setState(prev => ({ ...prev, agentType:{label:'Agent',value:'agent'} }));
+
       }
     }
   }, [user]);
@@ -66,7 +74,6 @@ const Introduction = ({ user }) => {
       setInputData(e.target.value.trim());
     }
   }
-  console.log({ formData });
   const handleLanguages = languages => {
     const langs = languages?.map(itm => itm?.value);
     setFormData(prevFormData => ({
@@ -155,7 +162,6 @@ const Introduction = ({ user }) => {
   };
 
   const handleComission = (val, type) => {
-    console.log({ val, type });
     let c = { type: state?.comission?.type, value: state?.comission?.value };
     if (type == 'type') {
       c.type = val;
@@ -165,7 +171,6 @@ const Introduction = ({ user }) => {
     setState(p => ({ ...p, comission: c }));
     const userComissions = Comission?.map(itm => {
       if (itm?.label == state?.comission?.type) {
-        console.log('in if');
         return {
           type: itm?.label,
           value: type != 'type' ? val : user?.comission?.find(i => i?.type == itm?.label)?.value,
@@ -181,6 +186,10 @@ const Introduction = ({ user }) => {
 
     setFormData(p => ({ ...p, comission: userComissions }));
   };
+  const handleAgentType=(val)=>{
+    setFormData(p => ({ ...p, agentType: val }));
+
+  }
   return (
     <StyledAgentIntroduction>
       <div className="totalsold">
@@ -196,6 +205,20 @@ const Introduction = ({ user }) => {
       </label>
       <textarea name="about" id="about" cols="30" rows="10" value={formData?.about} onChange={handleChange} />
       <div className="language-holder">
+        <span className="title">{t('Agent Type')}:</span>
+        <div className="language-select">
+          <Select
+            name="agentType"
+            option={AgentTypes}
+            title="Select Agent Type"
+            selectedVal={state?.agentType}
+            onChange={(e) => {
+              handleAgentType(e.value);
+            }}
+          />
+        </div>
+      </div>
+      <div className="language-holder">
         <span className="title">{t('Languages')}:</span>
         <div className="language-select">
           <MultiSelect
@@ -205,7 +228,6 @@ const Introduction = ({ user }) => {
             title="Select Languages"
             value={state?.languages}
             onChange={({ target: { value } }) => {
-              console.log({ value });
               handleLanguages(value);
             }}
           />
@@ -292,7 +314,6 @@ const Introduction = ({ user }) => {
             option={ComissionTypes}
             title="Select..."
             onChange={e => {
-              console.log({ e });
               handleComission(e.value, 'type');
             }}
           />

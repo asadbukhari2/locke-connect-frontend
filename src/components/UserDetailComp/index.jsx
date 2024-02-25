@@ -91,7 +91,7 @@ const UserDetail = ({ setModal, detail }) => {
           <div className="name">
             <h2>{detail.displayName}</h2>
             <p>
-              {t('License')} #{detail.licenseNumber}
+              {t('License')} #{detail.licenseNumber} ({detail?.agentType??'Agent'})
             </p>
           </div>
           <div className="userInfo">
@@ -150,6 +150,7 @@ const UserDetail = ({ setModal, detail }) => {
               )}
             </ul>
           </div>
+        
         </UserDetailText>
         <div className="buttonWrapper">
           <Button variant="primary" onClick={conversationHandler}>

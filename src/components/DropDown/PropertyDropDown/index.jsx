@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ItemWrapper, StyledPropertySelectWrapper } from './PropertySelect.styles';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
-const Select = ({ className, title = 'Select...', option, placeholder, onChange,isMulti }) => {
+const Select = ({ className, title = 'Select...', option, placeholder, onChange,selectedVal}) => {
   const [value, setValue] = useState(title);
   const [dropDown, setDropDown] = useState(false);
   const closeRef = useRef();
-
+console.log({title})
   function handelChange(elem) {
     setValue(elem);
     setDropDown(!dropDown);
@@ -17,9 +17,15 @@ const Select = ({ className, title = 'Select...', option, placeholder, onChange,
       setDropDown(false);
     }
   };
+
+  useEffect(()=>{
+    if(selectedVal){
+      setValue(selectedVal)
+    }
+  },[selectedVal])
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
-
+   
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

@@ -117,8 +117,13 @@ const AcountDetail = ({ user }) => {
           <label htmlFor="brokerage_name" className="field_title">
             {t('Brokerage Name')}
           </label>
-          {/* <Input Field_Name="brokerage_name" type="text" value={user.brokerage} /> */}
           <span>{user?.brokerageName}</span>
+        </div>
+        <div className="inputWrap">
+          <label htmlFor="brokerage_name" className="field_title">
+            {t('Agent Type')}
+          </label>
+          <span>{user?.agentType?? 'Agent'}</span>
         </div>
         <div className="inputWrap">
           <label htmlFor="address" className="field_title">

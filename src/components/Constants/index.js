@@ -189,3 +189,7 @@ export const Comission = [
   { label: 'seller', value: '' },
   { label: 'negotiable', value: '' },
 ];
+export const AgentTypes = [
+  { label: 'Agent', value: 'agent' },
+  { label: 'Contractor', value: 'contractor' },
+];
