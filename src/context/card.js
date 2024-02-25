@@ -8,9 +8,8 @@ export const MyContext = createContextHook(context);
 export const MyContextProvider = ({ children }) => {
   const [cardVal, setCardVal] = useState(1);
   const [tabs, setTabs] = useState([]);
-  const [activeTab, setActiveTab] = useState([]);
+  const [activeTab, setActiveTab] = useState(0);
   const [currentTab, setCurrentTab] = useState(null);
-  console.log({ tabs, activeTab ,currentTab});
 
   const contextValue = useMemo(
     () => ({
@@ -20,9 +19,8 @@ export const MyContextProvider = ({ children }) => {
       setTabs,
       activeTab,
       setActiveTab,
-      currentTab, 
+      currentTab,
       setCurrentTab,
-    
     }),
     [tabs,activeTab,currentTab,cardVal],
   );

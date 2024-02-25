@@ -22,6 +22,9 @@ import { RxCross2 } from 'react-icons/rx';
 import { MdAdd } from 'react-icons/md';
 import Image from 'next/image';
 import robot from '../../public/Group.png';
+import report from '../../public/report.png';
+import callAgent from '../../public/callAgent.png';
+import endChat from '../../public/endChat.png';
 import { Tabs } from '@/components/chat/ChatBoatMessage/ChatBoatMessage.styles';
 import { MyContext } from '@/context/card';
 const chatBot = () => {
@@ -37,17 +40,16 @@ const chatBot = () => {
   const inputRef = useRef();
   const { t } = useTranslation();
   const scrollContainerRef = useRef();
-  
 
   const online = useSelector(state => state.onlineUsers);
   const { user } = useContextHook(AuthContext, ['user']);
-  const { tabs, setTabs, activeTab, setActiveTab ,currentTab, setCurrentTab} = useContextHook(MyContext, [
+  const { tabs, setTabs, activeTab, setActiveTab, currentTab, setCurrentTab } = useContextHook(MyContext, [
     'tabs',
     'setTabs',
     'activeTab',
     'setActiveTab',
     'currentTab',
-    'setCurrentTab'
+    'setCurrentTab',
   ]);
   const socket = socketServer();
   const dispatch = useDispatch();
@@ -192,7 +194,7 @@ const chatBot = () => {
     messages: `I’m Robot this is my ID ${Date.now()}`,
     type: 'ai',
   };
-  
+
   function addNewTab() {
     setTabs(prev => [
       ...prev,
@@ -200,8 +202,9 @@ const chatBot = () => {
         id: Date.now(),
         content: (
           <>
-            <div className="messagesArea"
-            //  ref={scrollContainerRef}
+            <div
+              className="messagesArea"
+              //  ref={scrollContainerRef}
             >
               <>
                 <ChatBoatMessage message={chatInfo.messages} />
@@ -249,9 +252,16 @@ const chatBot = () => {
               handleSelectContact={handleSelectContact}
             />
             <div className="buttonWrapper">
-              <Button lg>Report A Problem</Button>
-              <Button lg>Live Agent</Button>
-              <Button lg>End Chat Now</Button>
+              <Button lg>
+                {' '}
+                <Image src={report} alt="report" /> Report A Problem
+              </Button>
+              <Button lg>
+                <Image src={callAgent} alt="callAgent" /> Report A Problem Live Agent
+              </Button>
+              <Button lg>
+                <Image src={endChat} alt="endChat" /> Report A Problem Live Agent End Chat Now
+              </Button>
             </div>
           </>
         ),
@@ -275,23 +285,28 @@ const chatBot = () => {
         <div className="tabsWrapper">
           {tabs?.map((v, i) => (
             <Tabs
-            key={i}
-              className={`tabs ${activeTab[i] && 'activeTab'}`}
-              $active={activeTab[i] ? true:false}
+              key={i}
+              className={`tabs ${activeTab == i && 'activeTab'}`}
+              $active={activeTab == i}
               onClick={() => {
-                console.log({i})
-                let arr=[]
-                arr[i]=true;
-                setCurrentTab(i);
-                setActiveTab(arr)}}>
+                setActiveTab(i);
+              }}>
               <Image src={robot} alt="Group" />
               <span className="title">Lorem Ipsum Lorem IpsumLorem Ipsum</span>
               <span className="cross">
-                <RxCross2 onClick={() => {removeTab(tabs[i]?.id)}} />
+                <RxCross2
+                  onClick={() => {
+                    removeTab(tabs[i]?.id);
+                  }}
+                />
               </span>
             </Tabs>
           ))}
-          <span onClick={() => {addNewTab(chatInfo)}} className="addIcon">
+          <span
+            onClick={() => {
+              addNewTab(chatInfo);
+            }}
+            className="addIcon">
             {tabs?.length ? (
               <MdAdd />
             ) : (
@@ -302,7 +317,7 @@ const chatBot = () => {
             )}
           </span>
         </div>
-        {tabs[currentTab]?.content}
+        {tabs[activeTab]?.content}
       </div>
     </>
   );
