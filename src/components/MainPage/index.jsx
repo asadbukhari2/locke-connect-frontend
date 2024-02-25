@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FloatingImages, FloatingWidget, HomeFooter, StyledMainPageStyles } from './MainPage.styles';
 import Link from 'next/link';
 import Button from '../Button';
@@ -17,14 +17,50 @@ import prop3 from '../../../public/prop3.png';
 import prop4 from '../../../public/prop4.png';
 import prop5 from '../../../public/prop5.png';
 import prop6 from '../../../public/prop6.png';
-import arraowDownHexa from '../../../public/arraowDownHexa.png';
-
+import { FiArrowUp } from 'react-icons/fi';
 import Image from 'next/image';
 import Revolutionize from './Revolutionize';
 import Modal from '../Modal';
 import Disclaimer from '../Legal/Disclaimer';
+import styled from 'styled-components';
+
+const BackTo = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  bottom: 20px;
+  transform: translateX(-80px);
+  width: 40px;
+  height: 40px;
+  z-index: 9;
+  opacity: 0;
+  visibility: hidden;
+  border-radius: 0 5px 5px 0;
+  padding: 0;
+  transition: all 0.3s;
+  background: var(--primary-500);
+`;
 const MainPage = () => {
   const [termModal, setTermModal] = useState(false);
+    useEffect(() => {
+    const backToTop = document.getElementById('back-to-top');
+    function backToTopFade() {
+      if (window.scrollY > 150) {
+        backToTop.style.cssText = 'opacity:1; visibility:visible; transform: translateX(0)';
+      } else {
+        backToTop.style.cssText = 'opacity:0; visibility:hidden; transform: translateX(-80px)';
+      }
+    }
+    window.addEventListener('scroll', backToTopFade);
+    setTimeout(() => {
+      window.scrollBy(0, 1);
+    }, 5000);
+  }, []);
+  const scrollToTop = () => {
+    window.scroll({ top: 0, behavior: 'smooth' });
+  };
   return (
     <>
       <Modal width="1100px" open={termModal} setOpen={setTermModal}>
@@ -127,6 +163,9 @@ const MainPage = () => {
           </div>
         </div>
       </HomeFooter>
+      <BackTo type="button" id="back-to-top" onClick={scrollToTop}>
+            <FiArrowUp color="#fff" size={25} />
+          </BackTo>
     </>
   );
 };
