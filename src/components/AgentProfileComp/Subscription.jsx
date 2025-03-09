@@ -25,7 +25,7 @@ const Subscription = ({ activeTab }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
+    googleMapsApiKey: 'AIzaSyD8SYqFL8dtPLzqASWGMvKMVpOWpI0bJjY',
   });
   const [searchQuery, setSearchQuery] = useState({ page: 1, itemsPerPage: 100, filterText: '' });
 
@@ -136,12 +136,16 @@ const Subscription = ({ activeTab }) => {
               <div className="area">Total:</div>$
               {selectedProduct
                 ? +selectedProduct.price.amount?.toFixed(2) +
-                  +mapChooseList.reduce((total, item) => {
-                    return total + (item.price ? item.price.amount : 0);
-                  }, 0)?.toFixed(2)
-                : mapChooseList.reduce((total, item) => {
-                    return total + (item.price ? item.price.amount : 0);
-                  }, 0)?.toFixed(2)}
+                  +mapChooseList
+                    .reduce((total, item) => {
+                      return total + (item.price ? item.price.amount : 0);
+                    }, 0)
+                    ?.toFixed(2)
+                : mapChooseList
+                    .reduce((total, item) => {
+                      return total + (item.price ? item.price.amount : 0);
+                    }, 0)
+                    ?.toFixed(2)}
             </div>
           </div>
           <div className="button-wrap">

@@ -1,13 +1,13 @@
 import { initializeApp, getApps } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAyt828bQ_YtQCLnFdr3ZXavIKmvrZzm5Y',
-  authDomain: 'locke-connect.firebaseapp.com',
-  projectId: 'locke-connect',
-  storageBucket: 'locke-connect.appspot.com',
-  messagingSenderId: '396499824399',
-  appId: '1:396499824399:web:520cb224ff8a6314f8187a',
-  measurementId: 'G-HX7X2E0KPM',
+  apiKey: 'AIzaSyC3qN6ez6srkws15Y8WS5krVWsTcOAZAG8',
+  authDomain: 'locke-9d934.firebaseapp.com',
+  projectId: 'locke-9d934',
+  storageBucket: 'locke-9d934.firebasestorage.app',
+  messagingSenderId: '42268287385',
+  appId: '1:42268287385:web:97a69682d313aaba37f308',
+  measurementId: 'G-GJJ8JE2JY7',
 };
 
 const firebase = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
